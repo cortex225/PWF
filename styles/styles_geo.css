@@ -1,11 +1,12 @@
-*{
-	margin : 0px ;
-	padding : 0px ;
+*
+{
+	padding: 0px;
+	margin: 0px;
 }
 
 /*EN-TETE*/
 header{
-	top : 0px ;
+	top : 100% ;
 	left : 0px ;
 	width : 100% ;
 	height : 100px;
@@ -100,37 +101,48 @@ nav li:hover .sous_menu
 
 
 
-
-/*Section*/
-section{
-	position : absolute ;
-	top : 100px ;
-	left : 0px ;
-	bottom: 100px;
-	width : 100% ;
-	padding : 0px ;
-	margin: 0px;
-	background-image: url(../img/cover.jpg);
+section
+{
+	background-image: url(../img/barner_geo.jpg);
     background-blend-mode: difference;
     background-repeat: no-repeat;
 	background-size: cover;
     background-attachment: scroll;
+	position: absolute;
+	width: 100%;
+	height: 150px;
+	top: 80px;
+	
 }
 
-/*Aside*/
-aside{
 
+/*Container de l'article*/
+.container
+{
+	padding: 0px;
+	margin-left: 60px;
+	margin-bottom: 60px;
+	margin-top: 110px;
+	border: solid 1px black;
+	height: auto;
+	width: 60%;
+	top: 50px;
+	position: relative;
 }
+
+
+
+
 /* FOOTER */
 
 footer {
     background: white;
-	position : absolute ;
-	bottom: 0;
-	left : 0px;
+	position : relative;
+	top: 100%;
 	width : 97.5% ;
 	height : 100px;
 	padding : 10px 20px;
+	margin-top: 50px;
 
 
 	
