@@ -1,97 +1,119 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title> Ma côte d'ivoire </title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="styles/Style.css">
-	</head>
-	
-	<body>
-		<header>
-			<h1>Ma Côte d'ivoire</h1>
-					
-		<nav>
-			<ul>
-				<li class="Menu_Presentation"><a href="#">Présentation</a>
-			
-					<ul class="sous_menu">
-						<li class="Histoire"><a href="html/Présentation/Histoire.html">Histoire</a></li>
-						<li class="Geographie"><a href="html/Présentation/Geographie.html">Géographie</a></li>
-						<li class="Symboles"><a href="html/Présentation/Symboles.html">Symboles de l'Etat</a></li>
-						<li class="Institutions"><a href="html/Présentation/Institutions.html">Institutions de l'Etat</a></li>
-					</ul>
-				</li>
-				
-				<li class="Menu_specialités"><a href="html/Spécialités/Spécialités.html">Spécialités culinaires</a>
-				</li>
-				
-				<li class="Menu_visiter"><a href="#">Visiter</a>
-					<ul class="sous_menu">
-						<li class="Sites"><a href="html/Visiter/Sites.html">Sites touristiques</a></li>
-						<li class="Parcs"><a href="html/Visiter/Parcs.html">Parcs et Réserves</a></li>
-						<li class="Evenements"><a href="html/Visiter/Evenements.html">Evènements à voir</a></li>
-						<li class="Attractions"><a href="html/Visiter/Attractions.html">Attractions incontournables</a></li>
-					</ul>
-				<li class="Menu_Art"><a href="html/Art/Art.html">Art</a>
-				</li>
-				</li>
-			</ul>
-		</nav>
-		</header>
-		
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Côte d'Ivoire - Terre d'Hospitalité</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/Style.css">
+    <link rel="icon" href="img/icon.ico">
+</head>
+<body>
 
-	
-			<!-- Le conteneur "section" sert à loger le contenu principal de la page Web -->
-		<section>
-	
-		
-		</section>
-	
-	   <aside>
-	   </aside>
-		
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Ma Côte d'Ivoire</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="html/Présentation/Histoire.html">Histoire</a></li>
+                <li><a href="html/Spécialités/Spécialités.html">Gastronomie</a></li>
+                <li><a href="html/Visiter/Visiter.html">Tourisme</a></li>
+                <li><a href="html/Art/Art.html">Art & Culture</a></li>
+            </ul>
+        </nav>
+    </header>
 
- <footer>
-        <div class="container">
-                <div class="info">
-                        <h4>Informations</h4>
-                        <p>Nom : Gouaho</p>
-                        <p>Prenoms : Déto Jean-Luc</p>
-                        <p>Mail : jlgouaho@gmail.com</p>
-                        <p>Contact et WhatsApp: (450) 521-1098</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Akwaba en Côte d'Ivoire</h2>
+            <p>Découvrez une terre riche en couleurs, saveurs et traditions.</p>
+            <a href="#decouvrir" class="btn">Explorer</a>
+        </div>
+    </section>
+
+    <!-- Flip Cards Section -->
+    <section id="decouvrir">
+        <div class="section-title">
+            <h3>Les Incontournables</h3>
+            <div class="line"></div>
+        </div>
+
+        <div class="cards-container">
+            <!-- Card 1: Gastronomie -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" style="background-image: url('img/alloco.JPG');">
+                        <h4>Gastronomie</h4>
                     </div>
-                    
-
-                        <form>
-                            <div class="commentaire">
-                                <label for="text">
-                                    <h4>Vos commentaires</h4>
-                                </label>
-                                <textarea class="form-control" id="text" ></textarea>
-                            <button class="bouton_envoyer">Envoyer </button>
-							</div>
-                        </form>
-                    
-                    
-                        
-                        <div class="Reseau"><h4>Reseaux sociaux</h4>
-                            
-           <a href="https://www.facebook.com/jl.gouaho" target="_blank" ></a>
-                           </div>
-
+                    <div class="flip-card-back">
+                        <h4>Saveurs Uniques</h4>
+                        <p>Plongez au cœur de la cuisine ivoirienne avec l'Alloco, le Garba et le Foutou. Une explosion de saveurs vous attend.</p>
+                        <a href="html/Spécialités/Spécialités.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
                     </div>
-   
+                </div>
+            </div>
+
+            <!-- Card 2: Nature (Redirects to Tourisme) -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" style="background-image: url('img/parcTai.jpg');">
+                        <h4>Nature & Parcs</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <h4>Biodiversité</h4>
+                        <p>Explorez la forêt primaire du Parc de Taï et rencontrez une faune exceptionnelle dans son habitat naturel.</p>
+                        <a href="html/Visiter/Visiter.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Architecture (Redirects to Histoire) -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" style="background-image: url('img/place/basilique.jpg');">
+                        <h4>Histoire</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <h4>Notre Héritage</h4>
+                        <p>Contemplez la majestueuse Basilique et découvrez les récits qui ont forgé notre nation.</p>
+                        <a href="html/Présentation/Histoire.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Art & Culture -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" style="background-image: url('img/Art/IMG-20190209-WA0032.jpg');">
+                        <h4>Art & Culture</h4>
+                    </div>
+                    <div class="flip-card-back">
+                        <h4>Traditions</h4>
+                        <p>Explorez la richesse de l'art ivoirien, de ses masques ancestraux à sa musique vibrante.</p>
+                        <a href="html/Art/Art.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h4>Ma Côte d'Ivoire</h4>
+            <p>Promouvoir la beauté et la culture de notre pays.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+            </div>
+            <p class="copyright">&copy; 2026 Tous droits réservés - Gouaho Déto Jean-Luc</p>
+        </div>
     </footer>
 
-	
-	
-	
-	
-
-	
-	
-	
-	
-	</body>
+</body>
 </html>
