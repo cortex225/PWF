@@ -28,10 +28,17 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="video-background">
+            <iframe id="hero-video" width="560" height="315" src="https://www.youtube.com/embed/_VrWeJov7jM?si=3dx16S2OhrUOhb9G&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=_VrWeJov7jM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <h2>Akwaba en Côte d'Ivoire</h2>
             <p>Découvrez une terre riche en couleurs, saveurs et traditions.</p>
-            <a href="#decouvrir" class="btn">Explorer</a>
+            <div class="hero-buttons">
+                <a href="#decouvrir" class="btn">Explorer</a>
+                <button id="toggle-video-btn" class="btn btn-outline">Voir la Vidéo</button>
+            </div>
         </div>
     </section>
 
@@ -46,13 +53,13 @@
             <!-- Card 1: Gastronomie -->
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/alloco.JPG');">
+                    <div class="flip-card-front" style="background-image: url('img/gastronomie_final.jpg');">
                         <h4>Gastronomie</h4>
                     </div>
                     <div class="flip-card-back">
                         <h4>Saveurs Uniques</h4>
                         <p>Plongez au cœur de la cuisine ivoirienne avec l'Alloco, le Garba et le Foutou. Une explosion de saveurs vous attend.</p>
-                        <a href="html/Spécialités/Spécialités.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                        <a href="#" class="btn open-modal-btn" data-category="gastronomie" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
                     </div>
                 </div>
             </div>
@@ -60,13 +67,13 @@
             <!-- Card 2: Nature (Redirects to Tourisme) -->
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/parcTai.jpg');">
+                    <div class="flip-card-front" style="background-image: url('img/nature_final.jpg');">
                         <h4>Nature & Parcs</h4>
                     </div>
                     <div class="flip-card-back">
                         <h4>Biodiversité</h4>
                         <p>Explorez la forêt primaire du Parc de Taï et rencontrez une faune exceptionnelle dans son habitat naturel.</p>
-                        <a href="html/Visiter/Visiter.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                        <a href="#" class="btn open-modal-btn" data-category="nature" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
                     </div>
                 </div>
             </div>
@@ -74,13 +81,13 @@
             <!-- Card 3: Architecture (Redirects to Histoire) -->
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/place/basilique.jpg');">
+                    <div class="flip-card-front" style="background-image: url('img/histoire_final.jpg');">
                         <h4>Histoire</h4>
                     </div>
                     <div class="flip-card-back">
                         <h4>Notre Héritage</h4>
                         <p>Contemplez la majestueuse Basilique et découvrez les récits qui ont forgé notre nation.</p>
-                        <a href="html/Présentation/Histoire.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                        <a href="#" class="btn open-modal-btn" data-category="histoire" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
                     </div>
                 </div>
             </div>
@@ -88,18 +95,73 @@
             <!-- Card 4: Art & Culture -->
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/Art/IMG-20190209-WA0032.jpg');">
+                    <div class="flip-card-front" style="background-image: url('img/art_final.jpg');">
                         <h4>Art & Culture</h4>
                     </div>
                     <div class="flip-card-back">
                         <h4>Traditions</h4>
                         <p>Explorez la richesse de l'art ivoirien, de ses masques ancestraux à sa musique vibrante.</p>
-                        <a href="html/Art/Art.html" class="btn" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">Découvrir</a>
+                        <a href="#" class="btn open-modal-btn" data-category="art" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal Structure -->
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <img id="modal-img" src="" alt="Détail">
+                <h3 id="modal-title">Titre</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modal-text">Description...</p>
+                <a id="modal-link" href="#" class="btn">Visiter la page dédiée</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+
+    <!-- YouTube API Script -->
+    <script>
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('hero-video', {
+          events: {
+            'onReady': onPlayerReady
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.mute();
+        event.target.playVideo();
+      }
+
+      document.getElementById('toggle-video-btn').addEventListener('click', function() {
+        var videoContainer = document.querySelector('.video-background');
+        // Toggle class to bring video to front or unmute
+        if (videoContainer.classList.contains('active-view')) {
+            videoContainer.classList.remove('active-view');
+            player.mute();
+            this.innerText = "Voir la Vidéo";
+        } else {
+            videoContainer.classList.add('active-view');
+            player.unMute();
+            player.setVolume(100);
+            this.innerText = "Masquer la Vidéo";
+        }
+      });
+    </script>
 
     <!-- Footer -->
     <footer>
