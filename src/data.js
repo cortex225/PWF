@@ -23,6 +23,7 @@ export const PHOTOS = {
   plateau: U('1648770664367-54d43741edf1', 'Djebi Abraham Philippe', 'https://unsplash.com/@topman1', 2000),
   pirogue: U('1620358722186-6b1e7de6bb0e', 'Sangaré Amara', 'https://unsplash.com/@thumbsup225', 2000),
   korhogo: U('1780311494695-946a468ccca9', 'Shane Ryan Herilalaina', 'https://unsplash.com/@alekseyryan', 2000),
+  nordVille: U('1781508202134-8cf0d8b11df3', 'Shane Ryan Herilalaina', 'https://unsplash.com/@alekseyryan', 1600),
   korhogoRocks: U('1769977225462-04bfae9ca911', 'Shane Ryan Herilalaina', 'https://unsplash.com/@alekseyryan'),
   treichville: U('1734866660928-f7cd6e1b90f9', 'Ingeborg Korme', 'https://unsplash.com/@ingeborgkorme'),
   marche: U('1734866675564-34463f5dce1e', 'Ingeborg Korme', 'https://unsplash.com/@ingeborgkorme'),
@@ -54,46 +55,11 @@ export const PHOTOS = {
 };
 
 /* ------------------------------------------------------------------ */
-/* Panorama plein écran                                                */
-/* ------------------------------------------------------------------ */
-export const PANORAMA = [
-  { img: PHOTOS.skyline, place: 'Abidjan, lagune Ébrié', title: 'La Perle<br /><em>des Lagunes</em>', text: 'Vue de l’autre rive, Abidjan se découpe sur la lagune. C’est ici que bat le cœur économique du pays.', alt: 'La ligne d’horizon d’Abidjan au-dessus de la lagune Ébrié' },
-  { img: local('basilique'), place: 'Yamoussoukro', title: 'Notre-Dame<br /><em>de la Paix</em>', text: 'Un dôme de 158 mètres qui surgit au milieu de la savane. On ne s’y attend pas, et c’est bien ça qui saisit.', alt: 'La Basilique Notre-Dame de la Paix' },
-  { img: PHOTOS.pirogue, place: 'Grand-Bassam', title: 'Au fil<br /><em>de la lagune</em>', text: 'La première capitale du pays vit au rythme lent des pirogues. Sa vieille ville est classée par l’UNESCO.', alt: 'Pirogue sur la lagune à Grand-Bassam' },
-  { img: PHOTOS.korhogo, place: 'Korhogo, pays sénoufo', title: 'Le Nord<br /><em>en majesté</em>', text: 'Plus on monte vers le nord, plus la lumière change. Collines de granit, toiles peintes et son du balafon.', alt: 'Vue de Korhogo et de sa grande mosquée' },
-  { img: PHOTOS.abidjanNuit, place: 'Abidjan, la nuit', title: 'La ville<br /><em>qui ne dort pas</em>', text: 'Quand le soleil se couche, les maquis s’allument, les taxis klaxonnent et la musique sort de partout.', alt: 'Abidjan illuminée la nuit' },
-  { img: PHOTOS.enfants, place: 'Dans les villages', title: 'Le sourire<br /><em>d’abord</em>', text: 'Ce que les voyageurs retiennent en rentrant, c’est souvent l’accueil. On vous salue, on vous sourit, on vous invite.', alt: 'Enfants souriants dans un village de Côte d’Ivoire' },
-  { img: local('foret'), place: 'Forêts de l’Ouest', title: 'Forêts<br /><em>de brume</em>', text: 'Le matin, la brume s’accroche aux arbres géants. Ce sont parmi les dernières forêts primaires d’Afrique de l’Ouest.', alt: 'Forêt tropicale dans la brume' },
-  { img: local('danse-masque'), place: 'Traditions vivantes', title: 'Le rythme<br /><em>sacré</em>', text: 'Chez nous, une fête sans tambour, ce n’est pas une fête. Les masques sortent et tout le village danse.', alt: 'Danse masquée traditionnelle' },
-];
-
-/* ------------------------------------------------------------------ */
-/* Destinations. `illu` affiche une illustration quand aucune photo     */
-/* fiable n'existe.                                                     */
-/* ------------------------------------------------------------------ */
-export const DESTINATIONS = [
-  { name: 'Abidjan, le Plateau', region: 'District d’Abidjan', tag: 'Capitale économique', img: PHOTOS.skyline, text: 'Les gratte-ciel regardent la lagune Ébrié, la cathédrale Saint-Paul tend les bras et la Tour F grimpe encore. Les nouveaux ponts relient le quartier à Cocody et Yopougon.', see: ['Cathédrale Saint-Paul', 'Baie de Cocody', 'Musée des Civilisations'] },
-  { name: 'Treichville, Marcory, Yopougon', region: 'District d’Abidjan', tag: 'Abidjan la nuit', img: PHOTOS.abidjanNuit, text: 'Le grand marché de Treichville le jour, les restos de la Zone 4 le soir, et la rue Princesse de Yopougon quand la nuit s’allonge. C’est là qu’est né le coupé-décalé.', see: ['Marché de Treichville', 'Zone 4', 'Rue Princesse'] },
-  { name: 'Grand-Bassam', region: 'Sud-Comoé', tag: 'Patrimoine mondial', img: PHOTOS.pirogue, text: 'On se promène dans le Quartier France entre les vieilles maisons à vérandas, on visite le musée du Costume, puis on finit les pieds dans l’Atlantique.', see: ['Quartier France', 'Musée du Costume', 'Fête de l’Abissa'] },
-  { name: 'Assinie-Mafia', region: 'Sud-Comoé', tag: 'Entre lagune et océan', img: local('plage'), text: 'Une longue langue de sable coincée entre l’océan et la lagune Aby. Les Abidjanais y filent le week-end pour la plage, le kitesurf et les balades en pirogue.', see: ['Lagune Aby', 'Kitesurf', 'Pirogue'] },
-  { name: 'Îles Ehotilé', region: 'Lagune Aby', tag: 'Parc national', img: local('coucher-palmiers'), text: 'Six petites îles protégées depuis 1974, avec leurs mangroves, leurs oiseaux et les sites sacrés du peuple éotilé. On y va en pirogue depuis Étuéboué.', see: ['Mangroves', 'Sites sacrés', 'Oiseaux'] },
-  { name: 'Parc national du Banco', region: 'Abidjan', tag: 'Une forêt en pleine ville', img: local('foret'), text: 'Plus de 3 400 hectares de forêt primaire au milieu d’Abidjan. Parc national depuis 1953, il se parcourt à pied sur de beaux sentiers ombragés.', see: ['Randonnée', 'Arboretum', 'Écomusée'] },
-  { name: 'Yamoussoukro', region: 'Lacs', tag: 'Capitale politique', img: local('basilique'), text: 'De grandes avenues, la basilique Notre-Dame de la Paix, et les crocodiles du lac qui entoure le palais présidentiel. Une ville qui ne ressemble à aucune autre.', see: ['Basilique', 'Lac aux caïmans', 'Fondation Houphouët-Boigny'] },
-  { name: 'Sassandra et Grand-Béréby', region: 'Littoral Ouest', tag: 'La côte sauvage', img: PHOTOS.vagues, text: 'Criques rocheuses, plages désertes et villages de pêcheurs. À Grand-Béréby, l’eau est calme et les tortues marines viennent pondre.', see: ['Baie de Monogaga', 'Tortues marines', 'Surf'] },
-  { name: 'Man', region: 'Tonkpi', tag: 'La ville aux 18 montagnes', illu: 'montagnes', tone: 'green', text: 'La Dent de Man et le mont Tonkpi dominent la ville. Pas loin, il y a la cascade et les ponts de lianes de Lieupleu, dont les Yacouba gardent le secret de fabrication.', see: ['Dent de Man', 'La Cascade', 'Ponts de lianes'] },
-  { name: 'Korhogo et ses villages', region: 'Poro', tag: 'Le cœur sénoufo', img: PHOTOS.nordAerien, text: 'Autour de Korhogo, chaque village a son art. Les tisserands à Waraniéné, les peintres de toiles à Fakaha, les forgerons à Koni.', see: ['Toiles de Fakaha', 'Waraniéné', 'Mont Korhogo'] },
-  { name: 'Kong', region: 'Tchologo', tag: 'Mosquée en terre, UNESCO', illu: 'soudanaise', tone: 'terracotta', text: 'Kong était la capitale d’un grand royaume marchand dioula. Sa mosquée en terre, hérissée de pieux de bois, est classée au patrimoine mondial depuis 2021.', see: ['Grande mosquée', 'Architecture en terre'] },
-  { name: 'Parc national de Taï', region: 'Cavally', tag: 'Forêt primaire, UNESCO', img: PHOTOS.chimpanze, text: 'Une des dernières grandes forêts primaires d’Afrique de l’Ouest. Ses chimpanzés sont connus des scientifiques du monde entier parce qu’ils cassent des noix avec des outils.', see: ['Chimpanzés', 'Mont Niénokoué', 'Écotourisme'] },
-  { name: 'Parc national de la Comoé', region: 'Nord-Est', tag: 'Savanes, UNESCO', img: PHOTOS.elephant, text: 'La plus grande réserve d’Afrique de l’Ouest, avec environ 11 500 km² de savanes. Les animaux y sont revenus, et le parc est sorti de la liste en péril en 2017.', see: ['Safari', 'Éléphants', 'Fleuve Comoé'] },
-];
-
-/* ------------------------------------------------------------------ */
 /* Abidjan moderne et architecture                                     */
 /* ------------------------------------------------------------------ */
 export const BUILDINGS = [
   { name: 'Tour F', meta: 'Plateau, livraison prévue en 2026', text: 'Avec sa flèche, elle atteindra 421 mètres. Pierre Fakhoury l’a dessinée comme un masque africain, et elle doit devenir la plus haute tour du continent.', illu: 'tourF', tone: 'night', size: 'tall' },
   { name: 'Pont Alassane Ouattara', meta: 'Entre Cocody et le Plateau, 2023', text: 'Le premier pont à haubans du pays. Il enjambe la baie de Cocody depuis le 12 août 2023.', illu: 'haubans', tone: 'lagoon', size: 'wide' },
-  { name: 'Stade olympique d’Ebimpé', meta: 'Anyama, 2020', text: 'Soixante mille places. C’est ici que la CAN 2023 s’est ouverte, et ici que les Éléphants l’ont gagnée.', img: PHOTOS.ebimpe },
   { name: 'Cathédrale Saint-Paul', meta: 'Plateau, 1985, par Aldo Spirito', text: 'Regardez bien sa silhouette, c’est saint Paul qui ouvre les bras. Sa tour de près de 60 mètres tient grâce à des haubans.', img: local('cathedrale') },
   { name: 'Mosquée Mohammed VI', meta: 'Treichville, 2024', text: 'Construite par des artisans marocains et inaugurée en avril 2024. Son minaret dépasse les 69 mètres.', illu: 'mosquee', tone: 'green' },
   { name: '4e pont d’Abidjan', meta: 'De Yopougon au Plateau, 2024', text: 'Il traverse la baie du Banco sur environ 1,4 km. Il a été ouvert en janvier 2024, juste avant le coup d’envoi de la CAN.', illu: 'pont', tone: 'terracotta', size: 'wide' },
@@ -105,17 +71,6 @@ export const BUILDINGS = [
 /* ------------------------------------------------------------------ */
 /* Saveurs                                                              */
 /* ------------------------------------------------------------------ */
-// Les incontournables (cartes empilées), avec de vraies photos
-export const DISHES = [
-  { name: 'Attiéké poisson braisé', origin: 'Peuples lagunaires du Sud', img: PHOTOS.poisson, text: 'La semoule de manioc un peu acidulée, le poisson braisé au charbon, les oignons, la tomate et le piment. On le mange avec les doigts. Depuis décembre 2024, le savoir-faire de l’attiéké est inscrit à l’UNESCO.' },
-  { name: 'Alloco', origin: 'Le goût d’Abidjan', img: local('alloco'), text: 'De la banane plantain bien mûre, frite jusqu’à ce qu’elle caramélise. Avec un peu de piment, un œuf dur ou du poisson, on ne s’arrête plus.' },
-  { name: 'Garba', origin: 'La street-food préférée', img: local('garba'), text: 'De l’attiéké, du thon frit bien croustillant, du piment frais et des oignons. Pas cher et servi à toute heure, c’est le repas des étudiants et des travailleurs.' },
-  { name: 'Foutou et sauce graine', origin: 'Pays akan, Centre et Est', img: local('foutou'), pos: 'center 75%', text: 'La banane et le manioc sont pilés au mortier jusqu’à former une pâte lisse. On la trempe dans une sauce à la noix de palme qui a mijoté des heures.' },
-  { name: 'Brochettes et choukouya', origin: 'Les soirées en maquis', img: local('brochettes'), text: 'La viande est grillée au feu de bois et servie avec oignons, tomates, piment en poudre et moutarde. Quand l’odeur des braises arrive, c’est l’heure du maquis.' },
-  { name: 'Placali sauce kplala', origin: 'Sud et Centre', img: local('placali'), text: 'Une pâte souple de manioc fermenté et une sauce gluante aux feuilles de jute, avec du poisson fumé ou du crabe. Le plat réconfort de la maison.' },
-  { name: 'Gnamankoudji', origin: 'La boisson de bienvenue', img: local('gnamankoudji'), pos: 'center 20%', text: 'Du gingembre frais pressé avec du citron et de l’ananas. On le sert glacé, et il pique juste ce qu’il faut.' },
-];
-
 export const MENU_TABS = [
   { id: 'all', label: 'Tout' },
   { id: 'plat', label: 'Plats' },
@@ -126,6 +81,8 @@ export const MENU_TABS = [
 
 // La carte complète. `img: null` affiche un visuel typographique.
 export const MENU = [
+  { name: 'Attiéké poisson braisé', cat: 'plat', featured: true, origin: 'Peuples lagunaires du Sud', img: PHOTOS.poisson, text: 'La semoule de manioc un peu acidulée, le poisson braisé au charbon, les oignons, la tomate et le piment. Depuis 2024, le savoir-faire de l’attiéké est inscrit à l’UNESCO.' },
+  { name: 'Foutou et sauce graine', cat: 'plat', featured: true, origin: 'Pays akan', img: local('foutou'), pos: 'center 75%', text: 'La banane et le manioc sont pilés au mortier puis trempés dans une sauce à la noix de palme qui a mijoté des heures.' },
   { name: 'Kedjenou', cat: 'plat', origin: 'Pays baoulé', img: null, text: 'Du poulet qui cuit sans eau dans une canari en terre, avec tomates, oignons, piment et gingembre. On secoue le pot de temps en temps.' },
   { name: 'Poulet braisé', cat: 'plat', origin: 'La star des maquis', img: local('grillade'), text: 'Mariné à l’ail, au gingembre et à la moutarde, puis braisé doucement au charbon jusqu’à ce que la peau soit bien dorée.' },
   { name: 'Sauce arachide', cat: 'plat', origin: 'Partout dans le pays', img: PHOTOS.arachide, text: 'Une sauce onctueuse à la pâte d’arachide, avec du poulet, du bœuf ou du poisson. Avec du riz, c’est parfait.' },
@@ -133,8 +90,8 @@ export const MENU = [
   { name: 'Tchêpe', cat: 'plat', origin: 'Abidjan', img: PHOTOS.tchepe, text: 'Du riz cuit dans un bouillon de tomate et de poisson avec des légumes, puis servi avec du poisson frit ou braisé.' },
   { name: 'Foufou', cat: 'plat', origin: 'Agni et Abron, à l’Est', img: PHOTOS.fufu, text: 'De la banane plantain pilée avec de l’huile de palme, qui donne une boule dorée à tremper dans la sauce claire.' },
   { name: 'Placali sauce kplala', cat: 'plat', origin: 'Sud et Centre', img: local('placali', true), text: 'Pâte de manioc fermenté et sauce aux feuilles de jute.' },
-  { name: 'Garba', cat: 'street-food', origin: 'Abidjan', img: local('garba', true), text: 'Attiéké, thon frit, piment et oignons.' },
-  { name: 'Alloco', cat: 'street-food', origin: 'L’Allocodrome de Cocody', img: local('alloco', true), text: 'Banane plantain frite et sauce pimentée.' },
+  { name: 'Garba', cat: 'street-food', featured: true, origin: 'La street-food préférée', img: local('garba'), text: 'De l’attiéké, du thon frit bien croustillant, du piment frais et des oignons. Pas cher et servi à toute heure.' },
+  { name: 'Alloco', cat: 'street-food', featured: true, origin: 'Le goût d’Abidjan', img: local('alloco'), text: 'De la banane plantain bien mûre, frite jusqu’à ce qu’elle caramélise. Avec un peu de piment, on ne s’arrête plus.' },
   { name: 'Choukouya', cat: 'street-food', origin: 'Les grilleurs du Nord', img: local('brochettes', true), text: 'Du mouton grillé au feu de bois avec oignons et piment en poudre.' },
   { name: 'Gbofloto', cat: 'douceur', origin: 'Au petit matin', img: local('gbofloto', true), text: 'Des beignets moelleux et un peu sucrés, qu’on achète tout chauds au bord de la route.' },
   { name: 'Claclo', cat: 'douceur', origin: 'Pays akan', img: PHOTOS.claclo, text: 'Des beignets de banane très mûre, croustillants dehors et fondants dedans.' },
@@ -160,12 +117,23 @@ export const RESTAURANTS = [
 /* ------------------------------------------------------------------ */
 /* Arts vivants                                                         */
 /* ------------------------------------------------------------------ */
-export const CULTURE = [
-  { kicker: 'Patrimoine immatériel, UNESCO 2017', title: 'Le Zaouli', text: 'Chez les Gouro de Zuénoula, le danseur masqué bouge les pieds si vite qu’on peine à suivre. Cette danse a été créée pour honorer la beauté des femmes, et l’UNESCO l’a inscrite au patrimoine de l’humanité.', img: local('masque', true) },
-  { kicker: 'L’Ouest montagneux', title: 'Les masques dan et wè', text: 'Autour de Man, chaque masque porte un esprit de la forêt. Certains jugent, d’autres chantent, courent ou marchent sur des échasses immenses.', img: PHOTOS.masqueDan },
-  { kicker: 'Pays baoulé', title: 'L’art baoulé', text: 'Masques portraits, statuettes et poids à peser l’or. Les artistes baoulé ont un sens de l’élégance qui a inspiré les musées du monde entier.', img: PHOTOS.masqueBaoule },
-  { kicker: 'Pays sénoufo, UNESCO 2012', title: 'Les toiles de Korhogo', text: 'À Fakaha, les artisans peignent sur de la toile tissée à la main les animaux et les mythes du Poro. Chaque toile raconte une histoire.', img: PHOTOS.korhogo },
-];
+// Réparties dans les étapes du voyage
+export const CULTURE = {
+  centre: [
+    { kicker: 'Patrimoine immatériel, UNESCO 2017', title: 'Le Zaouli', text: 'Chez les Gouro de Zuénoula, le danseur masqué bouge les pieds si vite qu’on peine à suivre. Cette danse a été créée pour honorer la beauté des femmes.', img: local('masque', true) },
+    { kicker: 'Pays baoulé', title: 'L’art baoulé', text: 'Masques portraits, statuettes et poids à peser l’or. Les artistes baoulé ont un sens de l’élégance qui a inspiré les musées du monde entier.', img: PHOTOS.masqueBaoule },
+  ],
+  nord: [
+    { kicker: 'Pays sénoufo, UNESCO 2012', title: 'Le balafon', alt: 'Collines de granit au coucher du soleil, dans le Nord', text: 'Le balafon sénoufo accompagne les fêtes, les récoltes et les funérailles. Ses pratiques sont reconnues par l’UNESCO.', img: PHOTOS.korhogoRocks },
+    { kicker: 'Fakaha', title: 'Les toiles de Korhogo', alt: 'Une ville du Nord au milieu de la verdure', text: 'Sur une toile tissée à la main, les artisans peignent les animaux et les mythes du Poro. Chaque toile raconte une histoire.', img: PHOTOS.nordVille },
+    { kicker: 'UNESCO 2021', title: 'Les mosquées en terre', text: 'Huit mosquées de style soudanais du nord ivoirien, dont celles de Kong et de Kaouara, sont classées au patrimoine mondial.', illu: 'soudanaise', tone: 'terracotta' },
+  ],
+  ouest: [
+    { kicker: 'Autour de Man', title: 'Les masques dan', text: 'Chez les Dan, chaque masque porte un esprit de la forêt. Certains jugent, d’autres chantent, courent ou font rire.', img: PHOTOS.masqueDan },
+    { kicker: 'Pays wè', title: 'Les masques wè', text: 'Plus spectaculaires encore, avec leurs dents, leurs cornes et leurs couleurs. Ils sortent pour les grandes occasions.', img: PHOTOS.masqueWe },
+    { kicker: 'Festi-San', title: 'Les échassiers', text: 'Perchés sur des échasses de plusieurs mètres, les danseurs masqués de l’Ouest font des acrobaties à couper le souffle.', img: local('danse-masque', true) },
+  ],
+};
 
 /* ------------------------------------------------------------------ */
 /* Nouchi                                                               */
@@ -200,23 +168,6 @@ export const NOUCHI = {
     { word: 'Wari', meaning: 'L’argent. Le mot vient du malinké.', example: 'Pas de wari, pas d’enjaillement.' },
   ],
 };
-
-/* ------------------------------------------------------------------ */
-/* Festivals et événements récents                                     */
-/* `video` est un identifiant YouTube. L'image par défaut est sa        */
-/* miniature.                                                           */
-/* ------------------------------------------------------------------ */
-export const FESTIVALS = [
-  { name: 'FEMUA', place: 'Anoumabo, Abidjan', period: 'Avril à mai', video: 'jR1r4iQl6Ic', text: 'Magic System a créé ce festival dans son quartier d’Anoumabo. Les concerts sont gratuits et chaque édition défend une cause.', latest: 'En 2026, du 28 avril au 3 mai à Abidjan et Dimbokro, avec Youssou N’Dour, Fatoumata Diawara, Black M, Meiway et Didi B.' },
-  { name: 'MASA', place: 'Abidjan', period: 'Avril, tous les deux ans', video: 'ZJgCegIZtaY', text: 'Le grand rendez-vous des arts de la scène africains. Musiciens, danseurs et comédiens viennent y jouer devant des programmateurs du monde entier.', latest: 'En 2026, du 11 au 18 avril, 89 groupes choisis parmi plus de 2 250 candidatures venues de 103 pays.' },
-  { name: 'Popo Carnaval', place: 'Bonoua', period: 'Avril', video: 'KIrGJ4eX8-Y', text: '« Popo » veut dire masque en abouré. Il y a des défilés costumés, des danses et des concerts, et à la fin on brûle le roi Popo géant.', latest: 'La 45e édition s’est tenue du 6 au 19 avril 2026, pour la première fois au Village Popo.' },
-  { name: 'Abissa', place: 'Grand-Bassam', period: 'Octobre', video: 'xhaWaS8TIRo', text: 'Le nouvel an du peuple N’Zima. Au son du tambour sacré, on fait le bilan de l’année, on dit tout haut ce qui ne va pas, et on se pardonne.', latest: 'En 2025, du 5 au 19 octobre, avec la phase rituelle puis la grande fête populaire.' },
-  { name: 'Fête du Dipri', place: 'Gomon, près de Sikensi', period: 'Avril', video: 'fvpbCovk6mw', text: 'La fête de purification du peuple abidji. Tout commence à minuit par des rites secrets, puis les initiés entrent en transe au petit matin.', latest: 'Elle a lieu chaque année à la fin de la saison sèche, souvent autour de Pâques.' },
-  { name: 'Festival des Grillades', place: 'Palais de la Culture, Abidjan', period: 'Septembre', img: local('grillade', true), text: 'Les meilleurs grilleurs de la ville se retrouvent autour du poulet braisé, du poisson et de l’attiéké, avec des concerts le soir.', latest: 'La 19e édition a eu lieu les 5 et 6 septembre 2026, avant une tournée à Cotonou, Dakar et Paris.' },
-  { name: 'Festi-San', place: 'Sandougou-Soba, près de Man', period: 'Avril', img: PHOTOS.masqueWe, text: 'Les masques dan sortent, dansent et défilent au son des rythmes de l’Ouest montagneux.', latest: 'En 2025, du 18 au 20 avril, plus de 10 000 personnes sont venues.' },
-  { name: 'Fête des Ignames', place: 'Abengourou et pays akan', period: 'Selon les peuples', img: PHOTOS.marche, text: 'On fête la nouvelle récolte et la nouvelle année. À Abengourou, le peuple se réunit autour du siège royal de l’Indénié.', latest: 'La 281e édition a été ouverte le 6 mars 2026 au palais royal d’Abengourou.' },
-  { name: 'Paquinou', place: 'Bouaké et pays baoulé', period: 'Pâques', img: local('danse-masque', true), text: 'À Pâques, des milliers de personnes quittent Abidjan pour rentrer au village. On danse, on mange ensemble et on retrouve la famille.', latest: 'En 2026, du 4 au 6 avril, avec les temps forts à Bouaké.' },
-];
 
 /* ------------------------------------------------------------------ */
 /* CAN 2023 (jouée en Côte d'Ivoire en janvier et février 2024)        */
@@ -293,17 +244,6 @@ export const MUSIC = {
     { img: PHOTOS.foule, caption: '' },
   ],
 };
-
-/* ------------------------------------------------------------------ */
-/* Patrimoine mondial                                                   */
-/* ------------------------------------------------------------------ */
-export const UNESCO = [
-  { year: '1981', name: 'Réserve naturelle intégrale du Mont Nimba', type: 'Naturel', img: local('foret', true) },
-  { year: '1982', name: 'Parc national de Taï', type: 'Naturel', img: PHOTOS.chimpanze },
-  { year: '1983', name: 'Parc national de la Comoé', type: 'Naturel', img: PHOTOS.elephant },
-  { year: '2012', name: 'Ville historique de Grand-Bassam', type: 'Culturel', img: PHOTOS.pirogue },
-  { year: '2021', name: 'Mosquées de style soudanais du nord ivoirien', type: 'Culturel', img: PHOTOS.korhogoRocks },
-];
 
 export const CREDITS = Object.values(PHOTOS).reduce((acc, p) => {
   if (!acc.find((a) => a.author === p.author)) acc.push({ author: p.author, url: `${p.url}?utm_source=ma-cote-divoire&utm_medium=referral` });

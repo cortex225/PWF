@@ -1,5 +1,5 @@
-// Scène WebGL principale : un nuage de particules qui se métamorphose
-// au fil des « salles » du musée (carte → basilique → cacao → masque → océan).
+// Scène WebGL principale : un nuage de particules qui se métamorphose au fil du voyage.
+// La carte du pays sert de fil rouge : elle zoome sur la région visitée et l'allume.
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, ballShape, CITIES, lonLatToLocal } from './shapes.js';
@@ -16,6 +16,8 @@ const vertexShader = /* glsl */ `
   uniform float uPixelRatio;
   uniform float uWaveFrom;
   uniform float uWaveTo;
+  uniform vec3 uFocus; // x, y (repère de la carte), intensité
+  uniform float uFocusR;
   varying vec3 vColor;
   varying float vTwinkle;
 
@@ -53,6 +55,11 @@ const vertexShader = /* glsl */ `
     gl_PointSize = uSize * (0.6 + aRand * 0.8) * uPixelRatio * (1.0 / -mv.z);
 
     vColor = mix(aColFrom, aColTo, p);
+
+    // Région visitée : allumée, le reste du pays s'estompe
+    float inside = 1.0 - smoothstep(uFocusR * 0.55, uFocusR, distance(pos.xy, uFocus.xy));
+    vColor *= mix(1.0, 0.22 + inside * 1.35, uFocus.z);
+    gl_PointSize *= 1.0 + inside * uFocus.z * 0.5;
     vTwinkle = 0.7 + 0.3 * sin(uTime * 2.0 + aRand * 80.0);
   }
 `;
@@ -134,6 +141,8 @@ export class ParticleWorld {
       uOpacity: { value: 1 },
       uWaveFrom: { value: 0 },
       uWaveTo: { value: 0 },
+      uFocus: { value: new THREE.Vector3(0, 0, 0) },
+      uFocusR: { value: 1 },
     };
     this.material = new THREE.ShaderMaterial({
       vertexShader,
@@ -208,8 +217,32 @@ export class ParticleWorld {
     this.applyLayout(duration * 0.8);
   }
 
+  // Zoom sur une région de la carte ({ lon, lat, zoom }) ou retour à la vue d'ensemble (null)
+  setFocus(focus, duration = 1.8) {
+    this.focus = focus;
+    const f = this.uniforms.uFocus.value;
+    if (focus) {
+      const [x, y] = lonLatToLocal(focus.lon, focus.lat);
+      gsap.to(f, { x, y, z: 1, duration, ease: 'power3.inOut' });
+      gsap.to(this.uniforms.uFocusR, { value: 1.9 / focus.zoom, duration, ease: 'power3.inOut' });
+    } else gsap.to(f, { z: 0, duration, ease: 'power3.inOut' });
+    this.applyLayout(duration);
+  }
+
   applyLayout(duration) {
     const def = SHAPES[this.current];
+    if (this.focus && (def.fn === mapShape || def.fn === 'map')) {
+      // la région visitée vient se placer à droite de l'écran (au-dessus du texte sur mobile)
+      const [fx, fy] = lonLatToLocal(this.focus.lon, this.focus.lat);
+      const z = this.focus.zoom * (this.isMobile ? 0.55 : 1);
+      const tx = this.isMobile ? 0 : 2.3;
+      const ty = this.isMobile ? 2.4 : 0;
+      // carte à plat face caméra : la région tombe exactement sur la cible
+      gsap.to(this.root.position, { x: tx - fx * z, y: ty - fy * z, duration, ease: 'power3.inOut' });
+      gsap.to(this.root.scale, { x: z, y: z, z, duration, ease: 'power3.inOut' });
+      gsap.to(this.root.rotation, { x: 0, z: 0, duration, ease: 'power3.inOut' });
+      return;
+    }
     const x = this.isMobile ? 0 : def.x;
     const isMap = def.fn === mapShape || def.fn === 'map';
     // Sur mobile, la forme se place au-dessus du texte

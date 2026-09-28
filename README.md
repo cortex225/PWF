@@ -20,33 +20,29 @@ npm run images    # régénère les photos WebP optimisées dans public/media/
 npm run map       # régénère le contour de la Côte d'Ivoire (Natural Earth)
 ```
 
-## Parcours
+## Parcours : un voyage en cinq étapes
 
-| # | Section | Effet |
+La carte 3D du pays sert de fil rouge : à chaque chapitre, elle zoome sur la région visitée et l'allume.
+
+| Étape | Région | On y découvre |
 | --- | --- | --- |
-| | Akwaba | Carte réelle de la CI (Natural Earth 1:10m) en ~16 000 particules |
-| 01 | Le pays | Texte révélé mot à mot, compteurs |
-| 02 | Panorama | Photos plein écran (ouverture en carte puis volets au scroll) |
-| 03 | Destinations | 13 lieux, défilement horizontal (bureau) ou carrousel (mobile) |
-| 04 | Abidjan aujourd'hui | Tour F, ponts, stade d'Ebimpé, mosquée Mohammed VI |
-| 05 | Yamoussoukro | Basilique en particules |
-| 06 | Le littoral | Océan de particules animé |
-| 07 | Le cacao | Cabosse 3D |
-| 08 | Saveurs et maquis | Plats phares, carte filtrable, adresses |
-| 09 | Masques et traditions | Masque 3D en particules |
-| 10 | La musique | Vinyle 3D, histoire du balafon au rap ivoire, 12 artistes avec clips |
-| 11 | Le nouchi | Glossaire en cartes à retourner |
-| 12 | La CAN 2023 | Stade d'Ebimpé, score de la finale, parcours des « miraculés », vidéos, ballon 3D |
-| 13 | Festivals | Éditions 2025 et 2026 avec vidéos |
-| 14 | Patrimoine mondial | Aperçu photo qui suit le curseur |
-| 15 | Préparer son voyage | Infos pratiques et carte finale |
+| | Akwaba, le voyage | Carte du pays, plan des cinq étapes |
+| 1 | Abidjan | Plateau, nuit abidjanaise, Banco, architecture, cuisine et maquis, musique, nouchi, CAN 2023, FEMUA, MASA |
+| 2 | L'Est | Grand-Bassam, Assinie, îles Ehotilé, littoral, Abissa, Popo Carnaval |
+| 3 | Le Centre | Yamoussoukro et sa basilique, Bouaké, art baoulé, Zaouli, Paquinou |
+| 4 | Le Nord | Korhogo et ses villages, Kong, Comoé, balafon, toiles, mosquées en terre |
+| 5 | L'Ouest | Man, Taï, côte sauvage, masques dan et wè, route du cacao, Festi-San |
+| | Partir | Calendrier des saisons et des fêtes, itinéraires 7 et 12 jours, infos pratiques |
+
+Chaque chapitre suit le même rythme : ouverture, carte postale plein écran, incontournables (fiches détaillées), blocs thématiques, fêtes. Toutes les photos s'ouvrent dans une visionneuse.
 
 ## Structure
 
 ```
 index.html              page principale
 src/main.js             orchestration (Lenis, GSAP, contenu)
-src/data.js             contenu éditorial (destinations, plats, culture…)
+src/voyage.js           le voyage : régions, lieux, fêtes, calendrier, itinéraires
+src/data.js             photos, cuisine, musique, nouchi, CAN, architecture
 src/style.css           design system (Fraunces + Manrope, palette chaude)
 src/webgl/particles.js  monde de particules qui se métamorphose
 src/webgl/shapes.js     formes procédurales (carte, basilique, cacao, masque, océan)
