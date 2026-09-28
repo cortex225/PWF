@@ -2,7 +2,7 @@
 // au fil des « salles » du musée (carte → basilique → cacao → masque → océan).
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, CITIES, lonLatToLocal } from './shapes.js';
+import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, ballShape, CITIES, lonLatToLocal } from './shapes.js';
 
 const vertexShader = /* glsl */ `
   attribute vec3 aFrom;
@@ -76,7 +76,8 @@ const SHAPES = {
   basilica: { fn: basilicaShape, x: 2.3, y: 0.35, rotX: 0.22, spin: 0.12, wave: 0, scale: 0.78 },
   cocoa: { fn: cocoaShape, x: 2.2, y: 0, rotX: 0.3, spin: 0.25, wave: 0, scale: 1, rotZ: -0.5 },
   mask: { fn: maskShape, x: 2.2, y: 0.1, rotX: 0, spin: 0, wave: 0, scale: 1.05, sway: true },
-  vinyl: { fn: vinylShape, x: 2.3, y: 0, rotX: 0.55, spin: 0.9, wave: 0, scale: 1 },
+  ball: { fn: ballShape, x: 2.3, y: 0, rotX: 0.3, spin: 0.5, wave: 0, scale: 1 },
+  vinyl: { fn: vinylShape, x: 2.4, y: 0, rotX: 0.95, spin: 0.9, wave: 0, scale: 1 },
   ocean: { fn: oceanShape, x: 0, y: 0, rotX: 0, spin: 0, wave: 1, scale: 1 },
 };
 

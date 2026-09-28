@@ -385,29 +385,83 @@ export function dustShape(pos, col, n) {
 export function vinylShape(pos, col, n) {
   const R = 2.6;
   const labelR = 0.85;
-  const vinyl = new Color('#2b2522');
-  const groove = new Color('#6b5a4c');
+  const vinyl = new Color('#6a5446');
+  const groove = new Color('#b89a80');
   for (let i = 0; i < n; i++) {
     const a = rand(0, TAU);
     let r;
-    let c;
-    if (i < n * 0.16) {
+    if (i < n * 0.18) {
       // étiquette centrale aux couleurs du drapeau
       r = Math.sqrt(Math.random()) * labelR;
       const x = r * Math.cos(a);
-      c = r < 0.08 ? PALETTE.gold : x < -labelR / 3 ? PALETTE.orange : x > labelR / 3 ? PALETTE.green : PALETTE.white;
+      tmp.copy(r < 0.09 ? PALETTE.gold : x < -labelR / 3 ? PALETTE.orange : x > labelR / 3 ? PALETTE.green : PALETTE.white);
+    } else if (i < n * 0.24) {
+      // bord du disque, bien net
+      r = R + rand(-0.015, 0.015);
+      tmp.copy(PALETTE.gold);
     } else {
-      r = labelR + 0.05 + Math.sqrt(Math.random()) * (R - labelR - 0.05);
-      // sillons : anneaux plus denses
-      r = Math.round(r * 18) / 18 + rand(-0.012, 0.012);
-      const onGroove = Math.abs(Math.sin(r * 57)) > 0.7;
-      c = tmp.copy(onGroove ? groove : vinyl);
-      // reflet lumineux en diagonale
-      const sheen = Math.pow(Math.max(0, Math.cos(a * 2 - 0.8)), 12);
-      c = tmp.lerp(PALETTE.gold, sheen * 0.8).clone();
+      // sillons : des anneaux fins et réguliers
+      r = labelR + 0.12 + Math.random() * (R - labelR - 0.14);
+      r = Math.round(r * 16) / 16 + rand(-0.008, 0.008);
+      tmp.copy(Math.round(r * 16) % 3 === 0 ? groove : vinyl);
+      // reflet de lumière en diagonale
+      const sheen = Math.pow(Math.max(0, Math.cos(a * 2 - 0.8)), 10);
+      tmp.lerp(PALETTE.gold, sheen * 0.9);
     }
-    setPos(pos, i, r * Math.cos(a), rand(-0.02, 0.02), r * Math.sin(a)); // disque à plat, il tourne comme sur une platine
-    tmp.copy(c).multiplyScalar(rand(0.8, 1.1));
+    // disque à plat, il tourne comme sur une platine
+    setPos(pos, i, r * Math.cos(a), rand(-0.015, 0.015), r * Math.sin(a));
+    tmp.multiplyScalar(rand(0.85, 1.1));
+    setCol(col, i, tmp);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Ballon de football (section CAN) : 12 pentagones aux sommets d'un    */
+/* icosaèdre, coutures entre les panneaux                               */
+/* ------------------------------------------------------------------ */
+export function ballShape(pos, col, n) {
+  const R = 1.9;
+  const phi = (1 + Math.sqrt(5)) / 2;
+  const verts = [
+    [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+    [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+    [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1],
+  ].map(([x, y, z]) => {
+    const l = Math.hypot(x, y, z);
+    return [x / l, y / l, z / l];
+  });
+  const classify = (p) => {
+    let best = -1;
+    let second = -1;
+    for (const v of verts) {
+      const d = v[0] * p[0] + v[1] * p[1] + v[2] * p[2];
+      if (d > best) {
+        second = best;
+        best = d;
+      } else if (d > second) second = d;
+    }
+    if (best > 0.945) return 'penta';
+    if (best - second < 0.018) return 'seam';
+    return 'panel';
+  };
+  // proportions visées : pentagones pleins, coutures fines, panneaux clairsemés
+  const quota = { penta: 0.5, seam: 0.3, panel: 0.2 };
+  for (let i = 0; i < n; i++) {
+    const want = Math.random() < quota.penta ? 'penta' : Math.random() < quota.seam / (1 - quota.penta) ? 'seam' : 'panel';
+    let p;
+    let kind;
+    let guard = 0;
+    do {
+      const u = rand(-1, 1);
+      const a = rand(0, TAU);
+      const sq = Math.sqrt(1 - u * u);
+      p = [sq * Math.cos(a), u, sq * Math.sin(a)];
+      kind = classify(p);
+    } while (kind !== want && ++guard < 60);
+    setPos(pos, i, p[0] * R, p[1] * R, p[2] * R);
+    if (kind === 'penta') tmp.copy(PALETTE.orange).multiplyScalar(rand(0.85, 1.05));
+    else if (kind === 'seam') tmp.copy(PALETTE.white).multiplyScalar(0.9);
+    else tmp.copy(PALETTE.white).multiplyScalar(rand(0.15, 0.3));
     setCol(col, i, tmp);
   }
 }

@@ -24,20 +24,22 @@ npm run map       # régénère le contour de la Côte d'Ivoire (Natural Earth)
 
 | # | Section | Effet |
 | --- | --- | --- |
-| — | Akwaba | Carte réelle de la CI (Natural Earth 1:10m) en ~16 000 particules, relief de l'Ouest |
-| 01 | Le Pays | Révélation mot à mot, compteurs |
-| 02 | Panorama | Photos plein écran : ouverture « keynote » puis volets au scroll |
-| 03 | Destinations | 13 lieux — défilement horizontal épinglé (desktop), carrousel à glisser (mobile) |
-| 04 | Abidjan moderne | Bento : Tour F, ponts, stade d'Ebimpé, mosquée Mohammed VI… |
-| 05 | Yamoussoukro | Basilique en particules (scrollytelling) |
-| 06 | Le Littoral | Océan de particules animé par shader |
-| 07 | L'Or brun | Cabosse de cacao 3D |
-| 08 | Saveurs & maquis | Cartes empilées, carte complète filtrable, adresses de restaurants |
-| 09 | Arts vivants | Masque 3D en particules |
-| 10 | Le Nouchi | Glossaire en cartes à retourner, bandeau défilant |
-| 11 | Festivals | Éditions 2024-2026, vidéos YouTube en modale |
-| 12 | Patrimoine mondial | Aperçu photo qui suit le curseur |
-| → | Préparer son voyage | Infos pratiques + carte finale des villes |
+| | Akwaba | Carte réelle de la CI (Natural Earth 1:10m) en ~16 000 particules |
+| 01 | Le pays | Texte révélé mot à mot, compteurs |
+| 02 | Panorama | Photos plein écran (ouverture en carte puis volets au scroll) |
+| 03 | Destinations | 13 lieux, défilement horizontal (bureau) ou carrousel (mobile) |
+| 04 | Abidjan aujourd'hui | Tour F, ponts, stade d'Ebimpé, mosquée Mohammed VI |
+| 05 | Yamoussoukro | Basilique en particules |
+| 06 | Le littoral | Océan de particules animé |
+| 07 | Le cacao | Cabosse 3D |
+| 08 | Saveurs et maquis | Plats phares, carte filtrable, adresses |
+| 09 | Masques et traditions | Masque 3D en particules |
+| 10 | La musique | Vinyle 3D, histoire du balafon au rap ivoire, 12 artistes avec clips |
+| 11 | Le nouchi | Glossaire en cartes à retourner |
+| 12 | La CAN 2023 | Stade d'Ebimpé, score de la finale, parcours des « miraculés », vidéos, ballon 3D |
+| 13 | Festivals | Éditions 2025 et 2026 avec vidéos |
+| 14 | Patrimoine mondial | Aperçu photo qui suit le curseur |
+| 15 | Préparer son voyage | Infos pratiques et carte finale |
 
 ## Structure
 

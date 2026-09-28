@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParticleWorld } from './webgl/particles.js';
 import { ILLUSTRATIONS } from './illustrations.js';
-import { PHOTOS, PANORAMA, DESTINATIONS, BUILDINGS, DISHES, MENU, MENU_TABS, RESTAURANTS, CULTURE, NOUCHI, FESTIVALS, UNESCO, CREDITS, local, src } from './data.js';
+import { PHOTOS, PANORAMA, DESTINATIONS, BUILDINGS, DISHES, MENU, MENU_TABS, RESTAURANTS, CULTURE, NOUCHI, CAN, MUSIC, FESTIVALS, UNESCO, CREDITS, local, src } from './data.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,24 +14,44 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 const isTouch = window.matchMedia('(pointer: coarse)').matches;
 const pad = (n) => String(n).padStart(2, '0');
 // Photo, ou illustration au trait si aucune photo fiable n'existe
-const visual = (item, alt, lazy = true) =>
-  item.illu
-    ? `<div class="illu-box illu-box--${item.tone || 'night'}">${ILLUSTRATIONS[item.illu]}</div>`
-    : `<img src="${src(item.img)}" alt="${alt}" ${lazy ? 'loading="lazy"' : ''} />`;
+// <img> avec srcset pour les photos Unsplash (net sur tous les écrans)
+const img = (image, alt, { lazy = true, sizes = '100vw', style = '', attrs = '' } = {}) =>
+  `<img src="${src(image)}" ${image?.srcset ? `srcset="${image.srcset}" sizes="${sizes}"` : ''} alt="${alt}" ${lazy ? 'loading="lazy"' : ''} ${style ? `style="${style}"` : ''} ${attrs} />`;
+const visual = (item, alt, opts) =>
+  item.illu ? `<div class="illu-box illu-box--${item.tone || 'night'}">${ILLUSTRATIONS[item.illu]}</div>` : img(item.img, alt, opts);
+// Une vidéo YouTube supprimée renvoie une miniature grise de 120 px : on masque alors le bouton lecture
+function checkVideo(el, id) {
+  const probe = new Image();
+  probe.onload = () => {
+    if (probe.naturalWidth <= 120) {
+      el.classList.add(el.classList[0] + '--novideo');
+      el.removeAttribute('data-video');
+      el.querySelector('[data-video]')?.removeAttribute('data-video');
+    }
+  };
+  probe.src = `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+}
 const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 /* ------------------------------------------------------------------ */
 /* 1. Contenu dynamique                                                */
 /* ------------------------------------------------------------------ */
 function renderContent() {
-  $$('img[data-photo]').forEach((img) => (img.src = PHOTOS[img.dataset.photo].src));
+  $$('img[data-photo]').forEach((el) => {
+    const p = PHOTOS[el.dataset.photo];
+    el.src = p.src;
+    if (p.srcset) {
+      el.srcset = p.srcset;
+      el.sizes = el.closest('.can-hero, .pano') ? '100vw' : '(max-width: 820px) 100vw, 50vw';
+    }
+  });
   $$('img[data-local]').forEach((img) => (img.src = local(img.dataset.local, true)));
 
   // Panorama
   $('.pano__slides').innerHTML = PANORAMA.map(
     (p, i) => `
     <figure class="pano__slide" style="z-index:${i + 1}">
-      <img src="${src(p.img)}" alt="${p.alt}" ${i > 1 ? 'loading="lazy"' : ''} />
+      ${img(p.img, p.alt, { lazy: i > 1 })}
       <figcaption class="pano__caption">
         <p class="pano__place">${p.place}</p>
         <h3>${p.title}</h3>
@@ -47,7 +67,7 @@ function renderContent() {
     <article class="dcard" data-cursor="Découvrir">
       <div class="dcard__media">
         <span class="dcard__num">${pad(i + 1)}</span>
-        ${visual(d, d.name)}
+        ${visual(d, d.name, { sizes: '(max-width: 820px) 85vw, 32vw' })}
         <span class="dcard__tag">${d.tag}</span>
       </div>
       <div class="dcard__body">
@@ -62,7 +82,7 @@ function renderContent() {
   $('.bento').innerHTML = BUILDINGS.map(
     (b) => `
     <article class="bcard ${b.size ? `bcard--${b.size}` : ''}">
-      ${visual(b, b.name)}
+      ${visual(b, b.name, { sizes: '(max-width: 820px) 100vw, 60vw' })}
       ${b.img?.author ? `<span class="bcard__credit">© ${b.img.author}</span>` : ''}
       <div class="bcard__body">
         <p class="bcard__meta">${b.meta}</p>
@@ -76,7 +96,7 @@ function renderContent() {
     (d, i) => `
     <article class="dish">
       <span class="dish__shade"></span>
-      <div class="dish__media"><img src="${src(d.img)}" alt="${d.name}" loading="lazy" style="object-position:${d.pos || 'center'}" /></div>
+      <div class="dish__media">${img(d.img, d.name, { sizes: '(max-width: 820px) 100vw, 55vw', style: `object-position:${d.pos || 'center'}` })}</div>
       <div class="dish__body">
         <p class="dish__idx">${pad(i + 1)} / ${pad(DISHES.length)}</p>
         <h3>${d.name}</h3>
@@ -93,7 +113,7 @@ function renderContent() {
     (m) => `
     <article class="mitem" data-cat="${m.cat}">
       <div class="mitem__img">
-        ${m.img ? `<img src="${src(m.img)}" alt="${m.name}" loading="lazy" />` : `<span class="mitem__placeholder">${m.name.split(' ')[0]}</span>`}
+        ${m.img ? img(m.img, m.name, { sizes: '(max-width: 820px) 50vw, 25vw' }) : `<span class="mitem__placeholder">${m.name.split(' ')[0]}</span>`}
         <span class="mitem__cat">${MENU_TABS.find((t) => t.id === m.cat)?.label || m.cat}</span>
       </div>
       <h4>${m.name}</h4>
@@ -116,7 +136,7 @@ function renderContent() {
     CULTURE.map(
       (c) => `
     <div class="story__step">
-      <img class="culture-step__img" src="${src(c.img)}" alt="${c.title}" loading="lazy" />
+      ${img(c.img, c.title, { sizes: '160px', attrs: 'class="culture-step__img"' })}
       <p class="eyebrow">${c.kicker}</p>
       <h3 class="story__h3">${c.title}</h3>
       <p>${c.text}</p>
@@ -127,7 +147,7 @@ function renderContent() {
   // Nouchi
   $('.nouchi__intro').innerHTML = NOUCHI.intro.map((p) => `<p>${p}</p>`).join('');
   $('.nouchi__marquee-inner').innerHTML = NOUCHI.glossary
-    .map((g) => `<span>${g.word}</span><i>✦</i>`)
+    .map((g) => `<span>${g.word}</span><i class="dot"></i>`)
     .join('')
     .repeat(2);
   $('.nouchi__grid').innerHTML = NOUCHI.glossary.map(
@@ -147,7 +167,61 @@ function renderContent() {
   $('.nouchi__facts').innerHTML = NOUCHI.facts.map((f) => `<li>${f}</li>`).join('');
 
   // Festivals
-  $('.marquee__inner').textContent = FESTIVALS.map((f) => f.name).join(' · ').concat(' · ').repeat(4);
+  $('.marquee__inner').innerHTML = FESTIVALS.map((f) => `<span>${f.name}</span><i class="dot"></i>`).join('').repeat(4);
+
+  // CAN 2023
+  $('.story--can .story__col').insertAdjacentHTML(
+    'beforeend',
+    CAN.path.map(
+      (m) => `
+    <div class="story__step">
+      <p class="eyebrow">${m.date}</p>
+      ${m.score ? `<p class="match match--${m.result}">${m.score[0]} <small>à</small> ${m.score[1]} <small>${m.against}${m.note ? `, ${m.note}` : ''}</small></p>` : ''}
+      <h3 class="story__h3">${m.title}</h3>
+      <p>${m.text}</p>
+    </div>`
+    ).join('')
+  );
+  $('.can-stats').innerHTML = CAN.stats.map((st) => `<div><b><span data-count="${st.value}">0</span>${st.suffix || ''}</b><span>${st.label}</span></div>`).join('');
+  $('.vgrid').innerHTML = CAN.videos.map(
+    (v) => `
+    <button class="vcard" data-video="${v.id}" data-cursor="Vidéo" aria-label="Voir la vidéo : ${v.title}">
+      ${img(v.img, '', { sizes: '(max-width: 560px) 50vw, 25vw' })}
+      <span class="vcard__play"></span>
+      <span class="vcard__body">
+        <span class="vcard__kind">${v.kind}</span>
+        <h4>${v.title}</h4>
+        <p>${v.text}</p>
+      </span>
+    </button>`
+  ).join('');
+  $('.pstrip').innerHTML = CAN.photos.map((p, i) => `<figure>${img(p.img, 'Supporters en fête à Abidjan', { sizes: i ? '(max-width: 820px) 50vw, 25vw' : '(max-width: 820px) 100vw, 50vw' })}<figcaption>${p.caption}, photo ${p.img.author}</figcaption></figure>`).join('');
+
+  // Musique
+  $('.story--music .story__col').innerHTML = MUSIC.eras.map(
+    (e) => `
+    <div class="story__step">
+      <p class="era__year">${e.year}</p>
+      <span class="era__genre">${e.genre}</span>
+      <h3 class="story__h3">${e.title}</h3>
+      <p>${e.text}</p>
+      <div class="era__artists">${e.artists.map((a) => `<span>${a}</span>`).join('')}</div>
+    </div>`
+  ).join('');
+  $('.agrid').innerHTML = MUSIC.artists.map(
+    (a) => `
+    <button class="acard" data-video="${a.video}" data-cursor="Écouter" aria-label="Écouter ${a.name}, ${a.hit}">
+      <span>
+        <span class="acard__genre">${a.genre}</span>
+        <h4>${a.name}</h4>
+        <p>${a.text}</p>
+      </span>
+      <span class="acard__hit"><i></i>${a.hit}</span>
+    </button>`
+  ).join('');
+  $('.mphotos').innerHTML = MUSIC.photos.map((p) => `<figure>${img(p.img, 'Musique et fête', { sizes: '(max-width: 820px) 50vw, 33vw' })}</figure>`).join('');
+  $('.mfacts').innerHTML = MUSIC.facts.map((f) => `<li>${f}</li>`).join('');
+  $$('.vcard, .acard').forEach((el) => checkVideo(el, el.dataset.video));
   $('.fest__grid').innerHTML = FESTIVALS.map(
     (f) => `
     <article class="fcard">
@@ -463,6 +537,25 @@ function initCity() {
   });
 }
 
+function initCanAndMusic() {
+  gsap.fromTo('.can-hero__bg', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.can-hero', scrub: true } });
+  gsap.from('.can-hero__inner > *', { y: 70, opacity: 0, stagger: 0.15, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.can-hero', start: 'top 55%' } });
+  gsap.from('.stars svg', { scale: 0, rotate: -90, stagger: 0.12, duration: 0.9, ease: 'back.out(2)', scrollTrigger: { trigger: '.can-hero', start: 'top 45%' } });
+  const reveal = (sel) =>
+    ScrollTrigger.batch(sel, {
+      start: 'top 90%',
+      once: true,
+      onEnter: (els) => gsap.from(els, { y: 70, opacity: 0, stagger: 0.08, duration: 1.1, ease: 'expo.out' }),
+    });
+  reveal('.can-stats > div');
+  reveal('.vcard');
+  reveal('.pstrip figure');
+  reveal('.acard');
+  reveal('.mphotos figure');
+  reveal('.mfacts li');
+  gsap.from('.music-head > *', { y: 60, opacity: 0, stagger: 0.1, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.music-head', start: 'top 70%' } });
+}
+
 function initStories() {
   $$('.story__step').forEach((step) => {
     gsap.from(step.children, {
@@ -760,6 +853,7 @@ intro().then(() => {
   initDestinations();
   initCity();
   initStories();
+  initCanAndMusic();
   initCoast();
   initFlavors();
   initNouchi();
