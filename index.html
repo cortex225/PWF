@@ -1,181 +1,298 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Côte d'Ivoire - Terre d'Hospitalité</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/Style.css">
-    <link rel="icon" href="img/icon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akwaba — Visite immersive de la Côte d'Ivoire</title>
+  <meta name="description" content="Une visite immersive de la Côte d'Ivoire, salle après salle : Abidjan, Grand-Bassam, Yamoussoukro, Assinie, Man, Korhogo, parcs nationaux, gastronomie, masques et festivals." />
+  <meta name="theme-color" content="#120b07" />
+  <meta property="og:title" content="Akwaba — Visite immersive de la Côte d'Ivoire" />
+  <meta property="og:description" content="Entrez dans le musée à ciel ouvert de la Côte d'Ivoire." />
+  <meta property="og:image" content="/media/plateau-aerien.webp" />
+  <link rel="icon" href="img/icon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 </head>
 <body>
+  <!-- ============ PRÉCHARGEMENT ============ -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__flag"><span></span><span></span><span></span></div>
+    <p class="loader__word">Akwaba</p>
+    <p class="loader__sub">Bienvenue en Côte d'Ivoire</p>
+    <p class="loader__count"><span>0</span>%</p>
+  </div>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <h1>Ma Côte d'Ivoire</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="html/Présentation/Histoire.html">Histoire</a></li>
-                <li><a href="html/Spécialités/Spécialités.html">Gastronomie</a></li>
-                <li><a href="html/Visiter/Visiter.html">Tourisme</a></li>
-                <li><a href="html/Art/Art.html">Art & Culture</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+  <div class="grain" aria-hidden="true"></div>
+  <canvas class="webgl" aria-hidden="true"></canvas>
+  <div class="city-labels" aria-hidden="true"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="video-background">
-            <iframe id="hero-video" width="560" height="315" src="https://www.youtube.com/embed/_VrWeJov7jM?si=3dx16S2OhrUOhb9G&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=_VrWeJov7jM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__logo" data-cursor="Accueil">
+      <span class="nav__flag"><i></i><i></i><i></i></span>
+      <span>Côte d'Ivoire</span>
+    </a>
+    <nav class="nav__links" aria-label="Navigation principale">
+      <a href="#galerie">Galerie</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#saveurs">Saveurs</a>
+      <a href="#culture">Culture</a>
+      <a href="#voyage">Voyager</a>
+    </nav>
+    <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <div class="menu" aria-hidden="true">
+    <ol class="menu__list">
+      <li><a href="#pays"><small>I</small>Le Pays</a></li>
+      <li><a href="#galerie"><small>II</small>La Galerie</a></li>
+      <li><a href="#destinations"><small>III</small>Destinations</a></li>
+      <li><a href="#yamoussoukro"><small>IV</small>Yamoussoukro</a></li>
+      <li><a href="#littoral"><small>V</small>Le Littoral</a></li>
+      <li><a href="#cacao"><small>VI</small>L'Or brun</a></li>
+      <li><a href="#saveurs"><small>VII</small>Saveurs</a></li>
+      <li><a href="#culture"><small>VIII</small>Arts vivants</a></li>
+      <li><a href="#festivals"><small>IX</small>Fêtes</a></li>
+      <li><a href="#unesco"><small>X</small>Patrimoine mondial</a></li>
+      <li><a href="#voyage"><small>→</small>Préparer son voyage</a></li>
+    </ol>
+  </div>
+
+  <!-- Plan du musée : « Vous êtes ici » -->
+  <aside class="wayfinder" aria-hidden="true">
+    <span class="wayfinder__num">00</span>
+    <span class="wayfinder__bar"><i></i></span>
+    <span class="wayfinder__name">Prologue</span>
+  </aside>
+
+  <main id="top">
+    <!-- ============ PROLOGUE ============ -->
+    <section class="hero" data-shape="map" data-room="00" data-room-name="Prologue">
+      <div class="hero__inner">
+        <p class="eyebrow hero__eyebrow">Visite immersive · Afrique de l'Ouest</p>
+        <h1 class="hero__title">
+          <span class="line"><span>Akwaba</span></span>
+          <span class="line line--italic"><span>en Côte d'Ivoire</span></span>
+        </h1>
+        <p class="hero__lead">Lagunes émeraude, forêts primaires, masques sacrés et rythmes qui font danser un continent. Entrez : le musée est à ciel ouvert.</p>
+        <div class="hero__cta">
+          <a href="#pays" class="btn btn--primary" data-cursor="Entrer">Commencer la visite</a>
+          <button class="btn btn--ghost" data-video data-cursor="Lecture"><span class="play"></span>Voir le film</button>
         </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h2>Akwaba en Côte d'Ivoire</h2>
-            <p>Découvrez une terre riche en couleurs, saveurs et traditions.</p>
-            <div class="hero-buttons">
-                <a href="#decouvrir" class="btn">Explorer</a>
-                <button id="toggle-video-btn" class="btn btn-outline">Voir la Vidéo</button>
-            </div>
-        </div>
+      </div>
+      <div class="hero__scroll"><span>Défiler pour entrer</span><i></i></div>
+      <ul class="hero__meta">
+        <li><b>5°–10° N</b> Golfe de Guinée</li>
+        <li><b>60+</b> peuples</li>
+        <li><b>1960</b> Indépendance · 7 août</li>
+      </ul>
     </section>
 
-    <!-- Flip Cards Section -->
-    <section id="decouvrir">
-        <div class="section-title">
-            <h3>Les Incontournables</h3>
-            <div class="line"></div>
-        </div>
-
-        <div class="cards-container">
-            <!-- Card 1: Gastronomie -->
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/gastronomie_final.jpg');">
-                        <h4>Gastronomie</h4>
-                    </div>
-                    <div class="flip-card-back">
-                        <h4>Saveurs Uniques</h4>
-                        <p>Plongez au cœur de la cuisine ivoirienne avec l'Alloco, le Garba et le Foutou. Une explosion de saveurs vous attend.</p>
-                        <a href="#" class="btn open-modal-btn" data-category="gastronomie" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Nature (Redirects to Tourisme) -->
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/nature_final.jpg');">
-                        <h4>Nature & Parcs</h4>
-                    </div>
-                    <div class="flip-card-back">
-                        <h4>Biodiversité</h4>
-                        <p>Explorez la forêt primaire du Parc de Taï et rencontrez une faune exceptionnelle dans son habitat naturel.</p>
-                        <a href="#" class="btn open-modal-btn" data-category="nature" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: Architecture (Redirects to Histoire) -->
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/histoire_final.jpg');">
-                        <h4>Histoire</h4>
-                    </div>
-                    <div class="flip-card-back">
-                        <h4>Notre Héritage</h4>
-                        <p>Contemplez la majestueuse Basilique et découvrez les récits qui ont forgé notre nation.</p>
-                        <a href="#" class="btn open-modal-btn" data-category="histoire" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4: Art & Culture -->
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front" style="background-image: url('img/art_final.jpg');">
-                        <h4>Art & Culture</h4>
-                    </div>
-                    <div class="flip-card-back">
-                        <h4>Traditions</h4>
-                        <p>Explorez la richesse de l'art ivoirien, de ses masques ancestraux à sa musique vibrante.</p>
-                        <a href="#" class="btn open-modal-btn" data-category="art" style="margin-top: 20px; padding: 8px 20px; font-size: 0.9rem;">En savoir plus</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- ============ SALLE I — LE PAYS ============ -->
+    <section id="pays" class="room room--intro" data-shape="dust" data-room="01" data-room-name="Le Pays">
+      <div class="room__label"><span>Salle I</span><span>Le Pays</span></div>
+      <p class="reveal-text" data-reveal-words>
+        Entre le golfe de Guinée et les savanes du Sahel, la Côte d'Ivoire rassemble plus de soixante peuples, des forêts parmi les plus anciennes d'Afrique et une énergie urbaine unique. Ici, on vous accueille d'un mot : <em>Akwaba</em>.
+      </p>
+      <div class="stats">
+        <article class="stat"><p class="stat__num"><span data-count="322462">0</span></p><p class="stat__label">km² de territoire, de la lagune aux savanes</p></article>
+        <article class="stat"><p class="stat__num"><span data-count="60">0</span>+</p><p class="stat__label">peuples et autant de langues, du baoulé au dioula</p></article>
+        <article class="stat"><p class="stat__num"><span data-count="5">0</span></p><p class="stat__label">sites inscrits au patrimoine mondial de l'UNESCO</p></article>
+        <article class="stat"><p class="stat__num"><span data-count="1">0</span><sup>er</sup></p><p class="stat__label">producteur mondial de cacao</p></article>
+      </div>
     </section>
 
-    <!-- Modal Structure -->
-    <div id="info-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <img id="modal-img" src="" alt="Détail">
-                <h3 id="modal-title">Titre</h3>
-            </div>
-            <div class="modal-body">
-                <p id="modal-text">Description...</p>
-                <a id="modal-link" href="#" class="btn">Visiter la page dédiée</a>
-            </div>
+    <!-- ============ SALLE II — GALERIE 3D ============ -->
+    <section id="galerie" class="gallery" data-shape="dust" data-hide-world data-room="02" data-room-name="La Galerie">
+      <div class="gallery__sticky">
+        <canvas class="gallery__canvas" aria-label="Galerie 3D : photographies de la Côte d'Ivoire"></canvas>
+        <div class="gallery__intro">
+          <div class="room__label"><span>Salle II</span><span>La Galerie</span></div>
+          <h2 class="gallery__title">Huit regards<br /><em>sur un pays</em></h2>
+          <p>Avancez dans la galerie en faisant défiler la page.</p>
         </div>
+        <div class="cartel" aria-live="polite">
+          <p class="cartel__idx">Œuvre <span>01</span> / 08</p>
+          <h3 class="cartel__title">—</h3>
+          <p class="cartel__place">—</p>
+          <p class="cartel__text">—</p>
+        </div>
+        <div class="gallery__progress"><i></i></div>
+      </div>
+    </section>
+
+    <!-- ============ SALLE III — DESTINATIONS ============ -->
+    <section id="destinations" class="dest" data-shape="dust" data-hide-world data-room="03" data-room-name="Destinations">
+      <div class="dest__sticky">
+        <div class="dest__head">
+          <div class="room__label room__label--dark"><span>Salle III</span><span>Destinations</span></div>
+          <h2 class="section-title">Neuf escales<br /><em>pour tomber amoureux</em></h2>
+        </div>
+        <div class="dest__track"></div>
+        <div class="dest__progress"><i></i></div>
+      </div>
+    </section>
+
+    <!-- ============ SALLE IV — YAMOUSSOUKRO ============ -->
+    <section id="yamoussoukro" class="story" data-shape="basilica" data-room="04" data-room-name="Yamoussoukro">
+      <div class="story__col">
+        <div class="room__label"><span>Salle IV</span><span>Yamoussoukro</span></div>
+        <div class="story__step">
+          <p class="eyebrow">Capitale politique depuis 1983</p>
+          <h2 class="section-title">Une basilique<br /><em>au cœur de la savane</em></h2>
+          <p>Au centre du pays, la ville natale de Félix Houphouët-Boigny déroule ses avenues monumentales jusqu'à la Basilique Notre-Dame de la Paix.</p>
+        </div>
+        <div class="story__step">
+          <p class="big-num"><span data-count="158">0</span><small>m</small></p>
+          <p>C'est la hauteur de l'édifice jusqu'à la croix. Son dôme, inspiré de Saint-Pierre de Rome, fait de la basilique l'une des plus grandes églises du monde.</p>
+        </div>
+        <div class="story__step">
+          <p class="big-num"><span data-count="1990">0</span></p>
+          <p>Année de sa consécration par le pape Jean-Paul II. Ses vitraux, fabriqués en France, couvrent des milliers de mètres carrés et baignent la nef d'une lumière colorée.</p>
+        </div>
+        <div class="story__step">
+          <p class="eyebrow">À ne pas manquer</p>
+          <h3 class="story__h3">Le lac aux caïmans sacrés</h3>
+          <p>Face au palais présidentiel, les crocodiles du lac sont nourris chaque fin d'après-midi : un rituel devenu légendaire.</p>
+          <figure class="story__photo"><img data-local="basilique-avenue" alt="L'avenue menant à la Basilique Notre-Dame de la Paix" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SALLE V — LE LITTORAL ============ -->
+    <section id="littoral" class="coast" data-shape="ocean" data-room="05" data-room-name="Le Littoral">
+      <div class="coast__inner">
+        <div class="room__label"><span>Salle V</span><span>Le Littoral</span></div>
+        <h2 class="coast__title" data-reveal-chars>Plus de 500 km<br /><em>d'océan</em></h2>
+        <p class="coast__lead">De Tabou à Assinie, une côte ourlée de cocotiers, de lagunes et de villages de pêcheurs. Les rouleaux de l'Atlantique y viennent mourir sur un sable doré.</p>
+      </div>
+      <div class="coast__cards">
+        <article class="coast__card" data-cursor="Assinie"><img data-local="plage" alt="Plage bordée de cocotiers" loading="lazy" /><div><h3>Assinie</h3><p>Lagune Aby, hôtels pieds dans l'eau et kitesurf.</p></div></article>
+        <article class="coast__card" data-cursor="Bassam"><img data-photo="cocotiers" alt="Cocotiers face à l'océan à Grand-Bassam" loading="lazy" /><div><h3>Grand-Bassam</h3><p>Plages populaires et maisons coloniales.</p></div></article>
+        <article class="coast__card" data-cursor="Sassandra"><img data-photo="vagues" alt="Vagues de l'Atlantique sur le rivage ivoirien" loading="lazy" /><div><h3>Sassandra · San-Pédro</h3><p>Criques sauvages, surf et pêche traditionnelle.</p></div></article>
+      </div>
+    </section>
+
+    <!-- ============ SALLE VI — CACAO ============ -->
+    <section id="cacao" class="story story--cocoa" data-shape="cocoa" data-room="06" data-room-name="L'Or brun">
+      <div class="story__col">
+        <div class="room__label"><span>Salle VI</span><span>L'Or brun</span></div>
+        <div class="story__step">
+          <p class="eyebrow">Cacao · Café · Anacarde</p>
+          <h2 class="section-title">Le pays<br /><em>du chocolat</em></h2>
+          <p>Près de deux fèves de cacao sur cinq dans le monde poussent en Côte d'Ivoire. Une richesse cultivée par des centaines de milliers de petits planteurs.</p>
+        </div>
+        <div class="story__step">
+          <p class="big-num">≈ <span data-count="40">0</span><small>%</small></p>
+          <p>de la production mondiale de cacao. Le pays est aussi l'un des premiers producteurs mondiaux de noix de cajou.</p>
+        </div>
+        <div class="story__step">
+          <p class="eyebrow">De la cabosse à la tablette</p>
+          <ol class="steps">
+            <li><b>Récolte</b> — les cabosses sont cueillies à la machette.</li>
+            <li><b>Écabossage</b> — on extrait les fèves et leur pulpe sucrée.</li>
+            <li><b>Fermentation</b> — six jours sous des feuilles de bananier.</li>
+            <li><b>Séchage</b> — au soleil, sur des claies.</li>
+          </ol>
+          <figure class="story__photo"><img data-photo="cacao" alt="Cabosses de cacao mûres" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SALLE VII — SAVEURS ============ -->
+    <section id="saveurs" class="flavors" data-shape="dust" data-hide-world data-room="07" data-room-name="Saveurs">
+      <div class="flavors__head">
+        <div class="room__label room__label--dark"><span>Salle VII</span><span>Saveurs</span></div>
+        <h2 class="section-title">À table,<br /><em>au maquis</em></h2>
+        <p>Dans les maquis — ces restaurants populaires à ciel ouvert — on partage l'attiéké, le poisson braisé et le jus de gingembre. Voici la carte.</p>
+      </div>
+      <div class="flavors__stack"></div>
+    </section>
+
+    <!-- ============ SALLE VIII — ARTS VIVANTS ============ -->
+    <section id="culture" class="story story--culture" data-shape="mask" data-room="08" data-room-name="Arts vivants">
+      <div class="story__col">
+        <div class="room__label"><span>Salle VIII</span><span>Arts vivants</span></div>
+        <div class="story__step story__step--intro">
+          <p class="eyebrow">Masques · Danses · Musiques</p>
+          <h2 class="section-title">L'esprit<br /><em>du masque</em></h2>
+          <p>En Côte d'Ivoire, le masque n'est pas un objet de vitrine : il danse, il juge, il chante. Il est la mémoire vivante des peuples.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SALLE IX — FESTIVALS ============ -->
+    <section id="festivals" class="fest" data-shape="dust" data-room="09" data-room-name="Fêtes">
+      <div class="room__label"><span>Salle IX</span><span>Fêtes & festivals</span></div>
+      <h2 class="section-title fest__title">Un calendrier<br /><em>qui danse</em></h2>
+      <div class="marquee" aria-hidden="true"><div class="marquee__inner">Abissa · Popo Carnaval · FEMUA · MASA · Fête des Ignames · Dipri · Zaouli · Coupé-décalé · Zouglou · </div></div>
+      <div class="fest__grid"></div>
+    </section>
+
+    <!-- ============ SALLE X — UNESCO ============ -->
+    <section id="unesco" class="unesco" data-shape="dust" data-room="10" data-room-name="Patrimoine mondial">
+      <div class="room__label"><span>Salle X</span><span>Patrimoine mondial</span></div>
+      <h2 class="section-title">Cinq trésors<br /><em>de l'humanité</em></h2>
+      <ul class="unesco__list"></ul>
+      <p class="unesco__note">Et au patrimoine culturel immatériel : le Gbofé d'Afounkaha (2008), les pratiques du balafon sénoufo (2012) et le Zaouli (2017).</p>
+      <div class="unesco__preview" aria-hidden="true"><img alt="" /></div>
+    </section>
+
+    <!-- ============ ÉPILOGUE — VOYAGE ============ -->
+    <section id="voyage" class="travel" data-shape="dust" data-hide-world data-room="11" data-room-name="Préparer son voyage">
+      <div class="room__label room__label--dark"><span>Épilogue</span><span>Préparer son voyage</span></div>
+      <h2 class="section-title">Votre visite<br /><em>commence ici</em></h2>
+      <div class="travel__grid">
+        <article class="tcard"><span class="tcard__icon">☀</span><h3>Quand partir</h3><p>De novembre à mars, pendant la grande saison sèche. Le Nord est plus sec, le Sud plus humide (saison des pluies d'avril à juillet).</p></article>
+        <article class="tcard"><span class="tcard__icon">✈</span><h3>Arrivée</h3><p>Aéroport international Félix-Houphouët-Boigny d'Abidjan. Visa électronique à demander en ligne avant le départ.</p></article>
+        <article class="tcard"><span class="tcard__icon">⚕</span><h3>Santé</h3><p>Vaccin contre la fièvre jaune obligatoire. Traitement antipaludéen conseillé : consultez un médecin avant le voyage.</p></article>
+        <article class="tcard"><span class="tcard__icon">₣</span><h3>Monnaie</h3><p>Franc CFA (XOF), à parité fixe avec l'euro. Paiement mobile (Orange Money, Wave…) très répandu.</p></article>
+        <article class="tcard"><span class="tcard__icon">✦</span><h3>Langues</h3><p>Français officiel, et plus de 60 langues : dioula, baoulé, bété, sénoufo… Et le nouchi, l'argot d'Abidjan !</p></article>
+        <article class="tcard"><span class="tcard__icon">◷</span><h3>Pratique</h3><p>Fuseau GMT toute l'année. Prises type C et E (230 V). Conduite à droite.</p></article>
+      </div>
+    </section>
+
+    <!-- ============ CARTE FINALE ============ -->
+    <section class="outro" data-shape="mapSide" data-show-cities data-room="12" data-room-name="Au revoir">
+      <div class="outro__inner">
+        <p class="eyebrow">Fin de la visite</p>
+        <h2 class="outro__title">On dit <em>Akwaba</em><br />une fois,<br />on revient toujours.</h2>
+        <a href="#top" class="btn btn--primary" data-cursor="Recommencer">Refaire la visite</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__brand">Ma Côte d'Ivoire</p>
+      <p>Promouvoir la beauté, la culture et l'hospitalité ivoiriennes.</p>
     </div>
+    <div class="footer__cols">
+      <div>
+        <h4>Dossiers</h4>
+        <a href="html/Présentation/Histoire.html">Histoire</a>
+        <a href="html/Spécialités/Spécialités.html">Gastronomie</a>
+        <a href="html/Visiter/Visiter.html">Tourisme</a>
+        <a href="html/Art/Art.html">Art & Culture</a>
+      </div>
+      <div>
+        <h4>Crédits photos</h4>
+        <p class="footer__credits"></p>
+        <p class="footer__small">Photographies Unsplash (licence Unsplash) et archives personnelles.</p>
+      </div>
+    </div>
+    <p class="footer__copy">© 2026 Gouaho Déto Jean-Luc — Fait avec amour, Three.js &amp; GSAP.</p>
+  </footer>
 
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
+  <!-- Salle de projection -->
+  <div class="video-modal" aria-hidden="true" role="dialog" aria-label="Film de présentation">
+    <button class="video-modal__close" aria-label="Fermer">×</button>
+    <div class="video-modal__frame"></div>
+  </div>
 
-    <!-- YouTube API Script -->
-    <script>
-      var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('hero-video', {
-          events: {
-            'onReady': onPlayerReady
-          }
-        });
-      }
-
-      function onPlayerReady(event) {
-        event.target.mute();
-        event.target.playVideo();
-      }
-
-      document.getElementById('toggle-video-btn').addEventListener('click', function() {
-        var videoContainer = document.querySelector('.video-background');
-        // Toggle class to bring video to front or unmute
-        if (videoContainer.classList.contains('active-view')) {
-            videoContainer.classList.remove('active-view');
-            player.mute();
-            this.innerText = "Voir la Vidéo";
-        } else {
-            videoContainer.classList.add('active-view');
-            player.unMute();
-            player.setVolume(100);
-            this.innerText = "Masquer la Vidéo";
-        }
-      });
-    </script>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <h4>Ma Côte d'Ivoire</h4>
-            <p>Promouvoir la beauté et la culture de notre pays.</p>
-            <div class="social-links">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">Twitter</a>
-            </div>
-            <p class="copyright">&copy; 2026 Tous droits réservés - Gouaho Déto Jean-Luc</p>
-        </div>
-    </footer>
-
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
