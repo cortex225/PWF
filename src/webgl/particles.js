@@ -2,7 +2,7 @@
 // au fil des « salles » du musée (carte → basilique → cacao → masque → océan).
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, CITIES, lonLatToLocal } from './shapes.js';
+import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, ballShape, CITIES, lonLatToLocal } from './shapes.js';
 
 const vertexShader = /* glsl */ `
   attribute vec3 aFrom;
@@ -76,6 +76,8 @@ const SHAPES = {
   basilica: { fn: basilicaShape, x: 2.3, y: 0.35, rotX: 0.22, spin: 0.12, wave: 0, scale: 0.78 },
   cocoa: { fn: cocoaShape, x: 2.2, y: 0, rotX: 0.3, spin: 0.25, wave: 0, scale: 1, rotZ: -0.5 },
   mask: { fn: maskShape, x: 2.2, y: 0.1, rotX: 0, spin: 0, wave: 0, scale: 1.05, sway: true },
+  ball: { fn: ballShape, x: 2.3, y: 0, rotX: 0.3, spin: 0.5, wave: 0, scale: 1 },
+  vinyl: { fn: vinylShape, x: 2.4, y: 0, rotX: 0.95, spin: 0.9, wave: 0, scale: 1 },
   ocean: { fn: oceanShape, x: 0, y: 0, rotX: 0, spin: 0, wave: 1, scale: 1 },
 };
 
@@ -160,7 +162,8 @@ export class ParticleWorld {
   resize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    this.isMobile = w < 820;
+    // portrait (mobile ou tablette) : la forme passe au-dessus du texte
+    this.isMobile = w < 820 || w / h < 0.85;
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     // Recule la caméra sur les écrans étroits pour garder la forme entière
@@ -208,8 +211,10 @@ export class ParticleWorld {
   applyLayout(duration) {
     const def = SHAPES[this.current];
     const x = this.isMobile ? 0 : def.x;
-    const y = this.isMobile && def.x ? def.y + 1.2 : def.y;
-    const s = (this.isMobile && def.x ? 0.8 : 1) * def.scale;
+    const isMap = def.fn === mapShape || def.fn === 'map';
+    // Sur mobile, la forme se place au-dessus du texte
+    const y = this.isMobile && def.x ? def.y + (isMap ? 2.9 : 1.2) : def.y;
+    const s = (this.isMobile && def.x ? (isMap ? 0.72 : 0.8) : 1) * def.scale;
     gsap.to(this.root.position, { x, y, duration, ease: 'power3.inOut' });
     gsap.to(this.root.scale, { x: s, y: s, z: s, duration, ease: 'power3.inOut' });
     gsap.to(this.root.rotation, { x: def.rotX, z: def.rotZ || 0, duration, ease: 'power3.inOut' });

@@ -3,8 +3,8 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParticleWorld } from './webgl/particles.js';
-import { MuseumGallery } from './webgl/gallery.js';
-import { PHOTOS, GALLERY, DESTINATIONS, DISHES, CULTURE, FESTIVALS, UNESCO, CREDITS, local } from './data.js';
+import { ILLUSTRATIONS } from './illustrations.js';
+import { PHOTOS, PANORAMA, DESTINATIONS, BUILDINGS, DISHES, MENU, MENU_TABS, RESTAURANTS, CULTURE, NOUCHI, CAN, MUSIC, FESTIVALS, UNESCO, CREDITS, local, src } from './data.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,20 +13,61 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(pointer: coarse)').matches;
 const pad = (n) => String(n).padStart(2, '0');
+// Photo, ou illustration au trait si aucune photo fiable n'existe
+// <img> avec srcset pour les photos Unsplash (net sur tous les écrans)
+const img = (image, alt, { lazy = true, sizes = '100vw', style = '', attrs = '' } = {}) =>
+  `<img src="${src(image)}" ${image?.srcset ? `srcset="${image.srcset}" sizes="${sizes}"` : ''} alt="${alt}" ${lazy ? 'loading="lazy"' : ''} ${style ? `style="${style}"` : ''} ${attrs} />`;
+const visual = (item, alt, opts) =>
+  item.illu ? `<div class="illu-box illu-box--${item.tone || 'night'}">${ILLUSTRATIONS[item.illu]}</div>` : img(item.img, alt, opts);
+// Une vidéo YouTube supprimée renvoie une miniature grise de 120 px : on masque alors le bouton lecture
+function checkVideo(el, id) {
+  const probe = new Image();
+  probe.onload = () => {
+    if (probe.naturalWidth <= 120) {
+      el.classList.add(el.classList[0] + '--novideo');
+      el.removeAttribute('data-video');
+      el.querySelector('[data-video]')?.removeAttribute('data-video');
+    }
+  };
+  probe.src = `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+}
+const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 /* ------------------------------------------------------------------ */
 /* 1. Contenu dynamique                                                */
 /* ------------------------------------------------------------------ */
 function renderContent() {
-  $$('img[data-photo]').forEach((img) => (img.src = PHOTOS[img.dataset.photo].src));
+  $$('img[data-photo]').forEach((el) => {
+    const p = PHOTOS[el.dataset.photo];
+    el.src = p.src;
+    if (p.srcset) {
+      el.srcset = p.srcset;
+      el.sizes = el.closest('.can-hero, .pano') ? '100vw' : '(max-width: 820px) 100vw, 50vw';
+    }
+  });
   $$('img[data-local]').forEach((img) => (img.src = local(img.dataset.local, true)));
+
+  // Panorama
+  $('.pano__slides').innerHTML = PANORAMA.map(
+    (p, i) => `
+    <figure class="pano__slide" style="z-index:${i + 1}">
+      ${img(p.img, p.alt, { lazy: i > 1 })}
+      <figcaption class="pano__caption">
+        <p class="pano__place">${p.place}</p>
+        <h3>${p.title}</h3>
+        <p>${p.text}</p>
+      </figcaption>
+      ${p.img.author ? `<span class="pano__credit">Photo : ${p.img.author}</span>` : ''}
+    </figure>`
+  ).join('');
+  $('.pano__count em').textContent = pad(PANORAMA.length);
 
   $('.dest__track').innerHTML = DESTINATIONS.map(
     (d, i) => `
     <article class="dcard" data-cursor="Découvrir">
       <div class="dcard__media">
         <span class="dcard__num">${pad(i + 1)}</span>
-        <img src="${d.img}" alt="${d.name}" loading="lazy" />
+        ${visual(d, d.name, { sizes: '(max-width: 820px) 85vw, 32vw' })}
         <span class="dcard__tag">${d.tag}</span>
       </div>
       <div class="dcard__body">
@@ -38,11 +79,24 @@ function renderContent() {
     </article>`
   ).join('');
 
+  $('.bento').innerHTML = BUILDINGS.map(
+    (b) => `
+    <article class="bcard ${b.size ? `bcard--${b.size}` : ''}">
+      ${visual(b, b.name, { sizes: '(max-width: 820px) 100vw, 60vw' })}
+      ${b.img?.author ? `<span class="bcard__credit">© ${b.img.author}</span>` : ''}
+      <div class="bcard__body">
+        <p class="bcard__meta">${b.meta}</p>
+        <h3>${b.name}</h3>
+        <p>${b.text}</p>
+      </div>
+    </article>`
+  ).join('');
+
   $('.flavors__stack').innerHTML = DISHES.map(
     (d, i) => `
     <article class="dish">
       <span class="dish__shade"></span>
-      <div class="dish__media"><img src="${d.img}" alt="${d.name}" loading="lazy" style="object-position:${d.pos || 'center'}" /></div>
+      <div class="dish__media">${img(d.img, d.name, { sizes: '(max-width: 820px) 100vw, 55vw', style: `object-position:${d.pos || 'center'}` })}</div>
       <div class="dish__body">
         <p class="dish__idx">${pad(i + 1)} / ${pad(DISHES.length)}</p>
         <h3>${d.name}</h3>
@@ -52,12 +106,37 @@ function renderContent() {
     </article>`
   ).join('');
 
+  $('.tabs').innerHTML = MENU_TABS.map(
+    (t, i) => `<button class="tab" role="tab" data-filter="${t.id}" aria-selected="${i === 0}">${t.label}</button>`
+  ).join('');
+  $('.menu-grid').innerHTML = MENU.map(
+    (m) => `
+    <article class="mitem" data-cat="${m.cat}">
+      <div class="mitem__img">
+        ${m.img ? img(m.img, m.name, { sizes: '(max-width: 820px) 50vw, 25vw' }) : `<span class="mitem__placeholder">${m.name.split(' ')[0]}</span>`}
+        <span class="mitem__cat">${MENU_TABS.find((t) => t.id === m.cat)?.label || m.cat}</span>
+      </div>
+      <h4>${m.name}</h4>
+      <p class="mitem__origin">${m.origin}</p>
+      <p>${m.text}</p>
+    </article>`
+  ).join('');
+
+  $('.eat__list').innerHTML = RESTAURANTS.map(
+    (r) => `
+    <li class="eat__item">
+      <h4>${r.name}</h4>
+      <span class="eat__place">${r.place}</span>
+      <p><span class="eat__type">${r.type}</span>${r.text}</p>
+    </li>`
+  ).join('');
+
   $('#culture .story__col').insertAdjacentHTML(
     'beforeend',
     CULTURE.map(
       (c) => `
     <div class="story__step">
-      <img class="culture-step__img" src="${c.img}" alt="${c.title}" loading="lazy" />
+      ${img(c.img, c.title, { sizes: '160px', attrs: 'class="culture-step__img"' })}
       <p class="eyebrow">${c.kicker}</p>
       <h3 class="story__h3">${c.title}</h3>
       <p>${c.text}</p>
@@ -65,29 +144,124 @@ function renderContent() {
     ).join('')
   );
 
+  // Nouchi
+  $('.nouchi__intro').innerHTML = NOUCHI.intro.map((p) => `<p>${p}</p>`).join('');
+  $('.nouchi__marquee-inner').innerHTML = NOUCHI.glossary
+    .map((g) => `<span>${g.word}</span><i class="dot"></i>`)
+    .join('')
+    .repeat(2);
+  $('.nouchi__grid').innerHTML = NOUCHI.glossary.map(
+    (g) => `
+    <button class="ncard" aria-label="${g.word} : ${g.meaning}">
+      <span class="ncard__face ncard__front">
+        <span class="ncard__word">${g.word}</span>
+        <span class="ncard__tap">Traduire ↻</span>
+      </span>
+      <span class="ncard__face ncard__back">
+        <strong>${g.word}</strong>
+        <p>${g.meaning}</p>
+        ${g.example ? `<em>« ${g.example} »</em>` : ''}
+      </span>
+    </button>`
+  ).join('');
+  $('.nouchi__facts').innerHTML = NOUCHI.facts.map((f) => `<li>${f}</li>`).join('');
+
+  // Festivals
+  $('.marquee__inner').innerHTML = FESTIVALS.map((f) => `<span>${f.name}</span><i class="dot"></i>`).join('').repeat(4);
+
+  // CAN 2023
+  $('.story--can .story__col').insertAdjacentHTML(
+    'beforeend',
+    CAN.path.map(
+      (m) => `
+    <div class="story__step">
+      <p class="eyebrow">${m.date}</p>
+      ${m.score ? `<p class="match match--${m.result}">${m.score[0]} <small>à</small> ${m.score[1]} <small>${m.against}${m.note ? `, ${m.note}` : ''}</small></p>` : ''}
+      <h3 class="story__h3">${m.title}</h3>
+      <p>${m.text}</p>
+    </div>`
+    ).join('')
+  );
+  $('.can-stats').innerHTML = CAN.stats.map((st) => `<div><b><span data-count="${st.value}">0</span>${st.suffix || ''}</b><span>${st.label}</span></div>`).join('');
+  $('.vgrid').innerHTML = CAN.videos.map(
+    (v) => `
+    <button class="vcard" data-video="${v.id}" data-cursor="Vidéo" aria-label="Voir la vidéo : ${v.title}">
+      ${img(v.img, '', { sizes: '(max-width: 560px) 50vw, 25vw' })}
+      <span class="vcard__play"></span>
+      <span class="vcard__body">
+        <span class="vcard__kind">${v.kind}</span>
+        <h4>${v.title}</h4>
+        <p>${v.text}</p>
+      </span>
+    </button>`
+  ).join('');
+  $('.pstrip').innerHTML = CAN.photos.map((p, i) => `<figure>${img(p.img, 'Supporters en fête à Abidjan', { sizes: i ? '(max-width: 820px) 50vw, 25vw' : '(max-width: 820px) 100vw, 50vw' })}<figcaption>${p.caption}, photo ${p.img.author}</figcaption></figure>`).join('');
+
+  // Musique
+  $('.story--music .story__col').innerHTML = MUSIC.eras.map(
+    (e) => `
+    <div class="story__step">
+      <p class="era__year">${e.year}</p>
+      <span class="era__genre">${e.genre}</span>
+      <h3 class="story__h3">${e.title}</h3>
+      <p>${e.text}</p>
+      <div class="era__artists">${e.artists.map((a) => `<span>${a}</span>`).join('')}</div>
+    </div>`
+  ).join('');
+  $('.agrid').innerHTML = MUSIC.artists.map(
+    (a) => `
+    <button class="acard" data-video="${a.video}" data-cursor="Écouter" aria-label="Écouter ${a.name}, ${a.hit}">
+      <span>
+        <span class="acard__genre">${a.genre}</span>
+        <h4>${a.name}</h4>
+        <p>${a.text}</p>
+      </span>
+      <span class="acard__hit"><i></i>${a.hit}</span>
+    </button>`
+  ).join('');
+  $('.mphotos').innerHTML = MUSIC.photos.map((p) => `<figure>${img(p.img, 'Musique et fête', { sizes: '(max-width: 820px) 50vw, 33vw' })}</figure>`).join('');
+  $('.mfacts').innerHTML = MUSIC.facts.map((f) => `<li>${f}</li>`).join('');
+  $$('.vcard, .acard').forEach((el) => checkVideo(el, el.dataset.video));
   $('.fest__grid').innerHTML = FESTIVALS.map(
     (f) => `
     <article class="fcard">
-      <p class="fcard__month">${f.month}</p>
-      <h3>${f.name}</h3>
-      <p class="fcard__place">${f.place}</p>
-      <p>${f.text}</p>
+      <div class="fcard__media">
+        <img src="${f.img ? src(f.img) : ytThumb(f.video)}" alt="${f.name}" loading="lazy" ${!f.img && f.video ? 'data-yt' : ''} />
+        <span class="fcard__month">${f.period}</span>
+        ${f.video ? `<button class="fcard__play" data-video="${f.video}" aria-label="Voir la vidéo : ${f.name}" data-cursor="Vidéo"><span></span></button>` : ''}
+      </div>
+      <div class="fcard__body">
+        <h3>${f.name}</h3>
+        <p class="fcard__place">${f.place}</p>
+        <p>${f.text}</p>
+        ${f.latest ? `<p class="fcard__latest">${f.latest}</p>` : ''}
+      </div>
     </article>`
   ).join('');
 
+  // Vidéo supprimée : YouTube renvoie une miniature grise de 120 px → on retire le bouton
+  $$('img[data-yt]').forEach((img) => {
+    const check = () => {
+      if (img.naturalWidth && img.naturalWidth <= 120) {
+        img.closest('.fcard').classList.add('fcard--novideo');
+        img.closest('.fcard__media').querySelector('.fcard__play')?.remove();
+        img.src = local('danse-masque', true);
+      }
+    };
+    img.complete ? check() : img.addEventListener('load', check);
+    img.addEventListener('error', () => img.remove());
+  });
+
   $('.unesco__list').innerHTML = UNESCO.map(
     (u) => `
-    <li class="unesco__item" data-img="${u.img}">
+    <li class="unesco__item" data-img="${src(u.img)}">
       <span class="unesco__year">${u.year}</span>
       <span class="unesco__name">${u.name}</span>
       <span class="unesco__type">${u.type}</span>
     </li>`
   ).join('');
 
-  $('.footer__credits').innerHTML = CREDITS.map((c) => `<a href="${c.url}?utm_source=ma-cote-divoire&utm_medium=referral" target="_blank" rel="noopener">${c.author}</a>`).join(', ');
-
-  const marquee = $('.marquee__inner');
-  marquee.textContent = marquee.textContent.repeat(4);
+  $('.footer__credits').innerHTML = CREDITS.map((c) => (c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${c.author}</a>` : c.author)).join(', ');
 }
 
 /* ------------------------------------------------------------------ */
@@ -201,14 +375,16 @@ function initRooms() {
     gsap.ticker.add(() => {
       if (!citiesOn) return;
       world.cityScreenPositions().forEach((c, i) => {
-        els[i].style.transform = `translate(${c.x}px, ${c.y + (c.dy || 0)}px) translateY(-50%)`;
+        const flip = c.x > window.innerWidth * 0.6; // étiquette à gauche près du bord droit
+        els[i].classList.toggle('city-label--left', flip);
+        els[i].style.transform = `translate(${c.x}px, ${c.y + (c.dy || 0)}px) translate(${flip ? '-100%' : '0'}, -50%)`;
       });
     });
   }
 }
 
 /* ------------------------------------------------------------------ */
-/* 5. Animations de salles                                             */
+/* 5. Animations des sections                                           */
 /* ------------------------------------------------------------------ */
 function initHero() {
   gsap.to('.hero__inner', {
@@ -278,78 +454,69 @@ function initCounters() {
   });
 }
 
-function initGallery() {
-  const canvas = $('.gallery__canvas');
-  const cartel = $('.cartel');
-  let gallery;
-  try {
-    gallery = new MuseumGallery(canvas, GALLERY, {
-      onActive: (i) => {
-        if (i < 0) return cartel.classList.remove('is-visible');
-        const a = GALLERY[i];
-        $('.cartel__idx span').textContent = pad(i + 1);
-        $('.cartel__title').textContent = a.title;
-        $('.cartel__place').textContent = `${a.place} — ${a.year}`;
-        $('.cartel__text').textContent = a.text;
-        cartel.classList.add('is-visible');
+function initPanorama() {
+  const slides = $$('.pano__slide');
+  const sec = $('.pano');
+  sec.style.height = `${slides.length * 100 + 60}vh`;
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: sec,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.8,
+      onUpdate: (self) => {
+        const i = Math.min(slides.length, Math.floor(self.progress * slides.length * 0.999) + 1);
+        $('.pano__count span').textContent = pad(i);
       },
-    });
-  } catch (e) {
-    console.warn('Galerie 3D indisponible', e);
-    return;
-  }
-  ScrollTrigger.create({
-    trigger: '.gallery',
-    start: 'top bottom',
-    end: 'bottom top',
-    onToggle: ({ isActive }) => (isActive ? gallery.start() : gallery.stop()),
-  });
-  ScrollTrigger.create({
-    trigger: '.gallery',
-    start: 'top top',
-    end: 'bottom bottom',
-    onUpdate: (self) => {
-      gallery.setProgress(self.progress);
-      gsap.set('.gallery__progress i', { scaleX: self.progress });
     },
   });
-  gsap.to('.gallery__intro', {
-    opacity: 0,
-    y: -40,
-    ease: 'none',
-    scrollTrigger: { trigger: '.gallery', start: 'top top', end: '+=60%', scrub: true },
+  slides.forEach((slide, i) => {
+    const img = $('img', slide);
+    const cap = $('.pano__caption', slide);
+    const at = i;
+    if (i === 0) {
+      // la première image s'ouvre depuis une carte centrée (effet « keynote »)
+      tl.fromTo(slide, { clipPath: 'inset(22% 18% 22% 18% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 0.6 }, 0);
+      tl.fromTo(img, { scale: 1.35 }, { scale: 1, duration: 1 }, 0);
+      tl.from(cap.children, { y: 60, opacity: 0, stagger: 0.05, duration: 0.3 }, 0.35);
+    } else {
+      tl.fromTo(slide, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6 }, at);
+      tl.fromTo(img, { scale: 1.3, yPercent: 8 }, { scale: 1, yPercent: 0, duration: 1 }, at);
+      tl.from(cap.children, { y: 80, opacity: 0, stagger: 0.05, duration: 0.3 }, at + 0.35);
+      // l'image précédente recule
+      tl.to($('img', slides[i - 1]), { yPercent: -12, opacity: 0.35, duration: 0.6 }, at);
+    }
   });
-  ScrollTrigger.addEventListener('refresh', () => gallery.resize());
-  document.fonts?.ready.then(() => gallery.resize());
+  tl.to({}, { duration: 0.4 });
 }
 
 function initDestinations() {
-  const track = $('.dest__track');
-  const distance = () => track.scrollWidth - window.innerWidth;
-  const tween = gsap.to(track, {
-    x: () => -distance(),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.dest',
-      pin: '.dest__sticky',
-      start: 'top top',
-      end: () => `+=${distance()}`,
-      scrub: 0.6,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => gsap.set('.dest__progress i', { scaleX: self.progress }),
-    },
-  });
-  // parallaxe interne des photos
-  $$('.dcard').forEach((card) => {
-    gsap.fromTo(
-      $('img', card),
-      { xPercent: -6 },
-      {
-        xPercent: 6,
-        ease: 'none',
-        scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true },
-      }
-    );
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 821px)', () => {
+    const track = $('.dest__track');
+    const distance = () => track.scrollWidth - window.innerWidth;
+    const tween = gsap.to(track, {
+      x: () => -distance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.dest',
+        pin: '.dest__sticky',
+        start: 'top top',
+        end: () => `+=${distance()}`,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => gsap.set('.dest__progress i', { scaleX: self.progress }),
+      },
+    });
+    $$('.dcard').forEach((card) => {
+      if (!$('img', card)) return;
+      gsap.fromTo(
+        $('img', card),
+        { xPercent: -6 },
+        { xPercent: 6, ease: 'none', scrollTrigger: { trigger: card, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } }
+      );
+    });
   });
   gsap.from('.dest__head > *', {
     y: 50,
@@ -359,6 +526,34 @@ function initDestinations() {
     ease: 'expo.out',
     scrollTrigger: { trigger: '.dest', start: 'top 70%' },
   });
+}
+
+function initCity() {
+  gsap.from('.city__head > *', { y: 50, opacity: 0, stagger: 0.1, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.city', start: 'top 70%' } });
+  $$('.bcard').forEach((card) => {
+    gsap.from(card, { y: 80, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: card, start: 'top 90%' } });
+    const img = $('img', card);
+    if (img) gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: card, scrub: true } });
+  });
+}
+
+function initCanAndMusic() {
+  gsap.fromTo('.can-hero__bg', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.can-hero', scrub: true } });
+  gsap.from('.can-hero__inner > *', { y: 70, opacity: 0, stagger: 0.15, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.can-hero', start: 'top 55%' } });
+  gsap.from('.stars svg', { scale: 0, rotate: -90, stagger: 0.12, duration: 0.9, ease: 'back.out(2)', scrollTrigger: { trigger: '.can-hero', start: 'top 45%' } });
+  const reveal = (sel) =>
+    ScrollTrigger.batch(sel, {
+      start: 'top 90%',
+      once: true,
+      onEnter: (els) => gsap.from(els, { y: 70, opacity: 0, stagger: 0.08, duration: 1.1, ease: 'expo.out' }),
+    });
+  reveal('.can-stats > div');
+  reveal('.vcard');
+  reveal('.pstrip figure');
+  reveal('.acard');
+  reveal('.mphotos figure');
+  reveal('.mfacts li');
+  gsap.from('.music-head > *', { y: 60, opacity: 0, stagger: 0.1, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.music-head', start: 'top 70%' } });
 }
 
 function initStories() {
@@ -406,6 +601,44 @@ function initFlavors() {
     ease: 'expo.out',
     scrollTrigger: { trigger: '.flavors', start: 'top 70%' },
   });
+
+  // Filtres de la carte
+  const items = $$('.mitem');
+  $$('.tab').forEach((tab) =>
+    tab.addEventListener('click', () => {
+      $$('.tab').forEach((t) => t.setAttribute('aria-selected', t === tab));
+      const f = tab.dataset.filter;
+      const shown = items.filter((it) => f === 'all' || it.dataset.cat === f);
+      items.forEach((it) => (it.hidden = !shown.includes(it)));
+      gsap.fromTo(shown, { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.04, duration: 0.7, ease: 'expo.out' });
+      ScrollTrigger.refresh();
+    })
+  );
+  ScrollTrigger.batch(items, {
+    start: 'top 92%',
+    once: true,
+    onEnter: (els) => gsap.from(els, { y: 50, opacity: 0, stagger: 0.06, duration: 1, ease: 'expo.out' }),
+  });
+  gsap.from('.eat__item', { y: 40, opacity: 0, stagger: 0.06, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.eat__list', start: 'top 85%' } });
+}
+
+function initNouchi() {
+  $$('.ncard').forEach((c) => c.addEventListener('click', () => c.classList.toggle('is-flipped')));
+  ScrollTrigger.batch('.ncard', {
+    start: 'top 92%',
+    once: true,
+    onEnter: (els) => gsap.from(els, { y: 60, rotateX: -25, opacity: 0, stagger: 0.05, duration: 1.1, ease: 'expo.out' }),
+  });
+  const inner = $('.nouchi__marquee-inner');
+  gsap.to(inner, { xPercent: -50, duration: 30, ease: 'none', repeat: -1 });
+  gsap.from('.nouchi__intro p, .nouchi__facts li', {
+    y: 40,
+    opacity: 0,
+    stagger: 0.1,
+    duration: 1.1,
+    ease: 'expo.out',
+    scrollTrigger: { trigger: '.nouchi__intro', start: 'top 85%' },
+  });
 }
 
 function initFestivals() {
@@ -419,13 +652,10 @@ function initFestivals() {
       gsap.to(inner, { skewX: gsap.utils.clamp(-12, 12, -v * 3), duration: 0.4, overwrite: 'auto' });
     },
   });
-  gsap.from('.fcard', {
-    y: 80,
-    opacity: 0,
-    stagger: 0.1,
-    duration: 1.2,
-    ease: 'expo.out',
-    scrollTrigger: { trigger: '.fest__grid', start: 'top 80%' },
+  ScrollTrigger.batch('.fcard', {
+    start: 'top 90%',
+    once: true,
+    onEnter: (els) => gsap.from(els, { y: 80, opacity: 0, stagger: 0.1, duration: 1.2, ease: 'expo.out' }),
   });
 }
 
@@ -548,15 +778,14 @@ function initVideo() {
     frame.innerHTML = '';
     lenis?.start();
   };
-  $$('[data-video]').forEach((b) =>
-    b.addEventListener('click', () => {
-      frame.innerHTML =
-        '<iframe src="https://www.youtube-nocookie.com/embed/_VrWeJov7jM?autoplay=1&rel=0" title="Film de présentation de la Côte d\'Ivoire" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      lenis?.stop();
-    })
-  );
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-video]');
+    if (!b) return;
+    frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.video}?autoplay=1&rel=0" title="Vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    lenis?.stop();
+  });
   $('.video-modal__close').addEventListener('click', close);
   modal.addEventListener('click', (e) => e.target === modal && close());
   document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-open') && close());
@@ -566,7 +795,7 @@ function initVideo() {
 /* 7. Préchargement & intro                                            */
 /* ------------------------------------------------------------------ */
 function preload() {
-  const imgs = [local('plateau-aerien'), local('basilique')].map(
+  const imgs = [src(PANORAMA[0].img), local('basilique')].map(
     (src) =>
       new Promise((res) => {
         const i = new Image();
@@ -620,11 +849,14 @@ intro().then(() => {
   initHero();
   initRevealText();
   initCounters();
-  initGallery();
+  initPanorama();
   initDestinations();
+  initCity();
   initStories();
+  initCanAndMusic();
   initCoast();
   initFlavors();
+  initNouchi();
   initFestivals();
   initUnesco();
   initTravel();

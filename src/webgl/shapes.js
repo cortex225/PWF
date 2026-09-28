@@ -2,6 +2,8 @@
 // Chaque fonction remplit `pos` (Float32Array xyz) et `col` (Float32Array rgb) pour `n` particules.
 
 import { Color } from 'three';
+// Contour réel (Natural Earth 1:10m) — généré par `npm run map`
+import CIV_OUTLINE from './civ-outline.json';
 
 const rand = (a = 0, b = 1) => a + Math.random() * (b - a);
 const TAU = Math.PI * 2;
@@ -35,17 +37,6 @@ const setPos = (pos, i, x, y, z) => {
 /* ------------------------------------------------------------------ */
 /* Carte de la Côte d'Ivoire (contour stylisé, lon/lat)                */
 /* ------------------------------------------------------------------ */
-const CIV_OUTLINE = [
-  [-7.52, 4.36], [-7.0, 4.42], [-6.5, 4.6], [-6.08, 4.95], [-5.5, 5.08], [-5.02, 5.13],
-  [-4.5, 5.2], [-4.0, 5.26], [-3.7, 5.2], [-3.28, 5.12], [-3.1, 5.1], [-3.2, 5.5],
-  [-2.95, 5.72], [-3.02, 6.2], [-3.22, 6.6], [-3.1, 7.0], [-2.95, 7.3], [-2.8, 7.6],
-  [-2.7, 8.0], [-2.6, 8.2], [-2.78, 8.6], [-2.8, 9.0], [-2.7, 9.4], [-2.9, 9.7],
-  [-3.2, 9.9], [-3.6, 9.9], [-4.0, 9.75], [-4.3, 9.65], [-4.7, 9.75], [-5.1, 10.2],
-  [-5.5, 10.42], [-5.8, 10.3], [-6.2, 10.3], [-6.6, 10.4], [-6.95, 10.2], [-7.5, 10.42],
-  [-7.9, 10.3], [-8.2, 10.0], [-8.2, 9.5], [-7.9, 9.4], [-8.1, 9.0], [-8.2, 8.5],
-  [-8.0, 8.3], [-8.3, 8.0], [-8.47, 7.6], [-8.3, 7.3], [-8.0, 6.8], [-7.8, 6.4],
-  [-7.5, 6.0], [-7.4, 5.6], [-7.5, 5.1], [-7.55, 4.6],
-];
 
 export const CITIES = [
   { id: 'abidjan', name: 'Abidjan', lon: -4.02, lat: 5.35 },
@@ -63,8 +54,8 @@ export const CITIES = [
 ];
 
 const MAP_K = 0.92;
-const MAP_CX = -5.5;
-const MAP_CY = 7.4;
+const MAP_CX = -5.56;
+const MAP_CY = 7.53;
 export const lonLatToLocal = (lon, lat) => [(lon - MAP_CX) * MAP_K, (lat - MAP_CY) * MAP_K];
 
 const OUTLINE_LOCAL = CIV_OUTLINE.map(([lon, lat]) => lonLatToLocal(lon, lat));
@@ -101,43 +92,70 @@ function pointOnOutline(t) {
 
 function flagColor(x) {
   // Drapeau : orange (ouest) · blanc · vert (est)
-  const minX = (-8.5 - MAP_CX) * MAP_K;
-  const maxX = (-2.6 - MAP_CX) * MAP_K;
+  const minX = (-8.62 - MAP_CX) * MAP_K;
+  const maxX = (-2.51 - MAP_CX) * MAP_K;
   const t = (x - minX) / (maxX - minX);
   if (t < 0.36) return PALETTE.orange;
   if (t < 0.64) return PALETTE.white;
   return PALETTE.green;
 }
 
+// Relief stylisé : montagnes de l'Ouest (Man, Nimba), plateaux du Nord
+function relief(x, y) {
+  const bump = (lon, lat, h, r) => {
+    const [cx, cy] = lonLatToLocal(lon, lat);
+    return h * Math.exp(-((x - cx) ** 2 + (y - cy) ** 2) / (r * r));
+  };
+  return bump(-7.6, 7.5, 0.34, 0.75) + bump(-8.45, 7.65, 0.3, 0.35) + bump(-5.6, 9.4, 0.12, 1.1) + bump(-4.4, 8.6, 0.08, 1.2);
+}
+
 export function mapShape(pos, col, n) {
-  const cityPts = Math.floor(n * 0.06);
-  const edgePts = Math.floor(n * 0.24);
+  const cityPts = Math.floor(n * 0.05);
+  const edgePts = Math.floor(n * 0.22);
   let i = 0;
-  // Contour lumineux
+  // Contour lumineux (suivi précis de la frontière)
   for (; i < edgePts; i++) {
     const [x, y] = pointOnOutline(Math.random());
-    setPos(pos, i, x + rand(-0.02, 0.02), y + rand(-0.02, 0.02), rand(-0.05, 0.05));
-    tmp.copy(flagColor(x)).lerp(PALETTE.white, 0.35);
+    setPos(pos, i, x + rand(-0.008, 0.008), y + rand(-0.008, 0.008), relief(x, y) + rand(-0.02, 0.02));
+    tmp.copy(flagColor(x)).lerp(PALETTE.white, 0.3);
     setCol(col, i, tmp);
   }
   // Villes (amas brillants)
   for (let c = 0; i < edgePts + cityPts; i++, c++) {
     const city = CITIES[c % CITIES.length];
     const [cx, cy] = lonLatToLocal(city.lon, city.lat);
-    const r = Math.pow(Math.random(), 2) * 0.09;
+    const r = Math.pow(Math.random(), 2) * 0.07;
     const a = rand(0, TAU);
-    setPos(pos, i, cx + Math.cos(a) * r, cy + Math.sin(a) * r, rand(0.05, 0.25));
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    setPos(pos, i, x, y, relief(x, y) + rand(0.04, 0.2));
     setCol(col, i, PALETTE.gold);
   }
-  // Remplissage
-  for (; i < n; i++) {
-    let x, y;
-    do {
-      x = rand(-3.2, 3.2);
-      y = rand(-3.2, 3.2);
-    } while (!insidePolygon(x, y, OUTLINE_LOCAL));
-    setPos(pos, i, x, y, rand(-0.12, 0.12));
-    tmp.copy(flagColor(x)).multiplyScalar(rand(0.45, 0.9));
+  // Remplissage régulier (grille décalée) pour une densité homogène
+  const fill = n - i;
+  const [minX, maxX, minY, maxY] = OUTLINE_LOCAL.reduce(
+    (b, [x, y]) => [Math.min(b[0], x), Math.max(b[1], x), Math.min(b[2], y), Math.max(b[3], y)],
+    [Infinity, -Infinity, Infinity, -Infinity]
+  );
+  const cells = [];
+  let step = Math.sqrt(((maxX - minX) * (maxY - minY) * 0.62) / fill);
+  for (let tries = 0; tries < 6; tries++) {
+    cells.length = 0;
+    for (let y = minY; y < maxY; y += step) for (let x = minX; x < maxX; x += step) if (insidePolygon(x, y, OUTLINE_LOCAL)) cells.push([x, y]);
+    if (cells.length >= fill) break;
+    step *= 0.92;
+  }
+  for (let k = cells.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1));
+    [cells[k], cells[j]] = [cells[j], cells[k]];
+  }
+  for (let k = 0; i < n; i++, k++) {
+    const [gx, gy] = cells[k % cells.length];
+    const x = gx + rand(-step, step) * 0.45;
+    const y = gy + rand(-step, step) * 0.45;
+    const h = relief(x, y);
+    setPos(pos, i, x, y, h + rand(-0.03, 0.03));
+    tmp.copy(flagColor(x)).multiplyScalar(0.4 + h * 1.2 + rand(0, 0.3));
     setCol(col, i, tmp);
   }
 }
@@ -357,6 +375,93 @@ export function dustShape(pos, col, n) {
     const r = rand(3.5, 11);
     setPos(pos, i, r * Math.sin(v) * Math.cos(u), r * Math.cos(v) * 0.7, r * Math.sin(v) * Math.sin(u) - 2);
     tmp.copy(Math.random() < 0.7 ? PALETTE.gold : PALETTE.orange).multiplyScalar(rand(0.25, 0.7));
+    setCol(col, i, tmp);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Disque vinyle (section musique) : sillons, reflet, étiquette drapeau */
+/* ------------------------------------------------------------------ */
+export function vinylShape(pos, col, n) {
+  const R = 2.6;
+  const labelR = 0.85;
+  const vinyl = new Color('#6a5446');
+  const groove = new Color('#b89a80');
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, TAU);
+    let r;
+    if (i < n * 0.18) {
+      // étiquette centrale aux couleurs du drapeau
+      r = Math.sqrt(Math.random()) * labelR;
+      const x = r * Math.cos(a);
+      tmp.copy(r < 0.09 ? PALETTE.gold : x < -labelR / 3 ? PALETTE.orange : x > labelR / 3 ? PALETTE.green : PALETTE.white);
+    } else if (i < n * 0.24) {
+      // bord du disque, bien net
+      r = R + rand(-0.015, 0.015);
+      tmp.copy(PALETTE.gold);
+    } else {
+      // sillons : des anneaux fins et réguliers
+      r = labelR + 0.12 + Math.random() * (R - labelR - 0.14);
+      r = Math.round(r * 16) / 16 + rand(-0.008, 0.008);
+      tmp.copy(Math.round(r * 16) % 3 === 0 ? groove : vinyl);
+      // reflet de lumière en diagonale
+      const sheen = Math.pow(Math.max(0, Math.cos(a * 2 - 0.8)), 10);
+      tmp.lerp(PALETTE.gold, sheen * 0.9);
+    }
+    // disque à plat, il tourne comme sur une platine
+    setPos(pos, i, r * Math.cos(a), rand(-0.015, 0.015), r * Math.sin(a));
+    tmp.multiplyScalar(rand(0.85, 1.1));
+    setCol(col, i, tmp);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Ballon de football (section CAN) : 12 pentagones aux sommets d'un    */
+/* icosaèdre, coutures entre les panneaux                               */
+/* ------------------------------------------------------------------ */
+export function ballShape(pos, col, n) {
+  const R = 1.9;
+  const phi = (1 + Math.sqrt(5)) / 2;
+  const verts = [
+    [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+    [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+    [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1],
+  ].map(([x, y, z]) => {
+    const l = Math.hypot(x, y, z);
+    return [x / l, y / l, z / l];
+  });
+  const classify = (p) => {
+    let best = -1;
+    let second = -1;
+    for (const v of verts) {
+      const d = v[0] * p[0] + v[1] * p[1] + v[2] * p[2];
+      if (d > best) {
+        second = best;
+        best = d;
+      } else if (d > second) second = d;
+    }
+    if (best > 0.945) return 'penta';
+    if (best - second < 0.018) return 'seam';
+    return 'panel';
+  };
+  // proportions visées : pentagones pleins, coutures fines, panneaux clairsemés
+  const quota = { penta: 0.5, seam: 0.3, panel: 0.2 };
+  for (let i = 0; i < n; i++) {
+    const want = Math.random() < quota.penta ? 'penta' : Math.random() < quota.seam / (1 - quota.penta) ? 'seam' : 'panel';
+    let p;
+    let kind;
+    let guard = 0;
+    do {
+      const u = rand(-1, 1);
+      const a = rand(0, TAU);
+      const sq = Math.sqrt(1 - u * u);
+      p = [sq * Math.cos(a), u, sq * Math.sin(a)];
+      kind = classify(p);
+    } while (kind !== want && ++guard < 60);
+    setPos(pos, i, p[0] * R, p[1] * R, p[2] * R);
+    if (kind === 'penta') tmp.copy(PALETTE.orange).multiplyScalar(rand(0.85, 1.05));
+    else if (kind === 'seam') tmp.copy(PALETTE.white).multiplyScalar(0.9);
+    else tmp.copy(PALETTE.white).multiplyScalar(rand(0.15, 0.3));
     setCol(col, i, tmp);
   }
 }
