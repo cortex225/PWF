@@ -160,7 +160,8 @@ export class ParticleWorld {
   resize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    this.isMobile = w < 820;
+    // portrait (mobile ou tablette) : la forme passe au-dessus du texte
+    this.isMobile = w < 820 || w / h < 0.85;
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     // Recule la caméra sur les écrans étroits pour garder la forme entière
@@ -208,8 +209,10 @@ export class ParticleWorld {
   applyLayout(duration) {
     const def = SHAPES[this.current];
     const x = this.isMobile ? 0 : def.x;
-    const y = this.isMobile && def.x ? def.y + 1.2 : def.y;
-    const s = (this.isMobile && def.x ? 0.8 : 1) * def.scale;
+    const isMap = def.fn === mapShape || def.fn === 'map';
+    // Sur mobile, la forme se place au-dessus du texte
+    const y = this.isMobile && def.x ? def.y + (isMap ? 2.9 : 1.2) : def.y;
+    const s = (this.isMobile && def.x ? (isMap ? 0.72 : 0.8) : 1) * def.scale;
     gsap.to(this.root.position, { x, y, duration, ease: 'power3.inOut' });
     gsap.to(this.root.scale, { x: s, y: s, z: s, duration, ease: 'power3.inOut' });
     gsap.to(this.root.rotation, { x: def.rotX, z: def.rotZ || 0, duration, ease: 'power3.inOut' });

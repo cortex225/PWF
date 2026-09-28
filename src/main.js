@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ParticleWorld } from './webgl/particles.js';
+import { ILLUSTRATIONS } from './illustrations.js';
 import { PHOTOS, PANORAMA, DESTINATIONS, BUILDINGS, DISHES, MENU, MENU_TABS, RESTAURANTS, CULTURE, NOUCHI, FESTIVALS, UNESCO, CREDITS, local, src } from './data.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +13,12 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(pointer: coarse)').matches;
 const pad = (n) => String(n).padStart(2, '0');
+// Photo, ou illustration au trait si aucune photo fiable n'existe
+const visual = (item, alt, lazy = true) =>
+  item.illu
+    ? `<div class="illu-box illu-box--${item.tone || 'night'}">${ILLUSTRATIONS[item.illu]}</div>`
+    : `<img src="${src(item.img)}" alt="${alt}" ${lazy ? 'loading="lazy"' : ''} />`;
+const ytThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 /* ------------------------------------------------------------------ */
 /* 1. Contenu dynamique                                                */
@@ -40,7 +47,7 @@ function renderContent() {
     <article class="dcard" data-cursor="Découvrir">
       <div class="dcard__media">
         <span class="dcard__num">${pad(i + 1)}</span>
-        <img src="${src(d.img)}" alt="${d.name}" loading="lazy" />
+        ${visual(d, d.name)}
         <span class="dcard__tag">${d.tag}</span>
       </div>
       <div class="dcard__body">
@@ -55,8 +62,8 @@ function renderContent() {
   $('.bento').innerHTML = BUILDINGS.map(
     (b) => `
     <article class="bcard ${b.size ? `bcard--${b.size}` : ''}">
-      <img src="${src(b.img)}" alt="${b.name}" loading="lazy" />
-      ${b.img.author ? `<span class="bcard__credit">© ${b.img.author}</span>` : ''}
+      ${visual(b, b.name)}
+      ${b.img?.author ? `<span class="bcard__credit">© ${b.img.author}</span>` : ''}
       <div class="bcard__body">
         <p class="bcard__meta">${b.meta}</p>
         <h3>${b.name}</h3>
@@ -145,7 +152,7 @@ function renderContent() {
     (f) => `
     <article class="fcard">
       <div class="fcard__media">
-        ${f.img ? `<img src="${src(f.img)}" alt="${f.name}" loading="lazy" />` : ''}
+        <img src="${f.img ? src(f.img) : ytThumb(f.video)}" alt="${f.name}" loading="lazy" ${!f.img && f.video ? 'data-yt' : ''} />
         <span class="fcard__month">${f.period}</span>
         ${f.video ? `<button class="fcard__play" data-video="${f.video}" aria-label="Voir la vidéo : ${f.name}" data-cursor="Vidéo"><span></span></button>` : ''}
       </div>
@@ -157,6 +164,19 @@ function renderContent() {
       </div>
     </article>`
   ).join('');
+
+  // Vidéo supprimée : YouTube renvoie une miniature grise de 120 px → on retire le bouton
+  $$('img[data-yt]').forEach((img) => {
+    const check = () => {
+      if (img.naturalWidth && img.naturalWidth <= 120) {
+        img.closest('.fcard').classList.add('fcard--novideo');
+        img.closest('.fcard__media').querySelector('.fcard__play')?.remove();
+        img.src = local('danse-masque', true);
+      }
+    };
+    img.complete ? check() : img.addEventListener('load', check);
+    img.addEventListener('error', () => img.remove());
+  });
 
   $('.unesco__list').innerHTML = UNESCO.map(
     (u) => `
@@ -281,14 +301,16 @@ function initRooms() {
     gsap.ticker.add(() => {
       if (!citiesOn) return;
       world.cityScreenPositions().forEach((c, i) => {
-        els[i].style.transform = `translate(${c.x}px, ${c.y + (c.dy || 0)}px) translateY(-50%)`;
+        const flip = c.x > window.innerWidth * 0.6; // étiquette à gauche près du bord droit
+        els[i].classList.toggle('city-label--left', flip);
+        els[i].style.transform = `translate(${c.x}px, ${c.y + (c.dy || 0)}px) translate(${flip ? '-100%' : '0'}, -50%)`;
       });
     });
   }
 }
 
 /* ------------------------------------------------------------------ */
-/* 5. Animations de salles                                             */
+/* 5. Animations des sections                                           */
 /* ------------------------------------------------------------------ */
 function initHero() {
   gsap.to('.hero__inner', {
@@ -389,7 +411,7 @@ function initPanorama() {
       tl.fromTo(img, { scale: 1.3, yPercent: 8 }, { scale: 1, yPercent: 0, duration: 1 }, at);
       tl.from(cap.children, { y: 80, opacity: 0, stagger: 0.05, duration: 0.3 }, at + 0.35);
       // l'image précédente recule
-      tl.to($('img', slides[i - 1]), { scale: 0.9, opacity: 0.4, duration: 0.6 }, at);
+      tl.to($('img', slides[i - 1]), { yPercent: -12, opacity: 0.35, duration: 0.6 }, at);
     }
   });
   tl.to({}, { duration: 0.4 });
@@ -414,6 +436,7 @@ function initDestinations() {
       },
     });
     $$('.dcard').forEach((card) => {
+      if (!$('img', card)) return;
       gsap.fromTo(
         $('img', card),
         { xPercent: -6 },
@@ -435,7 +458,8 @@ function initCity() {
   gsap.from('.city__head > *', { y: 50, opacity: 0, stagger: 0.1, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.city', start: 'top 70%' } });
   $$('.bcard').forEach((card) => {
     gsap.from(card, { y: 80, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: card, start: 'top 90%' } });
-    gsap.fromTo($('img', card), { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: card, scrub: true } });
+    const img = $('img', card);
+    if (img) gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: card, scrub: true } });
   });
 }
 

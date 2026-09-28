@@ -17,6 +17,9 @@ const SOURCES = {
   'foutou': 'img/food/foutou.jpg',
   'placali': 'img/food/placali.jpg',
   'gnamankoudji': 'img/food/gnamankoudji.jpg',
+  'brochettes': 'img/food/Screenshot_20190209-103610.png',
+  'grillade': 'img/food/Screenshot_20190209-103438.png',
+  'marche': 'img/Art/Screenshot_20190212-203025.png',
   'gbofloto': 'img/food/Screenshot_20190209-103648.png',
 };
 
