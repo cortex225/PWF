@@ -376,6 +376,9 @@ main,
 .city-labels.is-visible {
   opacity: 1;
 }
+.city-labels.is-hidden {
+  opacity: 0;
+}
 .city-label {
   position: absolute;
   top: 0;
@@ -898,64 +901,115 @@ main,
 
 /* ---------- Footer ---------- */
 .footer {
+  position: relative;
+  z-index: 3;
   background: var(--night-2);
-  padding: 10vh var(--gutter) 3rem;
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter) 2rem;
   border-top: 1px solid rgba(255, 248, 238, 0.08);
 }
 .footer__top {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-end;
   gap: 2rem;
   flex-wrap: wrap;
-  padding-bottom: 3rem;
+  padding-bottom: 2.5rem;
   border-bottom: 1px solid rgba(255, 248, 238, 0.1);
-  color: var(--muted);
 }
-.footer__brand {
+.footer__brand .nav__flag { width: 34px; height: 23px; margin-bottom: 1rem; }
+.footer__name {
   font-family: var(--serif);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1;
   color: var(--white);
 }
+.footer__tag { color: var(--muted); margin-top: 0.6rem; max-width: 26rem; }
 .footer__cols {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
-  padding: 3rem 0;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
 }
 .footer h3 {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
-.footer__cols div > a {
-  display: block;
-  padding: 0.6rem 0;
-}
-.footer__cols a {
-  color: rgba(255, 248, 238, 0.75);
-  margin-bottom: 0.4rem;
+.footer ul { list-style: none; }
+.footer__cols li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  color: rgba(255, 248, 238, 0.78);
   transition: color 0.3s;
 }
-.footer__cols a:hover {
+.footer__cols li a:hover { color: var(--gold); }
+.footer__steps small {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 176, 75, 0.6);
   color: var(--gold);
+  font-size: 0.75rem;
 }
+.footer__small {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.footer__credits-box summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 248, 238, 0.85);
+  font-weight: 600;
+}
+.footer__credits-box summary { list-style: none; gap: 0.7rem; }
+.footer__credits-box summary::-webkit-details-marker { display: none; }
+.footer__credits-box summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(45deg) translateY(-3px);
+  transition: transform 0.3s var(--ease);
+}
+.footer__credits-box[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
 .footer__credits {
   font-size: 0.85rem;
+  line-height: 1.8;
   color: rgba(255, 248, 238, 0.7);
+  margin: 0.4rem 0 0.8rem;
 }
 .footer__credits a {
-  display: inline;
   text-decoration: underline;
   text-decoration-color: rgba(232, 176, 75, 0.4);
+  text-underline-offset: 3px;
 }
-.footer__small,
-.footer__copy {
-  font-size: 0.78rem;
+.footer__credits a:hover { color: var(--gold); }
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 248, 238, 0.1);
+  font-size: 0.85rem;
   color: var(--muted);
-  margin-top: 0.8rem;
+}
+@media (max-width: 820px) {
+  .footer__cols { grid-template-columns: 1fr 1fr; }
+  .footer__cols > div { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .footer__cta { width: 100%; justify-content: center; }
 }
 
 /* ---------- Vidéo ---------- */
@@ -1510,7 +1564,6 @@ main,
   .travel { padding: 14vh var(--gutter); border-radius: 20px 20px 0 0; }
   .city { padding: 14vh var(--gutter) 10vh; }
   .menu__list { columns: 1; }
-  .footer__cols { grid-template-columns: 1fr; }
   .wayfinder { display: none; }
   .outro { min-height: 110vh; align-items: flex-end; padding-bottom: 12vh; }
   .outro__inner { position: relative; }

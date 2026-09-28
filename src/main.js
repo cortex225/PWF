@@ -367,6 +367,8 @@ function renderContent() {
     </article>`
   ).join('');
 
+  $('.footer__steps').innerHTML =
+    REGIONS.map((r) => `<li><a href="#${r.id}"><small>${r.step}</small>${r.name}</a></li>`).join('') + '<li><a href="#partir"><small>6</small>Partir</a></li>';
   $('.footer__credits').innerHTML = CREDITS.map((c) => `<a href="${c.url}" target="_blank" rel="noopener">${c.author}</a>`).join(', ');
 
   $$('[data-video]').forEach((el) => el.dataset.video !== '_VrWeJov7jM' && checkVideo(el, el.dataset.video));
@@ -638,6 +640,15 @@ function initRooms() {
         labels.classList.toggle('is-visible', citiesOn);
       },
     });
+  });
+
+  ScrollTrigger.create({
+    trigger: '.footer',
+    start: 'top 95%',
+    onToggle: ({ isActive }) => {
+      $('.webgl').style.opacity = isActive ? 0 : 1;
+      $('.city-labels').classList.toggle('is-hidden', isActive);
+    },
   });
 
   gsap.to('.wayfinder__bar i', { scaleY: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: true } });
