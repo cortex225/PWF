@@ -836,45 +836,6 @@ main,
 .travel .section-title em {
   color: var(--terracotta);
 }
-.travel__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
-  margin-top: 8vh;
-}
-.tcard {
-  background: var(--white);
-  border-radius: 10px;
-  padding: 2.2rem;
-  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
-}
-.tcard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 30px 60px rgba(33, 22, 15, 0.12);
-}
-.tcard__icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--orange);
-  color: var(--white);
-  font-size: 1.3rem;
-  margin-bottom: 1.6rem;
-}
-.tcard:nth-child(3n + 2) .tcard__icon { background: var(--green); }
-.tcard:nth-child(3n + 3) .tcard__icon { background: var(--gold); color: var(--night); }
-.tcard h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 1.5rem;
-  margin-bottom: 0.6rem;
-}
-.tcard p {
-  font-size: 0.95rem;
-  color: #5b4838;
-}
 
 /* ---------- Outro ---------- */
 .outro {
@@ -1473,7 +1434,6 @@ main,
   .nav__links { display: none; }
   .stats { grid-template-columns: repeat(2, 1fr); row-gap: 0; }
   .fest__grid { grid-template-columns: repeat(2, 1fr); }
-  .travel__grid { grid-template-columns: repeat(2, 1fr); }
   .bento { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 240px; }
   .bcard, .bcard--wide { grid-column: span 3; }
   .bcard--wide { grid-column: span 6; }
@@ -1571,10 +1531,8 @@ main,
 }
 
 @media (max-width: 560px) {
-  .stats, .fest__grid, .travel__grid { grid-template-columns: 1fr; }
   
   .menu-grid { grid-template-columns: 1fr 1fr; }
-  .tcard { padding: 1.6rem; }
   
 }
 
@@ -2072,15 +2030,6 @@ main,
 }
 
 /* ---------- Icônes au trait ---------- */
-.tcard__icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
 
 @media (max-width: 1024px) {
   .vgrid, .agrid { grid-template-columns: repeat(2, 1fr); }
@@ -2521,8 +2470,6 @@ main,
 .itin__days span { font-size: 0.8rem; font-weight: 700; color: var(--terracotta-ink); padding-top: 0.15rem; }
 .itin__days b { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; }
 .itin__days small { grid-column: 2; font-size: 0.88rem; color: #5b4838; }
-.depart .travel__grid { margin-top: 0; }
-.tcard h4 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin-bottom: 0.6rem; }
 
 /* ---------- Menu : durée des étapes ---------- */
 .menu__list a { padding: 0.25rem 0; }

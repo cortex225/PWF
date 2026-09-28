@@ -735,7 +735,6 @@ function initAnimations() {
   reveal('.mfacts li');
   reveal('.month', { y: 30, stagger: 0.03 });
   reveal('.itin');
-  reveal('.tcard');
   reveal('.ncard', { rotateX: -25 });
 
   $$('.story__step').forEach((step) => {
