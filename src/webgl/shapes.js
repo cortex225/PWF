@@ -378,3 +378,36 @@ export function dustShape(pos, col, n) {
     setCol(col, i, tmp);
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Disque vinyle (section musique) : sillons, reflet, étiquette drapeau */
+/* ------------------------------------------------------------------ */
+export function vinylShape(pos, col, n) {
+  const R = 2.6;
+  const labelR = 0.85;
+  const vinyl = new Color('#2b2522');
+  const groove = new Color('#6b5a4c');
+  for (let i = 0; i < n; i++) {
+    const a = rand(0, TAU);
+    let r;
+    let c;
+    if (i < n * 0.16) {
+      // étiquette centrale aux couleurs du drapeau
+      r = Math.sqrt(Math.random()) * labelR;
+      const x = r * Math.cos(a);
+      c = r < 0.08 ? PALETTE.gold : x < -labelR / 3 ? PALETTE.orange : x > labelR / 3 ? PALETTE.green : PALETTE.white;
+    } else {
+      r = labelR + 0.05 + Math.sqrt(Math.random()) * (R - labelR - 0.05);
+      // sillons : anneaux plus denses
+      r = Math.round(r * 18) / 18 + rand(-0.012, 0.012);
+      const onGroove = Math.abs(Math.sin(r * 57)) > 0.7;
+      c = tmp.copy(onGroove ? groove : vinyl);
+      // reflet lumineux en diagonale
+      const sheen = Math.pow(Math.max(0, Math.cos(a * 2 - 0.8)), 12);
+      c = tmp.lerp(PALETTE.gold, sheen * 0.8).clone();
+    }
+    setPos(pos, i, r * Math.cos(a), rand(-0.02, 0.02), r * Math.sin(a)); // disque à plat, il tourne comme sur une platine
+    tmp.copy(c).multiplyScalar(rand(0.8, 1.1));
+    setCol(col, i, tmp);
+  }
+}
