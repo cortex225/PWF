@@ -16,7 +16,7 @@ const pad = (n) => String(n).padStart(2, '0');
 // Photo, ou illustration au trait si aucune photo fiable n'existe
 // <img> avec srcset pour les photos Unsplash (net sur tous les écrans)
 const img = (image, alt, { lazy = true, sizes = '100vw', style = '', attrs = '' } = {}) =>
-  `<img src="${src(image)}" ${image?.srcset ? `srcset="${image.srcset}" sizes="${sizes}"` : ''} alt="${alt}" ${lazy ? 'loading="lazy"' : ''} ${style ? `style="${style}"` : ''} ${attrs} />`;
+  `<img src="${src(image)}" ${image?.srcset ? `srcset="${image.srcset}" sizes="${sizes}"` : ''} alt="${alt}" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" ${style ? `style="${style}"` : ''} ${attrs} />`;
 const visual = (item, alt, opts) =>
   item.illu ? `<div class="illu-box illu-box--${item.tone || 'night'}">${ILLUSTRATIONS[item.illu]}</div>` : img(item.img, alt, opts);
 // Une vidéo YouTube supprimée renvoie une miniature grise de 120 px : on masque alors le bouton lecture
@@ -107,7 +107,7 @@ function renderContent() {
   ).join('');
 
   $('.tabs').innerHTML = MENU_TABS.map(
-    (t, i) => `<button class="tab" role="tab" data-filter="${t.id}" aria-selected="${i === 0}">${t.label}</button>`
+    (t, i) => `<button class="tab" data-filter="${t.id}" aria-pressed="${i === 0}">${t.label}</button>`
   ).join('');
   $('.menu-grid').innerHTML = MENU.map(
     (m) => `
@@ -190,7 +190,7 @@ function renderContent() {
       <span class="vcard__play"></span>
       <span class="vcard__body">
         <span class="vcard__kind">${v.kind}</span>
-        <h4>${v.title}</h4>
+        <span class="vcard__title">${v.title}</span>
         <p>${v.text}</p>
       </span>
     </button>`
@@ -213,7 +213,7 @@ function renderContent() {
     <button class="acard" data-video="${a.video}" data-cursor="Écouter" aria-label="Écouter ${a.name}, ${a.hit}">
       <span>
         <span class="acard__genre">${a.genre}</span>
-        <h4>${a.name}</h4>
+        <span class="acard__name">${a.name}</span>
         <p>${a.text}</p>
       </span>
       <span class="acard__hit"><i></i>${a.hit}</span>
@@ -321,7 +321,8 @@ function initScroll() {
 
 function scrollTo(target) {
   if (lenis) lenis.scrollTo(target, { duration: 1.8 });
-  else document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+  else if (typeof target === 'number') window.scrollTo({ top: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+  else document.querySelector(target)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
 }
 
 /* ------------------------------------------------------------------ */
@@ -352,6 +353,11 @@ function initRooms() {
         const hide = sec.hasAttribute('data-hide-world');
         $('.webgl').style.opacity = hide ? 0 : 1;
         hide ? world?.pause() : world?.resume();
+        $$('.nav__links a').forEach((a) => {
+          const target = document.querySelector(a.getAttribute('href'));
+          const on = target && (target === sec || target.dataset.room === sec.dataset.room);
+          on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+        });
         $('.wayfinder__num').textContent = sec.dataset.room;
         $('.wayfinder__name').textContent = sec.dataset.roomName;
         wf.classList.toggle('is-visible', sec.dataset.room !== '00');
@@ -404,7 +410,7 @@ function initRevealText() {
   $$('[data-reveal-words]').forEach((el) => {
     const words = splitWords(el);
     gsap.to(words, {
-      opacity: 1,
+      color: '#fff8ee',
       stagger: 0.1,
       ease: 'none',
       scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true },
@@ -457,7 +463,7 @@ function initCounters() {
 function initPanorama() {
   const slides = $$('.pano__slide');
   const sec = $('.pano');
-  sec.style.height = `${slides.length * 100 + 60}vh`;
+  sec.style.height = `${slides.length * 80 + 40}vh`;
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
@@ -606,7 +612,7 @@ function initFlavors() {
   const items = $$('.mitem');
   $$('.tab').forEach((tab) =>
     tab.addEventListener('click', () => {
-      $$('.tab').forEach((t) => t.setAttribute('aria-selected', t === tab));
+      $$('.tab').forEach((t) => t.setAttribute('aria-pressed', t === tab));
       const f = tab.dataset.filter;
       const shown = items.filter((it) => f === 'all' || it.dataset.cat === f);
       items.forEach((it) => (it.hidden = !shown.includes(it)));
@@ -623,14 +629,17 @@ function initFlavors() {
 }
 
 function initNouchi() {
-  $$('.ncard').forEach((c) => c.addEventListener('click', () => c.classList.toggle('is-flipped')));
+  $$('.ncard').forEach((c) => {
+    c.setAttribute('aria-pressed', 'false');
+    c.addEventListener('click', () => c.setAttribute('aria-pressed', c.classList.toggle('is-flipped')));
+  });
   ScrollTrigger.batch('.ncard', {
     start: 'top 92%',
     once: true,
     onEnter: (els) => gsap.from(els, { y: 60, rotateX: -25, opacity: 0, stagger: 0.05, duration: 1.1, ease: 'expo.out' }),
   });
   const inner = $('.nouchi__marquee-inner');
-  gsap.to(inner, { xPercent: -50, duration: 30, ease: 'none', repeat: -1 });
+  if (!reduceMotion) gsap.to(inner, { xPercent: -50, duration: 30, ease: 'none', repeat: -1 });
   gsap.from('.nouchi__intro p, .nouchi__facts li', {
     y: 40,
     opacity: 0,
@@ -643,7 +652,7 @@ function initNouchi() {
 
 function initFestivals() {
   const inner = $('.marquee__inner');
-  const loop = gsap.to(inner, { xPercent: -25, duration: 22, ease: 'none', repeat: -1 });
+  const loop = gsap.to(inner, { xPercent: -25, duration: 22, ease: 'none', repeat: -1, paused: reduceMotion });
   ScrollTrigger.create({
     trigger: '.fest',
     onUpdate: (self) => {
@@ -722,14 +731,41 @@ function initNav() {
     },
   });
 
+  const toTop = $('.to-top');
+  ScrollTrigger.create({
+    start: () => window.innerHeight,
+    end: 'max',
+    onToggle: ({ isActive }) => toTop.classList.toggle('is-visible', isActive),
+  });
+  toTop.addEventListener('click', () => {
+    scrollTo(0);
+    $('.nav__logo').focus({ preventScroll: true });
+  });
+
+  // Onglet en arrière-plan : on arrête la 3D pour économiser la batterie
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) world?.pause();
+    else if ($('.webgl').style.opacity !== '0') world?.resume();
+  });
+
   const burger = $('.nav__burger');
+  const menu = $('.menu');
   const toggle = (open) => {
+    if (open === document.body.classList.contains('menu-open')) return;
     document.body.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open);
-    $('.menu').setAttribute('aria-hidden', !open);
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    menu.setAttribute('aria-hidden', !open);
+    menu.inert = !open;
+    // le reste de la page devient inactif tant que le menu est ouvert
+    ['main', '.footer', '.nav__logo', '.nav__links', '.to-top'].forEach((sel) => $(sel) && ($(sel).inert = open));
     open ? lenis?.stop() : lenis?.start();
-    if (open) gsap.from('.menu__list li', { y: 40, opacity: 0, stagger: 0.04, duration: 0.9, ease: 'expo.out', delay: 0.25 });
+    if (open) {
+      gsap.from('.menu__list li', { y: 40, opacity: 0, stagger: 0.04, duration: 0.9, ease: 'expo.out', delay: 0.25 });
+      setTimeout(() => $('.menu__list a')?.focus({ preventScroll: true }), 300);
+    } else burger.focus({ preventScroll: true });
   };
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && document.body.classList.contains('menu-open') && toggle(false));
   burger.addEventListener('click', () => toggle(!document.body.classList.contains('menu-open')));
 
   $$('a[href^="#"]').forEach((a) =>
@@ -739,6 +775,11 @@ function initNav() {
       e.preventDefault();
       toggle(false);
       scrollTo(href === '#top' ? 0 : href);
+      const target = href === '#top' ? $('main') : $(href);
+      if (target) {
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
     })
   );
 }
@@ -772,62 +813,107 @@ function initCursor() {
 function initVideo() {
   const modal = $('.video-modal');
   const frame = $('.video-modal__frame');
+  let opener = null;
+  const setBackground = (off) => ['main', '.nav', '.footer', '.to-top'].forEach((sel) => $(sel) && ($(sel).inert = off));
   const close = () => {
+    if (!modal.classList.contains('is-open')) return;
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
+    modal.inert = true;
+    setBackground(false);
     frame.innerHTML = '';
     lenis?.start();
+    opener?.focus({ preventScroll: true });
   };
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-video]');
     if (!b) return;
     frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.video}?autoplay=1&rel=0" title="Vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    opener = b;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
+    modal.inert = false;
+    setBackground(true);
     lenis?.stop();
+    $('.video-modal__close').focus({ preventScroll: true });
   });
   $('.video-modal__close').addEventListener('click', close);
   modal.addEventListener('click', (e) => e.target === modal && close());
-  document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-open') && close());
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    // le focus boucle entre le bouton Fermer et le lecteur
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const btn = $('.video-modal__close');
+      const iframe = $('iframe', frame);
+      (document.activeElement === btn && iframe ? iframe : btn).focus();
+    }
+  });
 }
 
 /* ------------------------------------------------------------------ */
 /* 7. Préchargement & intro                                            */
 /* ------------------------------------------------------------------ */
+// Déjà venu pendant cette session ? On ne rejoue pas l'écran d'accueil.
+const seenIntro = (() => {
+  try {
+    const seen = sessionStorage.getItem('akwaba-intro') === '1';
+    sessionStorage.setItem('akwaba-intro', '1');
+    return seen;
+  } catch {
+    return false;
+  }
+})();
+const quickIntro = reduceMotion || seenIntro;
+
+// Attend la police et l'image du hero, mais jamais plus de 1,2 s : le contenu passe avant l'animation
 function preload() {
-  const imgs = [src(PANORAMA[0].img), local('basilique')].map(
-    (src) =>
-      new Promise((res) => {
-        const i = new Image();
-        i.onload = i.onerror = res;
-        i.src = src;
-      })
-  );
-  const minTime = new Promise((r) => setTimeout(r, reduceMotion ? 200 : 1800));
-  return Promise.all([...imgs, document.fonts?.ready, minTime]);
+  const image = new Promise((res) => {
+    const i = new Image();
+    i.onload = i.onerror = res;
+    i.src = local('basilique', true);
+  });
+  const ready = Promise.all([image, document.fonts?.ready]);
+  const cap = new Promise((r) => setTimeout(r, 1200));
+  const min = new Promise((r) => setTimeout(r, quickIntro ? 0 : 900));
+  return Promise.all([Promise.race([ready, cap]), min]);
 }
 
 function intro() {
+  if (quickIntro) {
+    return preload().then(
+      () =>
+        new Promise((resolve) => {
+          gsap.to('.loader', { opacity: 0, duration: 0.35, onComplete: () => gsap.set('.loader', { display: 'none' }) });
+          world?.morphTo('map', { duration: reduceMotion ? 0.01 : 2 });
+          resolve();
+        })
+    );
+  }
   const count = { v: 0 };
-  const tl = gsap.timeline();
-  tl.to('.loader__flag span', { scaleY: 1, stagger: 0.12, duration: 0.8, ease: 'expo.out' })
-    .from('.loader__word', { yPercent: 60, opacity: 0, duration: 1.2, ease: 'expo.out' }, 0.1)
-    .from('.loader__sub', { opacity: 0, duration: 1 }, 0.5)
-    .to(count, { v: 100, duration: 1.8, ease: 'power2.inOut', onUpdate: () => ($('.loader__count span').textContent = Math.round(count.v)) }, 0);
+  gsap
+    .timeline()
+    .to('.loader__flag span', { scaleY: 1, stagger: 0.1, duration: 0.6, ease: 'expo.out' })
+    .from('.loader__word', { yPercent: 60, opacity: 0, duration: 0.9, ease: 'expo.out' }, 0.05)
+    .from('.loader__sub', { opacity: 0, duration: 0.6 }, 0.3)
+    .to(count, { v: 100, duration: 0.9, ease: 'power2.inOut', onUpdate: () => ($('.loader__count span').textContent = Math.round(count.v)) }, 0);
 
   return preload().then(
     () =>
       new Promise((resolve) => {
-        const out = gsap.timeline({ onComplete: resolve });
-        out
-          .to('.loader > *', { yPercent: -40, opacity: 0, stagger: 0.05, duration: 0.8, ease: 'expo.in' })
-          .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, '-=0.2')
+        gsap
+          .timeline()
+          .to('.loader > *', { yPercent: -40, opacity: 0, stagger: 0.04, duration: 0.5, ease: 'expo.in' })
+          .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 0.8, ease: 'expo.inOut' }, '-=0.15')
           .set('.loader', { display: 'none' })
-          .from('.hero__title .line > span', { yPercent: 110, duration: 1.4, stagger: 0.12, ease: 'expo.out' }, '-=0.6')
-          .from('.hero__eyebrow, .hero__lead, .hero__cta > *', { y: 30, opacity: 0, stagger: 0.08, duration: 1.1, ease: 'expo.out' }, '-=1.1')
-          .from('.hero__meta li, .hero__scroll', { opacity: 0, x: 20, stagger: 0.08, duration: 1 }, '-=0.9')
-          .from('.nav', { yPercent: -100, opacity: 0, duration: 1, ease: 'expo.out' }, '-=1');
-        world?.morphTo('map', { duration: 3 });
+          .add(resolve, '-=0.4') // la page devient utilisable pendant la fin de l'animation
+          .from('.hero__title .line > span', { yPercent: 110, duration: 1.2, stagger: 0.1, ease: 'expo.out' }, '-=0.5')
+          .from('.hero__eyebrow, .hero__lead, .hero__cta > *', { y: 30, opacity: 0, stagger: 0.06, duration: 1, ease: 'expo.out' }, '-=1')
+          .from('.hero__meta li, .hero__scroll', { opacity: 0, x: 20, stagger: 0.06, duration: 0.8 }, '-=0.8')
+          // on anime le contenu du bandeau, pas le bandeau lui-même (sa position est gérée en CSS au scroll)
+          .from('.nav > *', { y: -30, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'expo.out', clearProps: 'transform,opacity' }, '-=0.9');
+        world?.morphTo('map', { duration: 2.6 });
       })
   );
 }

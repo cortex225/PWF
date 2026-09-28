@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 </head>
 <body>
+  <a class="skip-link" href="#pays">Aller au contenu</a>
   <!-- ============ PRÉCHARGEMENT ============ -->
   <div class="loader" aria-hidden="true">
     <div class="loader__flag"><span></span><span></span><span></span></div>
@@ -43,10 +44,10 @@
       <a href="#festivals">Festivals</a>
       <a href="#voyage">Voyager</a>
     </nav>
-    <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
+    <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </header>
 
-  <div class="menu" aria-hidden="true">
+  <div class="menu" id="menu" aria-hidden="true" inert>
     <ol class="menu__list">
       <li><a href="#pays"><small>01</small>Le pays</a></li>
       <li><a href="#panorama"><small>02</small>Panorama</a></li>
@@ -72,7 +73,7 @@
     <span class="wayfinder__name">Akwaba</span>
   </aside>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
     <!-- ============ HERO ============ -->
     <section class="hero" data-shape="map" data-room="00" data-room-name="Akwaba">
       <div class="hero__inner">
@@ -111,6 +112,7 @@
 
     <!-- ============ 02 PANORAMA ============ -->
     <section id="panorama" class="pano" data-shape="dust" data-hide-world data-room="02" data-room-name="Panorama">
+      <h2 class="sr-only">Panorama de la Côte d'Ivoire en images</h2>
       <div class="pano__sticky">
         <div class="pano__slides"></div>
         <div class="pano__ui">
@@ -222,7 +224,7 @@
       <div class="menu-card">
         <div class="menu-card__head">
           <h3 class="menu-card__title">Toute <em>la carte</em></h3>
-          <div class="tabs" role="tablist" aria-label="Filtrer la carte"></div>
+          <div class="tabs" role="group" aria-label="Filtrer la carte"></div>
         </div>
         <div class="menu-grid"></div>
       </div>
@@ -373,14 +375,14 @@
     </div>
     <div class="footer__cols">
       <div>
-        <h4>Dossiers</h4>
+        <h3>Dossiers</h3>
         <a href="html/Présentation/Histoire.html">Histoire</a>
         <a href="html/Spécialités/Spécialités.html">Gastronomie</a>
         <a href="html/Visiter/Visiter.html">Tourisme</a>
         <a href="html/Art/Art.html">Art et culture</a>
       </div>
       <div>
-        <h4>Crédits photos</h4>
+        <h3>Crédits photos</h3>
         <p class="footer__credits"></p>
         <p class="footer__small">Photos Unsplash (licence Unsplash) et archives personnelles. Vidéos hébergées sur YouTube par leurs auteurs.</p>
       </div>
@@ -388,9 +390,11 @@
     <p class="footer__copy">© 2026 Gouaho Déto Jean-Luc. Fait avec amour, Three.js et GSAP.</p>
   </footer>
 
+  <button class="to-top" aria-label="Revenir en haut de la page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
   <!-- Lecteur vidéo -->
-  <div class="video-modal" aria-hidden="true" role="dialog" aria-label="Lecteur vidéo">
-    <button class="video-modal__close" aria-label="Fermer">×</button>
+  <div class="video-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Lecteur vidéo" inert>
+    <button class="video-modal__close" aria-label="Fermer la vidéo">×</button>
     <div class="video-modal__frame"></div>
   </div>
 
