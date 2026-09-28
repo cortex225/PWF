@@ -6,10 +6,7 @@ import fs from 'node:fs';
 const SOURCES = {
   'basilique-avenue': 'img/histoire_final.jpg',
   'basilique': 'img/place/basilique.jpg',
-  'basilique-aerienne': 'img/place/download (1).jpg',
   'cathedrale': 'img/place/cathedraleStPaul.jpg',
-  'plateau-lagune': 'img/place/download (2).jpg',
-  'plateau-aerien': 'img/place/download.jpg',
   'plage': 'img/place/Beach.jpg',
   'coucher-palmiers': 'img/place/CleanShot 2026-01-10 at 20.28.34@2x.png',
   'foret': 'img/nature_final.jpg',
@@ -25,9 +22,9 @@ const SOURCES = {
 
 fs.mkdirSync('public/media', { recursive: true });
 for (const [name, src] of Object.entries(SOURCES)) {
-  for (const [suffix, width] of [['', 1600], ['-sm', 720]]) {
+  for (const [suffix, width] of [['', 2400], ['-sm', 900]]) {
     const out = `public/media/${name}${suffix}.webp`;
-    await sharp(src).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 78 }).toFile(out);
+    await sharp(src).rotate().resize({ width, height: width, fit: 'inside', withoutEnlargement: true }).webp({ quality: 80 }).toFile(out);
   }
   console.log('✓', name);
 }

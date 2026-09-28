@@ -2,18 +2,19 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akwaba — Visite immersive de la Côte d'Ivoire</title>
-  <meta name="description" content="Une visite immersive de la Côte d'Ivoire, salle après salle : Abidjan, Grand-Bassam, Yamoussoukro, Assinie, Man, Korhogo, parcs nationaux, gastronomie, masques et festivals." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Akwaba — Découvrir la Côte d'Ivoire</title>
+  <meta name="description" content="Découvrez la Côte d'Ivoire : Abidjan, Grand-Bassam, Assinie, Yamoussoukro, Man, Korhogo, parcs nationaux, gastronomie, nouchi, festivals et culture." />
   <meta name="theme-color" content="#120b07" />
-  <meta property="og:title" content="Akwaba — Visite immersive de la Côte d'Ivoire" />
-  <meta property="og:description" content="Entrez dans le musée à ciel ouvert de la Côte d'Ivoire." />
-  <meta property="og:image" content="/media/plateau-aerien.webp" />
+  <meta property="og:title" content="Akwaba — Découvrir la Côte d'Ivoire" />
+  <meta property="og:description" content="Plages, forêts, masques, maquis et festivals : la Côte d'Ivoire comme vous ne l'avez jamais vue." />
+  <meta property="og:image" content="/media/basilique.webp" />
   <link rel="icon" href="img/icon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin />
 </head>
 <body>
   <!-- ============ PRÉCHARGEMENT ============ -->
@@ -36,10 +37,11 @@
       <span>Côte d'Ivoire</span>
     </a>
     <nav class="nav__links" aria-label="Navigation principale">
-      <a href="#galerie">Galerie</a>
       <a href="#destinations">Destinations</a>
+      <a href="#abidjan">Abidjan</a>
       <a href="#saveurs">Saveurs</a>
-      <a href="#culture">Culture</a>
+      <a href="#nouchi">Nouchi</a>
+      <a href="#festivals">Festivals</a>
       <a href="#voyage">Voyager</a>
     </nav>
     <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span></button>
@@ -47,53 +49,54 @@
 
   <div class="menu" aria-hidden="true">
     <ol class="menu__list">
-      <li><a href="#pays"><small>I</small>Le Pays</a></li>
-      <li><a href="#galerie"><small>II</small>La Galerie</a></li>
-      <li><a href="#destinations"><small>III</small>Destinations</a></li>
-      <li><a href="#yamoussoukro"><small>IV</small>Yamoussoukro</a></li>
-      <li><a href="#littoral"><small>V</small>Le Littoral</a></li>
-      <li><a href="#cacao"><small>VI</small>L'Or brun</a></li>
-      <li><a href="#saveurs"><small>VII</small>Saveurs</a></li>
-      <li><a href="#culture"><small>VIII</small>Arts vivants</a></li>
-      <li><a href="#festivals"><small>IX</small>Fêtes</a></li>
-      <li><a href="#unesco"><small>X</small>Patrimoine mondial</a></li>
+      <li><a href="#pays"><small>01</small>Le Pays</a></li>
+      <li><a href="#panorama"><small>02</small>Panorama</a></li>
+      <li><a href="#destinations"><small>03</small>Destinations</a></li>
+      <li><a href="#abidjan"><small>04</small>Abidjan moderne</a></li>
+      <li><a href="#yamoussoukro"><small>05</small>Yamoussoukro</a></li>
+      <li><a href="#littoral"><small>06</small>Le Littoral</a></li>
+      <li><a href="#cacao"><small>07</small>L'Or brun</a></li>
+      <li><a href="#saveurs"><small>08</small>Saveurs & maquis</a></li>
+      <li><a href="#culture"><small>09</small>Arts vivants</a></li>
+      <li><a href="#nouchi"><small>10</small>Le Nouchi</a></li>
+      <li><a href="#festivals"><small>11</small>Festivals</a></li>
+      <li><a href="#unesco"><small>12</small>Patrimoine mondial</a></li>
       <li><a href="#voyage"><small>→</small>Préparer son voyage</a></li>
     </ol>
   </div>
 
-  <!-- Plan du musée : « Vous êtes ici » -->
   <aside class="wayfinder" aria-hidden="true">
     <span class="wayfinder__num">00</span>
     <span class="wayfinder__bar"><i></i></span>
-    <span class="wayfinder__name">Prologue</span>
+    <span class="wayfinder__name">Akwaba</span>
   </aside>
 
   <main id="top">
-    <!-- ============ PROLOGUE ============ -->
-    <section class="hero" data-shape="map" data-room="00" data-room-name="Prologue">
+    <!-- ============ HERO ============ -->
+    <section class="hero" data-shape="map" data-room="00" data-room-name="Akwaba">
       <div class="hero__inner">
-        <p class="eyebrow hero__eyebrow">Visite immersive · Afrique de l'Ouest</p>
+        <p class="eyebrow hero__eyebrow">Afrique de l'Ouest · Golfe de Guinée</p>
         <h1 class="hero__title">
           <span class="line"><span>Akwaba</span></span>
           <span class="line line--italic"><span>en Côte d'Ivoire</span></span>
         </h1>
-        <p class="hero__lead">Lagunes émeraude, forêts primaires, masques sacrés et rythmes qui font danser un continent. Entrez : le musée est à ciel ouvert.</p>
+        <p class="hero__lead">Lagunes émeraude, forêts primaires, masques sacrés, maquis enfumés et rythmes qui font danser tout un continent.</p>
         <div class="hero__cta">
-          <a href="#pays" class="btn btn--primary" data-cursor="Entrer">Commencer la visite</a>
-          <button class="btn btn--ghost" data-video data-cursor="Lecture"><span class="play"></span>Voir le film</button>
+          <a href="#pays" class="btn btn--primary" data-cursor="Go">Commencer le voyage</a>
+          <button class="btn btn--ghost" data-video="_VrWeJov7jM" data-cursor="Lecture"><span class="play"></span>Voir le film</button>
         </div>
       </div>
-      <div class="hero__scroll"><span>Défiler pour entrer</span><i></i></div>
+      <div class="hero__scroll"><span>Défiler</span><i></i></div>
       <ul class="hero__meta">
-        <li><b>5°–10° N</b> Golfe de Guinée</li>
+        <li><b>322 462</b> km²</li>
         <li><b>60+</b> peuples</li>
         <li><b>1960</b> Indépendance · 7 août</li>
       </ul>
     </section>
 
-    <!-- ============ SALLE I — LE PAYS ============ -->
+    <!-- ============ 01 — LE PAYS ============ -->
     <section id="pays" class="room room--intro" data-shape="dust" data-room="01" data-room-name="Le Pays">
-      <div class="room__label"><span>Salle I</span><span>Le Pays</span></div>
+      <div class="chip"><span>01</span><span>Le Pays</span></div>
       <p class="reveal-text" data-reveal-words>
         Entre le golfe de Guinée et les savanes du Sahel, la Côte d'Ivoire rassemble plus de soixante peuples, des forêts parmi les plus anciennes d'Afrique et une énergie urbaine unique. Ici, on vous accueille d'un mot : <em>Akwaba</em>.
       </p>
@@ -105,41 +108,44 @@
       </div>
     </section>
 
-    <!-- ============ SALLE II — GALERIE 3D ============ -->
-    <section id="galerie" class="gallery" data-shape="dust" data-hide-world data-room="02" data-room-name="La Galerie">
-      <div class="gallery__sticky">
-        <canvas class="gallery__canvas" aria-label="Galerie 3D : photographies de la Côte d'Ivoire"></canvas>
-        <div class="gallery__intro">
-          <div class="room__label"><span>Salle II</span><span>La Galerie</span></div>
-          <h2 class="gallery__title">Huit regards<br /><em>sur un pays</em></h2>
-          <p>Avancez dans la galerie en faisant défiler la page.</p>
+    <!-- ============ 02 — PANORAMA (plein écran) ============ -->
+    <section id="panorama" class="pano" data-shape="dust" data-hide-world data-room="02" data-room-name="Panorama">
+      <div class="pano__sticky">
+        <div class="pano__slides"></div>
+        <div class="pano__ui">
+          <div class="chip chip--light"><span>02</span><span>Panorama</span></div>
+          <p class="pano__count"><span>01</span> / <em></em></p>
         </div>
-        <div class="cartel" aria-live="polite">
-          <p class="cartel__idx">Œuvre <span>01</span> / 08</p>
-          <h3 class="cartel__title">—</h3>
-          <p class="cartel__place">—</p>
-          <p class="cartel__text">—</p>
-        </div>
-        <div class="gallery__progress"><i></i></div>
       </div>
     </section>
 
-    <!-- ============ SALLE III — DESTINATIONS ============ -->
+    <!-- ============ 03 — DESTINATIONS ============ -->
     <section id="destinations" class="dest" data-shape="dust" data-hide-world data-room="03" data-room-name="Destinations">
       <div class="dest__sticky">
         <div class="dest__head">
-          <div class="room__label room__label--dark"><span>Salle III</span><span>Destinations</span></div>
-          <h2 class="section-title">Neuf escales<br /><em>pour tomber amoureux</em></h2>
+          <div class="chip chip--dark"><span>03</span><span>Destinations</span></div>
+          <h2 class="section-title">Où aller<br /><em>en Côte d'Ivoire</em></h2>
+          <p class="dest__hint">Faites défiler <span aria-hidden="true">→</span></p>
         </div>
         <div class="dest__track"></div>
         <div class="dest__progress"><i></i></div>
       </div>
     </section>
 
-    <!-- ============ SALLE IV — YAMOUSSOUKRO ============ -->
-    <section id="yamoussoukro" class="story" data-shape="basilica" data-room="04" data-room-name="Yamoussoukro">
+    <!-- ============ 04 — ABIDJAN MODERNE ============ -->
+    <section id="abidjan" class="city" data-shape="dust" data-room="04" data-room-name="Abidjan moderne">
+      <div class="city__head">
+        <div class="chip"><span>04</span><span>Abidjan moderne</span></div>
+        <h2 class="section-title">La Perle<br /><em>des Lagunes</em></h2>
+        <p class="city__lead">Des tours qui se reflètent dans la lagune Ébrié, de nouveaux ponts, un stade olympique et des quartiers qui ne dorment jamais : Abidjan se réinvente sans cesse.</p>
+      </div>
+      <div class="bento"></div>
+    </section>
+
+    <!-- ============ 05 — YAMOUSSOUKRO ============ -->
+    <section id="yamoussoukro" class="story" data-shape="basilica" data-room="05" data-room-name="Yamoussoukro">
       <div class="story__col">
-        <div class="room__label"><span>Salle IV</span><span>Yamoussoukro</span></div>
+        <div class="chip"><span>05</span><span>Yamoussoukro</span></div>
         <div class="story__step">
           <p class="eyebrow">Capitale politique depuis 1983</p>
           <h2 class="section-title">Une basilique<br /><em>au cœur de la savane</em></h2>
@@ -151,39 +157,40 @@
         </div>
         <div class="story__step">
           <p class="big-num"><span data-count="1990">0</span></p>
-          <p>Année de sa consécration par le pape Jean-Paul II. Ses vitraux, fabriqués en France, couvrent des milliers de mètres carrés et baignent la nef d'une lumière colorée.</p>
+          <p>Année de sa consécration par le pape Jean-Paul II. Ses immenses vitraux baignent la nef d'une lumière colorée.</p>
+          <figure class="story__photo"><img data-local="basilique" alt="La Basilique Notre-Dame de la Paix de Yamoussoukro" loading="lazy" /></figure>
         </div>
         <div class="story__step">
           <p class="eyebrow">À ne pas manquer</p>
           <h3 class="story__h3">Le lac aux caïmans sacrés</h3>
           <p>Face au palais présidentiel, les crocodiles du lac sont nourris chaque fin d'après-midi : un rituel devenu légendaire.</p>
-          <figure class="story__photo"><img data-local="basilique-avenue" alt="L'avenue menant à la Basilique Notre-Dame de la Paix" loading="lazy" /></figure>
+          <figure class="story__photo"><img data-local="basilique-avenue" alt="L'avenue menant à la Basilique" loading="lazy" /></figure>
         </div>
       </div>
     </section>
 
-    <!-- ============ SALLE V — LE LITTORAL ============ -->
-    <section id="littoral" class="coast" data-shape="ocean" data-room="05" data-room-name="Le Littoral">
+    <!-- ============ 06 — LE LITTORAL ============ -->
+    <section id="littoral" class="coast" data-shape="ocean" data-room="06" data-room-name="Le Littoral">
       <div class="coast__inner">
-        <div class="room__label"><span>Salle V</span><span>Le Littoral</span></div>
+        <div class="chip"><span>06</span><span>Le Littoral</span></div>
         <h2 class="coast__title" data-reveal-chars>Plus de 500 km<br /><em>d'océan</em></h2>
         <p class="coast__lead">De Tabou à Assinie, une côte ourlée de cocotiers, de lagunes et de villages de pêcheurs. Les rouleaux de l'Atlantique y viennent mourir sur un sable doré.</p>
       </div>
       <div class="coast__cards">
-        <article class="coast__card" data-cursor="Assinie"><img data-local="plage" alt="Plage bordée de cocotiers" loading="lazy" /><div><h3>Assinie</h3><p>Lagune Aby, hôtels pieds dans l'eau et kitesurf.</p></div></article>
-        <article class="coast__card" data-cursor="Bassam"><img data-photo="cocotiers" alt="Cocotiers face à l'océan à Grand-Bassam" loading="lazy" /><div><h3>Grand-Bassam</h3><p>Plages populaires et maisons coloniales.</p></div></article>
-        <article class="coast__card" data-cursor="Sassandra"><img data-photo="vagues" alt="Vagues de l'Atlantique sur le rivage ivoirien" loading="lazy" /><div><h3>Sassandra · San-Pédro</h3><p>Criques sauvages, surf et pêche traditionnelle.</p></div></article>
+        <article class="coast__card"><img data-local="plage" alt="Plage bordée de cocotiers" loading="lazy" /><div><h3>Assinie</h3><p>Lagune Aby, hôtels pieds dans l'eau et kitesurf.</p></div></article>
+        <article class="coast__card"><img data-photo="cocotiers" alt="Cocotiers face à l'océan à Grand-Bassam" loading="lazy" /><div><h3>Grand-Bassam</h3><p>Plages populaires et maisons coloniales.</p></div></article>
+        <article class="coast__card"><img data-photo="vagues" alt="Vagues de l'Atlantique sur le rivage ivoirien" loading="lazy" /><div><h3>Sassandra · San-Pédro</h3><p>Criques sauvages, surf et pêche traditionnelle.</p></div></article>
       </div>
     </section>
 
-    <!-- ============ SALLE VI — CACAO ============ -->
-    <section id="cacao" class="story story--cocoa" data-shape="cocoa" data-room="06" data-room-name="L'Or brun">
+    <!-- ============ 07 — CACAO ============ -->
+    <section id="cacao" class="story story--cocoa" data-shape="cocoa" data-room="07" data-room-name="L'Or brun">
       <div class="story__col">
-        <div class="room__label"><span>Salle VI</span><span>L'Or brun</span></div>
+        <div class="chip"><span>07</span><span>L'Or brun</span></div>
         <div class="story__step">
           <p class="eyebrow">Cacao · Café · Anacarde</p>
           <h2 class="section-title">Le pays<br /><em>du chocolat</em></h2>
-          <p>Près de deux fèves de cacao sur cinq dans le monde poussent en Côte d'Ivoire. Une richesse cultivée par des centaines de milliers de petits planteurs.</p>
+          <p>Près de deux fèves de cacao sur cinq dans le monde poussent en Côte d'Ivoire, cultivées par des centaines de milliers de petits planteurs.</p>
         </div>
         <div class="story__step">
           <p class="big-num">≈ <span data-count="40">0</span><small>%</small></p>
@@ -194,7 +201,7 @@
           <ol class="steps">
             <li><b>Récolte</b> — les cabosses sont cueillies à la machette.</li>
             <li><b>Écabossage</b> — on extrait les fèves et leur pulpe sucrée.</li>
-            <li><b>Fermentation</b> — six jours sous des feuilles de bananier.</li>
+            <li><b>Fermentation</b> — quelques jours sous des feuilles de bananier.</li>
             <li><b>Séchage</b> — au soleil, sur des claies.</li>
           </ol>
           <figure class="story__photo"><img data-photo="cacao" alt="Cabosses de cacao mûres" loading="lazy" /></figure>
@@ -202,20 +209,36 @@
       </div>
     </section>
 
-    <!-- ============ SALLE VII — SAVEURS ============ -->
-    <section id="saveurs" class="flavors" data-shape="dust" data-hide-world data-room="07" data-room-name="Saveurs">
+    <!-- ============ 08 — SAVEURS ============ -->
+    <section id="saveurs" class="flavors" data-shape="dust" data-hide-world data-room="08" data-room-name="Saveurs & maquis">
       <div class="flavors__head">
-        <div class="room__label room__label--dark"><span>Salle VII</span><span>Saveurs</span></div>
+        <div class="chip chip--dark"><span>08</span><span>Saveurs & maquis</span></div>
         <h2 class="section-title">À table,<br /><em>au maquis</em></h2>
-        <p>Dans les maquis — ces restaurants populaires à ciel ouvert — on partage l'attiéké, le poisson braisé et le jus de gingembre. Voici la carte.</p>
+        <p>Dans les maquis, ces restaurants populaires à ciel ouvert, on partage l'attiéké, le poisson braisé et le jus de gingembre. Voici les incontournables.</p>
       </div>
       <div class="flavors__stack"></div>
+
+      <div class="menu-card">
+        <div class="menu-card__head">
+          <h3 class="menu-card__title">La carte <em>complète</em></h3>
+          <div class="tabs" role="tablist" aria-label="Filtrer la carte"></div>
+        </div>
+        <div class="menu-grid"></div>
+      </div>
+
+      <div class="eat">
+        <div class="eat__head">
+          <h3 class="menu-card__title">Où <em>manger</em></h3>
+          <p>Maquis mythiques, tables modernes et spots de street-food : nos adresses.</p>
+        </div>
+        <ul class="eat__list"></ul>
+      </div>
     </section>
 
-    <!-- ============ SALLE VIII — ARTS VIVANTS ============ -->
-    <section id="culture" class="story story--culture" data-shape="mask" data-room="08" data-room-name="Arts vivants">
+    <!-- ============ 09 — ARTS VIVANTS ============ -->
+    <section id="culture" class="story story--culture" data-shape="mask" data-room="09" data-room-name="Arts vivants">
       <div class="story__col">
-        <div class="room__label"><span>Salle VIII</span><span>Arts vivants</span></div>
+        <div class="chip"><span>09</span><span>Arts vivants</span></div>
         <div class="story__step story__step--intro">
           <p class="eyebrow">Masques · Danses · Musiques</p>
           <h2 class="section-title">L'esprit<br /><em>du masque</em></h2>
@@ -224,43 +247,56 @@
       </div>
     </section>
 
-    <!-- ============ SALLE IX — FESTIVALS ============ -->
-    <section id="festivals" class="fest" data-shape="dust" data-room="09" data-room-name="Fêtes">
-      <div class="room__label"><span>Salle IX</span><span>Fêtes & festivals</span></div>
+    <!-- ============ 10 — NOUCHI ============ -->
+    <section id="nouchi" class="nouchi" data-shape="dust" data-room="10" data-room-name="Le Nouchi">
+      <div class="nouchi__head">
+        <div class="chip"><span>10</span><span>Le Nouchi</span></div>
+        <h2 class="nouchi__title" data-reveal-chars>On dit quoi ?</h2>
+        <div class="nouchi__intro"></div>
+      </div>
+      <div class="nouchi__marquee" aria-hidden="true"><div class="nouchi__marquee-inner"></div></div>
+      <p class="nouchi__hint">Touchez une carte pour la traduire</p>
+      <div class="nouchi__grid"></div>
+      <ul class="nouchi__facts"></ul>
+    </section>
+
+    <!-- ============ 11 — FESTIVALS ============ -->
+    <section id="festivals" class="fest" data-shape="dust" data-room="11" data-room-name="Festivals">
+      <div class="chip"><span>11</span><span>Festivals</span></div>
       <h2 class="section-title fest__title">Un calendrier<br /><em>qui danse</em></h2>
-      <div class="marquee" aria-hidden="true"><div class="marquee__inner">Abissa · Popo Carnaval · FEMUA · MASA · Fête des Ignames · Dipri · Zaouli · Coupé-décalé · Zouglou · </div></div>
+      <div class="marquee" aria-hidden="true"><div class="marquee__inner"></div></div>
       <div class="fest__grid"></div>
     </section>
 
-    <!-- ============ SALLE X — UNESCO ============ -->
-    <section id="unesco" class="unesco" data-shape="dust" data-room="10" data-room-name="Patrimoine mondial">
-      <div class="room__label"><span>Salle X</span><span>Patrimoine mondial</span></div>
+    <!-- ============ 12 — UNESCO ============ -->
+    <section id="unesco" class="unesco" data-shape="dust" data-room="12" data-room-name="Patrimoine mondial">
+      <div class="chip"><span>12</span><span>Patrimoine mondial</span></div>
       <h2 class="section-title">Cinq trésors<br /><em>de l'humanité</em></h2>
       <ul class="unesco__list"></ul>
       <p class="unesco__note">Et au patrimoine culturel immatériel : le Gbofé d'Afounkaha (2008), les pratiques du balafon sénoufo (2012) et le Zaouli (2017).</p>
       <div class="unesco__preview" aria-hidden="true"><img alt="" /></div>
     </section>
 
-    <!-- ============ ÉPILOGUE — VOYAGE ============ -->
-    <section id="voyage" class="travel" data-shape="dust" data-hide-world data-room="11" data-room-name="Préparer son voyage">
-      <div class="room__label room__label--dark"><span>Épilogue</span><span>Préparer son voyage</span></div>
-      <h2 class="section-title">Votre visite<br /><em>commence ici</em></h2>
+    <!-- ============ VOYAGE ============ -->
+    <section id="voyage" class="travel" data-shape="dust" data-hide-world data-room="13" data-room-name="Préparer son voyage">
+      <div class="chip chip--dark"><span>→</span><span>Préparer son voyage</span></div>
+      <h2 class="section-title">Votre voyage<br /><em>commence ici</em></h2>
       <div class="travel__grid">
-        <article class="tcard"><span class="tcard__icon">☀</span><h3>Quand partir</h3><p>De novembre à mars, pendant la grande saison sèche. Le Nord est plus sec, le Sud plus humide (saison des pluies d'avril à juillet).</p></article>
+        <article class="tcard"><span class="tcard__icon">☀</span><h3>Quand partir</h3><p>De novembre à mars, pendant la grande saison sèche. Le Nord est plus sec, le Sud plus humide (grandes pluies d'avril à juillet).</p></article>
         <article class="tcard"><span class="tcard__icon">✈</span><h3>Arrivée</h3><p>Aéroport international Félix-Houphouët-Boigny d'Abidjan. Visa électronique à demander en ligne avant le départ.</p></article>
         <article class="tcard"><span class="tcard__icon">⚕</span><h3>Santé</h3><p>Vaccin contre la fièvre jaune obligatoire. Traitement antipaludéen conseillé : consultez un médecin avant le voyage.</p></article>
         <article class="tcard"><span class="tcard__icon">₣</span><h3>Monnaie</h3><p>Franc CFA (XOF), à parité fixe avec l'euro. Paiement mobile (Orange Money, Wave…) très répandu.</p></article>
         <article class="tcard"><span class="tcard__icon">✦</span><h3>Langues</h3><p>Français officiel, et plus de 60 langues : dioula, baoulé, bété, sénoufo… Et le nouchi, l'argot d'Abidjan !</p></article>
-        <article class="tcard"><span class="tcard__icon">◷</span><h3>Pratique</h3><p>Fuseau GMT toute l'année. Prises type C et E (230 V). Conduite à droite.</p></article>
+        <article class="tcard"><span class="tcard__icon">◷</span><h3>Pratique</h3><p>Fuseau GMT toute l'année. Prises type C et E (230 V). Conduite à droite. Taxis orange à Abidjan, woro-woro partagés.</p></article>
       </div>
     </section>
 
     <!-- ============ CARTE FINALE ============ -->
-    <section class="outro" data-shape="mapSide" data-show-cities data-room="12" data-room-name="Au revoir">
+    <section class="outro" data-shape="mapSide" data-show-cities data-room="14" data-room-name="On se revoit">
       <div class="outro__inner">
-        <p class="eyebrow">Fin de la visite</p>
+        <p class="eyebrow">Ce n'est qu'un au revoir</p>
         <h2 class="outro__title">On dit <em>Akwaba</em><br />une fois,<br />on revient toujours.</h2>
-        <a href="#top" class="btn btn--primary" data-cursor="Recommencer">Refaire la visite</a>
+        <a href="#top" class="btn btn--primary" data-cursor="Encore">Recommencer</a>
       </div>
     </section>
   </main>
@@ -281,14 +317,14 @@
       <div>
         <h4>Crédits photos</h4>
         <p class="footer__credits"></p>
-        <p class="footer__small">Photographies Unsplash (licence Unsplash) et archives personnelles.</p>
+        <p class="footer__small">Photographies Unsplash (licence Unsplash), Wikimedia Commons (licences Creative Commons, auteurs cités) et archives personnelles.</p>
       </div>
     </div>
     <p class="footer__copy">© 2026 Gouaho Déto Jean-Luc — Fait avec amour, Three.js &amp; GSAP.</p>
   </footer>
 
-  <!-- Salle de projection -->
-  <div class="video-modal" aria-hidden="true" role="dialog" aria-label="Film de présentation">
+  <!-- Lecteur vidéo -->
+  <div class="video-modal" aria-hidden="true" role="dialog" aria-label="Lecteur vidéo">
     <button class="video-modal__close" aria-label="Fermer">×</button>
     <div class="video-modal__frame"></div>
   </div>

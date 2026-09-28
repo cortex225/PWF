@@ -2,6 +2,7 @@
 
 const base = import.meta.env.BASE_URL;
 export const local = (name, small = false) => `${base}media/${name}${small ? '-sm' : ''}.webp`;
+export const src = (img) => (typeof img === 'string' ? img : img?.src || '');
 const unsplash = (id, w = 1600) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=78`;
 
 // Photos Unsplash (licence Unsplash) — crédits affichés en pied de page
@@ -27,24 +28,21 @@ export const PHOTOS = {
   sourire: { src: unsplash('1664629152253-4cd71d256d8c'), author: 'Ali Drabo', url: 'https://unsplash.com/@draboali33' },
 };
 
-// Œuvres exposées dans la galerie 3D (Salle II)
-export const GALLERY = [
-  { img: local('plateau-lagune'), title: 'Le Plateau', place: 'Abidjan', year: 'Lagune Ébrié', text: "Les tours du quartier d'affaires se reflètent dans la lagune : bienvenue dans la « Perle des Lagunes »." },
-  { img: local('basilique'), title: 'Notre-Dame de la Paix', place: 'Yamoussoukro', year: 'Consacrée en 1990', text: "Son dôme culmine à environ 158 m : l'un des plus grands édifices chrétiens au monde." },
-  { img: local('masque'), title: "L'Esprit du masque", place: 'Centre-Ouest', year: 'Art gouro', text: 'Le masque ne se regarde pas : il se danse. Il relie les vivants, les ancêtres et la forêt.' },
-  { img: PHOTOS.pirogue.src, title: 'Pirogue sur la lagune', place: 'Grand-Bassam', year: 'UNESCO 2012', text: 'Première capitale coloniale, Bassam garde ses maisons à arcades et son rythme lent au bord de la lagune.' },
-  { img: local('danse-masque'), title: 'Le Rythme sacré', place: 'Fête traditionnelle', year: 'Tambours & masques', text: 'Tambours parleurs, chants et masques : chaque fête est un opéra à ciel ouvert.' },
-  { img: local('cathedrale'), title: 'Cathédrale Saint-Paul', place: 'Abidjan', year: 'Aldo Spirito, 1985', text: 'Une silhouette de missionnaire bras tendus, dessinée par l’architecte italien Aldo Spirito.' },
-  { img: PHOTOS.korhogo.src, title: 'La cité du Poro', place: 'Korhogo', year: 'Pays sénoufo', text: 'Capitale du Nord, berceau des toiles peintes et des maîtres du balafon.' },
-  { img: local('coucher-palmiers'), title: 'Heure dorée', place: 'Littoral', year: 'Golfe de Guinée', text: 'Plus de 500 km de côtes où les cocotiers dessinent le soir en ombres chinoises.' },
+// Panorama plein écran
+export const PANORAMA = [
+  { img: PHOTOS.plateau, place: 'Abidjan · Lagune Ébrié', title: 'La Perle<br /><em>des Lagunes</em>', text: 'Les tours du Plateau se reflètent dans la lagune : bienvenue dans la capitale économique.', alt: 'Le Plateau d’Abidjan vu depuis la lagune' },
+  { img: local('basilique'), place: 'Yamoussoukro', title: 'Notre-Dame<br /><em>de la Paix</em>', text: 'Un dôme de 158 m au cœur de la savane.', alt: 'La Basilique Notre-Dame de la Paix' },
+  { img: PHOTOS.pirogue, place: 'Grand-Bassam', title: 'Au fil<br /><em>de la lagune</em>', text: 'Première capitale, patrimoine mondial de l’UNESCO.', alt: 'Pirogue sur la lagune à Grand-Bassam' },
+  { img: local('foret'), place: 'Ouest montagneux', title: 'Forêts<br /><em>de brume</em>', text: 'Les forêts de l’Ouest, royaume des chimpanzés et des masques.', alt: 'Forêt tropicale dans la brume' },
+  { img: local('danse-masque'), place: 'Traditions', title: 'Le rythme<br /><em>sacré</em>', text: 'Tambours, chants et masques : chaque fête est un opéra à ciel ouvert.', alt: 'Danse masquée traditionnelle' },
 ];
 
 // Destinations (Salle III — défilement horizontal)
 export const DESTINATIONS = [
-  { name: 'Abidjan', region: 'Lagunes', tag: 'La Perle des Lagunes', img: local('plateau-aerien'), text: "Tours du Plateau, maquis de Treichville, nuits de Marcory et forêt du Banco en pleine ville : Abidjan ne dort jamais.", see: ['Le Plateau', 'Forêt du Banco', 'Treichville', 'Cocody'] },
+  { name: 'Abidjan', region: 'Lagunes', tag: 'La Perle des Lagunes', img: PHOTOS.plateau.src, text: "Tours du Plateau, maquis de Treichville, nuits de Marcory et forêt du Banco en pleine ville : Abidjan ne dort jamais.", see: ['Le Plateau', 'Forêt du Banco', 'Treichville', 'Cocody'] },
   { name: 'Grand-Bassam', region: 'Sud-Comoé', tag: 'Patrimoine mondial', img: PHOTOS.pirogue.src, text: 'Quartier France aux façades coloniales, Musée national du Costume, plages de sable et fête de l’Abissa.', see: ['Quartier France', 'Musée du Costume', 'Village artisanal'] },
   { name: 'Assinie', region: 'Sud-Comoé', tag: 'Entre lagune et océan', img: local('plage'), text: 'Une langue de sable entre lagune Aby et océan. Sports nautiques, cocotiers et week-ends suspendus.', see: ['Assinie-Mafia', 'Lagune Aby', 'Îles Ehotilé'] },
-  { name: 'Yamoussoukro', region: 'Lacs', tag: 'Capitale politique', img: local('basilique-aerienne'), text: 'Avenues monumentales, Basilique Notre-Dame de la Paix et lac aux caïmans sacrés du palais présidentiel.', see: ['Basilique', 'Lac aux caïmans', 'Fondation Houphouët-Boigny'] },
+  { name: 'Yamoussoukro', region: 'Lacs', tag: 'Capitale politique', img: local('basilique'), text: 'Avenues monumentales, Basilique Notre-Dame de la Paix et lac aux caïmans sacrés du palais présidentiel.', see: ['Basilique', 'Lac aux caïmans', 'Fondation Houphouët-Boigny'] },
   { name: 'Sassandra & San-Pédro', region: 'Bas-Sassandra', tag: 'La Côte sauvage', img: PHOTOS.vagues.src, text: 'Villages de pêcheurs fanti, criques secrètes, surf à Monogaga et embouchure du fleuve Sassandra.', see: ['Baie de Monogaga', 'Plage de Poly', 'Phare de Sassandra'] },
   { name: 'Man', region: 'Tonkpi', tag: 'La ville aux 18 montagnes', img: local('foret'), text: 'La Dent de Man, la cascade sacrée, les ponts de lianes et les masques dan dans les brumes de l’Ouest.', see: ['Dent de Man', 'La Cascade', 'Ponts de lianes', 'Mont Tonkpi'] },
   { name: 'Korhogo', region: 'Poro', tag: 'Le cœur sénoufo', img: PHOTOS.korhogoRocks.src, text: 'Toiles peintes de Fakaha, forgerons de Koni, potières de Katiola et sons du balafon au coucher du soleil.', see: ['Toiles de Fakaha', 'Village de Waraniéné', 'Mont Korhogo'] },
@@ -95,3 +93,19 @@ export const CREDITS = Object.values(PHOTOS).reduce((acc, p) => {
   if (!acc.find((a) => a.author === p.author)) acc.push({ author: p.author, url: p.url });
   return acc;
 }, []);
+
+// --- Contenu provisoire, enrichi par la recherche ---
+export const BUILDINGS = [
+  { name: 'Cathédrale Saint-Paul', meta: 'Abidjan · 1985', text: 'Œuvre de l’architecte Aldo Spirito.', img: local('cathedrale'), size: 'wide' },
+  { name: 'Stade olympique d’Ebimpé', meta: 'Abidjan · 2020', text: 'Théâtre de la CAN 2023.', img: PHOTOS.ebimpe },
+];
+export const MENU_TABS = [
+  { id: 'all', label: 'Tout' },
+  { id: 'plat', label: 'Plats' },
+  { id: 'street-food', label: 'Street-food' },
+  { id: 'boisson', label: 'Boissons' },
+  { id: 'douceur', label: 'Douceurs' },
+];
+export const MENU = DISHES.map((d) => ({ ...d, cat: 'plat' }));
+export const RESTAURANTS = [];
+export const NOUCHI = { intro: ['Le nouchi est l’argot urbain d’Abidjan.'], glossary: [{ word: 'On dit quoi ?', meaning: 'Quoi de neuf ?', example: '' }], facts: [] };
