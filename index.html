@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Akwaba, découvrir la Côte d'Ivoire</title>
-  <meta name="description" content="Découvrez la Côte d'Ivoire : Abidjan, Grand-Bassam, Assinie, Yamoussoukro, Man, Korhogo, les parcs nationaux, la cuisine, la musique, le nouchi, la CAN 2023 et les festivals." />
+  <title>Akwaba, un voyage en Côte d'Ivoire</title>
+  <meta name="description" content="Un voyage en cinq étapes à travers la Côte d'Ivoire : Abidjan, l'Est, le Centre, le Nord et l'Ouest. Lieux, cuisine, musique, fêtes, itinéraires et infos pratiques." />
   <meta name="theme-color" content="#120b07" />
-  <meta property="og:title" content="Akwaba, découvrir la Côte d'Ivoire" />
-  <meta property="og:description" content="Plages, forêts, masques, maquis, musique et festivals. La Côte d'Ivoire comme on la vit." />
+  <meta property="og:title" content="Akwaba, un voyage en Côte d'Ivoire" />
+  <meta property="og:description" content="D'Abidjan aux montagnes de l'Ouest, cinq étapes pour tomber amoureux de la Côte d'Ivoire." />
   <meta property="og:image" content="/media/basilique.webp" />
   <link rel="icon" href="img/icon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,7 +16,8 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 </head>
 <body>
-  <a class="skip-link" href="#pays">Aller au contenu</a>
+  <a class="skip-link" href="#voyage">Aller au contenu</a>
+
   <!-- ============ PRÉCHARGEMENT ============ -->
   <div class="loader" aria-hidden="true">
     <div class="loader__flag"><span></span><span></span><span></span></div>
@@ -36,334 +37,87 @@
       <span class="nav__flag"><i></i><i></i><i></i></span>
       <span>Côte d'Ivoire</span>
     </a>
-    <nav class="nav__links" aria-label="Navigation principale">
-      <a href="#destinations">Destinations</a>
-      <a href="#saveurs">Saveurs</a>
-      <a href="#musique">Musique</a>
-      <a href="#can">CAN 2023</a>
-      <a href="#festivals">Festivals</a>
-      <a href="#voyage">Voyager</a>
-    </nav>
+    <nav class="nav__links" aria-label="Étapes du voyage"></nav>
     <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </header>
 
   <div class="menu" id="menu" aria-hidden="true" inert>
-    <ol class="menu__list">
-      <li><a href="#pays"><small>01</small>Le pays</a></li>
-      <li><a href="#panorama"><small>02</small>Panorama</a></li>
-      <li><a href="#destinations"><small>03</small>Destinations</a></li>
-      <li><a href="#abidjan"><small>04</small>Abidjan aujourd'hui</a></li>
-      <li><a href="#yamoussoukro"><small>05</small>Yamoussoukro</a></li>
-      <li><a href="#littoral"><small>06</small>Le littoral</a></li>
-      <li><a href="#cacao"><small>07</small>Le cacao</a></li>
-      <li><a href="#saveurs"><small>08</small>Saveurs et maquis</a></li>
-      <li><a href="#culture"><small>09</small>Masques et traditions</a></li>
-      <li><a href="#musique"><small>10</small>La musique</a></li>
-      <li><a href="#nouchi"><small>11</small>Le nouchi</a></li>
-      <li><a href="#can"><small>12</small>La CAN 2023</a></li>
-      <li><a href="#festivals"><small>13</small>Festivals</a></li>
-      <li><a href="#unesco"><small>14</small>Patrimoine mondial</a></li>
-      <li><a href="#voyage"><small>15</small>Préparer son voyage</a></li>
-    </ol>
+    <ol class="menu__list"></ol>
   </div>
 
   <aside class="wayfinder" aria-hidden="true">
-    <span class="wayfinder__num">00</span>
+    <span class="wayfinder__num">0/5</span>
     <span class="wayfinder__bar"><i></i></span>
     <span class="wayfinder__name">Akwaba</span>
   </aside>
 
   <main id="top" tabindex="-1">
-    <!-- ============ HERO ============ -->
-    <section class="hero" data-shape="map" data-room="00" data-room-name="Akwaba">
+    <!-- ============ ACCUEIL ============ -->
+    <section class="hero" data-shape="map" data-room="0" data-room-name="Akwaba">
       <div class="hero__inner">
-        <p class="eyebrow hero__eyebrow">Afrique de l'Ouest, golfe de Guinée</p>
+        <p class="eyebrow hero__eyebrow">Un voyage en cinq étapes</p>
         <h1 class="hero__title">
           <span class="line"><span>Akwaba</span></span>
           <span class="line line--italic"><span>en Côte d'Ivoire</span></span>
         </h1>
-        <p class="hero__lead">Chez nous, on dit Akwaba pour dire bienvenue. Venez voir nos lagunes, nos forêts, nos maquis et entendre la musique qui fait danser toute l'Afrique.</p>
+        <p class="hero__lead">Chez nous, Akwaba veut dire bienvenue. Suivez-nous d'Abidjan jusqu'aux montagnes de l'Ouest, et vous aurez envie de faire le voyage pour de vrai.</p>
         <div class="hero__cta">
-          <a href="#pays" class="btn btn--primary" data-cursor="Go">Commencer le voyage</a>
+          <a href="#voyage" class="btn btn--primary" data-cursor="Go">Commencer le voyage</a>
           <button class="btn btn--ghost" data-video="_VrWeJov7jM" data-cursor="Lecture"><span class="play"></span>Voir le film</button>
         </div>
       </div>
       <div class="hero__scroll"><span>Défiler</span><i></i></div>
-      <ul class="hero__meta">
-        <li><b>322 462</b> km²</li>
-        <li><b>60+</b> peuples</li>
-        <li><b>1960</b> Indépendance, le 7 août</li>
+    </section>
+
+    <!-- ============ LE PLAN DU VOYAGE ============ -->
+    <section id="voyage" class="plan" data-shape="mapSide" data-show-cities data-room="0" data-room-name="Le voyage" tabindex="-1">
+      <div class="plan__inner">
+        <p class="eyebrow">Le voyage</p>
+        <h2 class="section-title">Douze jours,<br /><em>cinq régions</em></h2>
+        <p class="plan__lead" data-reveal-words>Entre l'océan et les savanes du Nord, la Côte d'Ivoire réunit plus de soixante peuples, des forêts parmi les plus vieilles d'Afrique et une capitale qui ne dort jamais. On part d'Abidjan et on fait le tour du pays, région par région.</p>
+        <ol class="route"></ol>
+      </div>
+    </section>
+
+    <!-- ============ LES CINQ ÉTAPES (générées depuis src/voyage.js) ============ -->
+    <div id="chapitres"></div>
+
+    <!-- ============ PARTIR ============ -->
+    <section id="partir" class="depart" data-shape="dust" data-hide-world data-room="6" data-room-name="Partir">
+      <div class="depart__head">
+        <p class="eyebrow eyebrow--dark">Partir</p>
+        <h2 class="section-title">Votre voyage<br /><em>commence ici</em></h2>
+        <p class="depart__lead">Vous avez fait le tour du pays avec nous. Voici tout ce qu'il faut pour le faire en vrai.</p>
+      </div>
+
+      <h3 class="subhead subhead--dark">Quand <em>venir</em></h3>
+      <p class="depart__text">La meilleure période, c'est la grande saison sèche, de novembre à mars. Avril est le mois des fêtes, et l'Abissa illumine octobre.</p>
+      <div class="calendar" role="list"></div>
+      <ul class="calendar__legend" aria-label="Légende">
+        <li><i class="season season--dry"></i>Saison sèche, idéal</li>
+        <li><i class="season season--short"></i>Petite saison sèche</li>
+        <li><i class="season season--rain"></i>Saison des pluies dans le Sud</li>
       </ul>
-    </section>
 
-    <!-- ============ 01 LE PAYS ============ -->
-    <section id="pays" class="room room--intro" data-shape="dust" data-room="01" data-room-name="Le pays">
-      <div class="chip"><span>01</span><span>Le pays</span></div>
-      <p class="reveal-text" data-reveal-words>
-        Entre l'océan et les savanes du Nord, la Côte d'Ivoire réunit plus de soixante peuples, des forêts parmi les plus vieilles d'Afrique et une capitale qui ne dort jamais. Et partout, le même mot pour vous recevoir, <em>Akwaba</em>.
-      </p>
-      <div class="stats">
-        <article class="stat"><p class="stat__num"><span data-count="322462">0</span></p><p class="stat__label">km² de territoire, de la lagune jusqu'aux savanes</p></article>
-        <article class="stat"><p class="stat__num"><span data-count="60">0</span>+</p><p class="stat__label">peuples et autant de langues, du baoulé au dioula</p></article>
-        <article class="stat"><p class="stat__num"><span data-count="5">0</span></p><p class="stat__label">sites inscrits au patrimoine mondial de l'UNESCO</p></article>
-        <article class="stat"><p class="stat__num"><span data-count="1">0</span><sup>er</sup></p><p class="stat__label">producteur de cacao au monde</p></article>
-      </div>
-    </section>
+      <h3 class="subhead subhead--dark">Des itinéraires <em>prêts à partir</em></h3>
+      <div class="itins"></div>
 
-    <!-- ============ 02 PANORAMA ============ -->
-    <section id="panorama" class="pano" data-shape="dust" data-hide-world data-room="02" data-room-name="Panorama">
-      <h2 class="sr-only">Panorama de la Côte d'Ivoire en images</h2>
-      <div class="pano__sticky">
-        <div class="pano__slides"></div>
-        <div class="pano__ui">
-          <div class="chip chip--light"><span>02</span><span>Panorama</span></div>
-          <p class="pano__count"><span>01</span> / <em></em></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 03 DESTINATIONS ============ -->
-    <section id="destinations" class="dest" data-shape="dust" data-hide-world data-room="03" data-room-name="Destinations">
-      <div class="dest__sticky">
-        <div class="dest__head">
-          <div class="chip chip--dark"><span>03</span><span>Destinations</span></div>
-          <h2 class="section-title">Où aller<br /><em>en Côte d'Ivoire</em></h2>
-          <p class="dest__hint">Faites glisser pour voir la suite</p>
-        </div>
-        <div class="dest__track"></div>
-        <div class="dest__progress"><i></i></div>
-      </div>
-    </section>
-
-    <!-- ============ 04 ABIDJAN ============ -->
-    <section id="abidjan" class="city" data-shape="dust" data-room="04" data-room-name="Abidjan aujourd'hui">
-      <div class="city__head">
-        <div class="chip"><span>04</span><span>Abidjan aujourd'hui</span></div>
-        <h2 class="section-title">La Perle<br /><em>des Lagunes</em></h2>
-        <p class="city__lead">Abidjan change à toute vitesse. De nouveaux ponts, un stade olympique, une tour qui va devenir la plus haute d'Afrique, et des quartiers qui vivent jour et nuit.</p>
-      </div>
-      <div class="bento"></div>
-    </section>
-
-    <!-- ============ 05 YAMOUSSOUKRO ============ -->
-    <section id="yamoussoukro" class="story" data-shape="basilica" data-room="05" data-room-name="Yamoussoukro">
-      <div class="story__col">
-        <div class="chip"><span>05</span><span>Yamoussoukro</span></div>
-        <div class="story__step">
-          <p class="eyebrow">Capitale politique depuis 1983</p>
-          <h2 class="section-title">Une basilique<br /><em>dans la savane</em></h2>
-          <p>Au centre du pays, la ville natale de Félix Houphouët-Boigny aligne ses grandes avenues jusqu'à la basilique Notre-Dame de la Paix.</p>
-        </div>
-        <div class="story__step">
-          <p class="big-num"><span data-count="158">0</span><small>m</small></p>
-          <p>C'est la hauteur de la basilique jusqu'à la croix. Son dôme s'inspire de Saint-Pierre de Rome, et elle compte parmi les plus grandes églises du monde.</p>
-        </div>
-        <div class="story__step">
-          <p class="big-num"><span data-count="1990">0</span></p>
-          <p>L'année où le pape Jean-Paul II l'a consacrée. Quand le soleil traverse ses vitraux, la nef se remplit de couleurs.</p>
-          <figure class="story__photo"><img data-local="basilique" alt="La basilique Notre-Dame de la Paix de Yamoussoukro" loading="lazy" /></figure>
-        </div>
-        <div class="story__step">
-          <p class="eyebrow">À ne pas manquer</p>
-          <h3 class="story__h3">Le lac aux caïmans</h3>
-          <p>Devant le palais présidentiel, on nourrit les crocodiles du lac en fin d'après-midi. Une scène qu'on n'oublie pas.</p>
-          <figure class="story__photo"><img data-local="basilique-avenue" alt="L'avenue qui mène à la basilique" loading="lazy" /></figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 06 LE LITTORAL ============ -->
-    <section id="littoral" class="coast" data-shape="ocean" data-room="06" data-room-name="Le littoral">
-      <div class="coast__inner">
-        <div class="chip"><span>06</span><span>Le littoral</span></div>
-        <h2 class="coast__title" data-reveal-chars>Plus de 500 km<br /><em>d'océan</em></h2>
-        <p class="coast__lead">De Tabou à Assinie, la côte n'est que cocotiers, lagunes et villages de pêcheurs. Les vagues de l'Atlantique arrivent fort, et le sable est doré.</p>
-      </div>
-      <div class="coast__cards">
-        <article class="coast__card"><img data-local="plage" alt="Plage bordée de cocotiers" loading="lazy" /><div><h3>Assinie</h3><p>La lagune Aby, les hôtels les pieds dans l'eau et le kitesurf.</p></div></article>
-        <article class="coast__card"><img data-photo="bassamPlage" alt="La plage de Grand-Bassam au bord de l'océan" loading="lazy" /><div><h3>Grand-Bassam</h3><p>Les plages du dimanche et les maisons coloniales.</p></div></article>
-        <article class="coast__card"><img data-photo="vagues" alt="Vagues de l'Atlantique sur la côte ivoirienne" loading="lazy" /><div><h3>Sassandra et San-Pédro</h3><p>Des criques sauvages, du surf et la pêche au filet.</p></div></article>
-      </div>
-    </section>
-
-    <!-- ============ 07 CACAO ============ -->
-    <section id="cacao" class="story story--cocoa" data-shape="cocoa" data-room="07" data-room-name="Le cacao">
-      <div class="story__col">
-        <div class="chip"><span>07</span><span>Le cacao</span></div>
-        <div class="story__step">
-          <p class="eyebrow">Cacao, café, noix de cajou</p>
-          <h2 class="section-title">Le pays<br /><em>du chocolat</em></h2>
-          <p>Presque deux fèves de cacao sur cinq dans le monde poussent chez nous, dans les plantations de centaines de milliers de petits planteurs.</p>
-        </div>
-        <div class="story__step">
-          <p class="big-num"><span data-count="40">0</span><small>%</small></p>
-          <p>C'est environ la part de la Côte d'Ivoire dans la production mondiale de cacao. Le pays est aussi l'un des premiers producteurs de noix de cajou.</p>
-        </div>
-        <div class="story__step">
-          <p class="eyebrow">De la cabosse au chocolat</p>
-          <ol class="steps">
-            <li><b>La récolte.</b> On coupe les cabosses à la machette.</li>
-            <li><b>L'écabossage.</b> On ouvre la cabosse pour sortir les fèves et leur pulpe sucrée.</li>
-            <li><b>La fermentation.</b> Les fèves reposent quelques jours sous des feuilles de bananier.</li>
-            <li><b>Le séchage.</b> Elles sèchent ensuite au soleil, étalées sur des claies.</li>
-          </ol>
-          <figure class="story__photo"><img data-photo="cacao" alt="Cabosses de cacao mûres" loading="lazy" /></figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 08 SAVEURS ============ -->
-    <section id="saveurs" class="flavors" data-shape="dust" data-hide-world data-room="08" data-room-name="Saveurs et maquis">
-      <div class="flavors__head">
-        <div class="chip chip--dark"><span>08</span><span>Saveurs et maquis</span></div>
-        <h2 class="section-title">À table,<br /><em>au maquis</em></h2>
-        <p>Le maquis, c'est le petit restaurant du coin, souvent en plein air, où l'on mange avec les doigts et où la musique ne s'arrête jamais. Voici ce qu'il faut goûter.</p>
-      </div>
-      <div class="flavors__stack"></div>
-
-      <div class="menu-card">
-        <div class="menu-card__head">
-          <h3 class="menu-card__title">Toute <em>la carte</em></h3>
-          <div class="tabs" role="group" aria-label="Filtrer la carte"></div>
-        </div>
-        <div class="menu-grid"></div>
-      </div>
-
-      <div class="eat">
-        <div class="eat__head">
-          <h3 class="menu-card__title">Où <em>manger</em></h3>
-          <p>Des maquis de légende, des tables plus chics et des coins de street-food. Nos adresses à Abidjan.</p>
-        </div>
-        <ul class="eat__list"></ul>
-      </div>
-    </section>
-
-    <!-- ============ 09 MASQUES ============ -->
-    <section id="culture" class="story story--culture" data-shape="mask" data-room="09" data-room-name="Masques et traditions">
-      <div class="story__col">
-        <div class="chip"><span>09</span><span>Masques et traditions</span></div>
-        <div class="story__step story__step--intro">
-          <p class="eyebrow">Masques, danses, artisans</p>
-          <h2 class="section-title">L'esprit<br /><em>du masque</em></h2>
-          <p>Ici, un masque n'est pas fait pour rester accroché au mur. Il danse, il juge, il chante. C'est la mémoire vivante de chaque peuple.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 10 MUSIQUE ============ -->
-    <section id="musique" class="music-head" data-shape="vinyl" data-room="10" data-room-name="La musique">
-      <div class="chip"><span>10</span><span>La musique</span></div>
-      <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <h2 class="music-head__title">La bande-son <em>d'un pays</em></h2>
-      <p class="music-head__lead">Du balafon au rap ivoire en passant par le reggae, le zouglou et le coupé-décalé, la Côte d'Ivoire n'a jamais arrêté d'inventer des sons. Et quand Abidjan lance une danse, toute l'Afrique la reprend.</p>
-    </section>
-    <section class="story story--music" data-shape="vinyl" data-room="10" data-room-name="La musique">
-      <div class="story__col"></div>
-    </section>
-    <section class="artists" data-shape="vinyl" data-room="10" data-room-name="La musique">
-      <h3 class="subhead">Les voix <em>à écouter</em></h3>
-      <div class="mphotos"></div>
-      <div class="agrid"></div>
-      <ul class="mfacts"></ul>
-    </section>
-
-    <!-- ============ 11 NOUCHI ============ -->
-    <section id="nouchi" class="nouchi" data-shape="dust" data-room="11" data-room-name="Le nouchi">
-      <div class="nouchi__head">
-        <div class="chip"><span>11</span><span>Le nouchi</span></div>
-        <h2 class="nouchi__title" data-reveal-chars>On dit quoi&nbsp;?</h2>
-        <div class="nouchi__intro"></div>
-      </div>
-      <div class="nouchi__marquee" aria-hidden="true"><div class="nouchi__marquee-inner"></div></div>
-      <p class="nouchi__hint">Touchez une carte pour la traduire</p>
-      <div class="nouchi__grid"></div>
-      <ul class="nouchi__facts"></ul>
-    </section>
-
-    <!-- ============ 12 CAN 2023 ============ -->
-    <section id="can" class="can-hero" data-shape="ball" data-hide-world data-room="12" data-room-name="La CAN 2023">
-      <div class="can-hero__bg"><img data-photo="ebimpe" alt="Le stade olympique Alassane-Ouattara d'Ebimpé à Abidjan" /></div>
-      <span class="can-credit">Stade d'Ebimpé, photo Marou Bamba</span>
-      <div class="can-hero__inner">
-        <div>
-          <div class="chip chip--light"><span>12</span><span>La CAN 2023</span></div>
-          <div class="stars" aria-label="Trois étoiles : 1992, 2015, 2024">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
-            <span>1992, 2015, 2024</span>
-          </div>
-          <h2 class="can-hero__title">Champions<br /><em>d'Afrique</em></h2>
-          <p class="can-hero__lead">En 2024, la Côte d'Ivoire a reçu toute l'Afrique pour la Coupe d'Afrique des Nations. Presque éliminés au premier tour, les Éléphants sont allés jusqu'au bout. Chez nous, on les appelle les miraculés.</p>
-        </div>
-        <div class="score" aria-label="Finale : Côte d'Ivoire 2, Nigeria 1">
-          <p class="score__label">Finale, 11 février 2024, Ebimpé</p>
-          <div class="score__row score__row--win">
-            <span class="score__team"><span class="score__flag"><i style="background:#f77f00"></i><i style="background:#fff8ee"></i><i style="background:#00a65a"></i></span>Côte d'Ivoire</span>
-            <span class="score__num">2</span>
-          </div>
-          <div class="score__row score__row--lose">
-            <span class="score__team"><span class="score__flag"><i style="background:#008751"></i><i style="background:#fff8ee"></i><i style="background:#008751"></i></span>Nigeria</span>
-            <span class="score__num">1</span>
-          </div>
-          <p class="score__goals">Kessié 62e, Haller 81e</p>
-        </div>
-      </div>
-    </section>
-    <section class="story story--can" data-shape="ball" data-room="12" data-room-name="La CAN 2023">
-      <div class="story__col">
-        <div class="story__step">
-          <p class="eyebrow">Le parcours</p>
-          <h2 class="section-title">L'histoire<br /><em>des miraculés</em></h2>
-          <p>Un match d'ouverture réussi, une défaite qui fait honte, un entraîneur remercié, puis cinq matchs gagnés avec le cœur. Voici comment tout s'est passé.</p>
-        </div>
-      </div>
-    </section>
-    <section class="can-media" data-shape="ball" data-room="12" data-room-name="La CAN 2023">
-      <div class="can-stats"></div>
-      <h3 class="subhead">Revivre <em>la CAN</em></h3>
-      <div class="vgrid"></div>
-      <h3 class="subhead">La nuit où Abidjan <em>n'a pas dormi</em></h3>
-      <div class="pstrip"></div>
-    </section>
-
-    <!-- ============ 13 FESTIVALS ============ -->
-    <section id="festivals" class="fest" data-shape="dust" data-room="13" data-room-name="Festivals">
-      <div class="chip"><span>13</span><span>Festivals</span></div>
-      <h2 class="section-title fest__title">Toute l'année,<br /><em>on fait la fête</em></h2>
-      <div class="marquee" aria-hidden="true"><div class="marquee__inner"></div></div>
-      <div class="fest__grid"></div>
-    </section>
-
-    <!-- ============ 14 UNESCO ============ -->
-    <section id="unesco" class="unesco" data-shape="dust" data-room="14" data-room-name="Patrimoine mondial">
-      <div class="chip"><span>14</span><span>Patrimoine mondial</span></div>
-      <h2 class="section-title">Cinq trésors<br /><em>de l'humanité</em></h2>
-      <ul class="unesco__list"></ul>
-      <p class="unesco__note">L'UNESCO reconnaît aussi notre patrimoine vivant : le gbofé d'Afounkaha depuis 2008, le balafon sénoufo depuis 2012, le zaouli depuis 2017 et le savoir-faire de l'attiéké depuis 2024.</p>
-      <div class="unesco__preview" aria-hidden="true"><img alt="" /></div>
-    </section>
-
-    <!-- ============ 15 VOYAGE ============ -->
-    <section id="voyage" class="travel" data-shape="dust" data-hide-world data-room="15" data-room-name="Préparer son voyage">
-      <div class="chip chip--dark"><span>15</span><span>Préparer son voyage</span></div>
-      <h2 class="section-title">Votre voyage<br /><em>commence ici</em></h2>
+      <h3 class="subhead subhead--dark">Bon <em>à savoir</em></h3>
       <div class="travel__grid">
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><h3>Quand partir</h3><p>Le mieux, c'est de novembre à mars, pendant la saison sèche. Le Nord est plus sec que le Sud, où les grosses pluies tombent d'avril à juillet.</p></article>
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M2 16l20-7-4-2-6 2-5-4-2 1 3 5-4 1-2-1-1 1z"/><path d="M3 20h18"/></svg></span><h3>Arriver</h3><p>On atterrit à l'aéroport Félix-Houphouët-Boigny d'Abidjan. Pensez à demander votre visa électronique en ligne avant de partir.</p></article>
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/><path d="M9 11h6M12 8v6"/></svg></span><h3>Santé</h3><p>Le vaccin contre la fièvre jaune est obligatoire. Un traitement contre le paludisme est conseillé, parlez-en à votre médecin.</p></article>
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span><h3>Argent</h3><p>On paie en franc CFA, lié à l'euro par un taux fixe. Le paiement par mobile, avec Orange Money ou Wave, est partout.</p></article>
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span><h3>Langues</h3><p>Le français est la langue officielle, mais on parle plus de soixante langues : dioula, baoulé, bété, sénoufo. Et bien sûr le nouchi.</p></article>
-        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6" rx="2"/><path d="M5 11l2-5h10l2 5M7 17v2M17 17v2"/></svg></span><h3>Se déplacer</h3><p>À Abidjan, on prend les taxis orange ou les woro-woro partagés. Le pays est à l'heure GMT toute l'année et on roule à droite.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M2 16l20-7-4-2-6 2-5-4-2 1 3 5-4 1-2-1-1 1z"/><path d="M3 20h18"/></svg></span><h4>Arriver</h4><p>On atterrit à l'aéroport Félix-Houphouët-Boigny d'Abidjan. Pensez à demander votre visa électronique en ligne avant de partir.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/><path d="M9 11h6M12 8v6"/></svg></span><h4>Santé</h4><p>Le vaccin contre la fièvre jaune est obligatoire. Un traitement contre le paludisme est conseillé, parlez-en à votre médecin.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span><h4>Argent</h4><p>On paie en franc CFA, lié à l'euro par un taux fixe. Le paiement par mobile, avec Orange Money ou Wave, est partout.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6" rx="2"/><path d="M5 11l2-5h10l2 5M7 17v2M17 17v2"/></svg></span><h4>Se déplacer</h4><p>Taxis orange et woro-woro à Abidjan, cars confortables entre les villes, et vols intérieurs pour le Nord et l'Ouest.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span><h4>Langues</h4><p>Le français partout, plus de soixante langues locales, et le nouchi à Abidjan. Un « Akwaba » suffit pour se faire des amis.</p></article>
+        <article class="tcard"><span class="tcard__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h4>Sur place</h4><p>Heure GMT toute l'année, prises de type C et E en 230 V, conduite à droite. Et on prend le temps : ici, on salue avant de demander.</p></article>
       </div>
     </section>
 
-    <!-- ============ CARTE FINALE ============ -->
-    <section class="outro" data-shape="mapSide" data-show-cities data-room="16" data-room-name="À bientôt">
+    <section class="outro" data-shape="mapSide" data-show-cities data-room="6" data-room-name="À bientôt">
       <div class="outro__inner">
         <p class="eyebrow">À très vite</p>
         <h2 class="outro__title">On dit <em>Akwaba</em><br />une fois,<br />on revient toujours.</h2>
-        <a href="#top" class="btn btn--primary" data-cursor="Encore">Refaire le voyage</a>
+        <a href="#voyage" class="btn btn--primary" data-cursor="Encore">Revoir le voyage</a>
       </div>
     </section>
   </main>
@@ -384,7 +138,7 @@
       <div>
         <h3>Crédits photos</h3>
         <p class="footer__credits"></p>
-        <p class="footer__small">Photos Unsplash (licence Unsplash) et archives personnelles. Vidéos hébergées sur YouTube par leurs auteurs.</p>
+        <p class="footer__small">Photos Unsplash (licence Unsplash) et archives personnelles. Vidéos hébergées sur YouTube par leurs auteurs. Distances et durées données à titre indicatif.</p>
       </div>
     </div>
     <p class="footer__copy">© 2026 Gouaho Déto Jean-Luc. Fait avec amour, Three.js et GSAP.</p>
@@ -392,11 +146,214 @@
 
   <button class="to-top" aria-label="Revenir en haut de la page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
+  <!-- Visionneuse photo -->
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse photo" aria-hidden="true" inert>
+    <button class="lightbox__close" aria-label="Fermer la visionneuse">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Photo précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <figure class="lightbox__figure">
+      <img alt="" />
+      <figcaption><span class="lightbox__caption"></span><span class="lightbox__credit"></span><span class="lightbox__count"></span></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Photo suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+
+  <!-- Fiche d'un lieu -->
+  <div class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true" inert>
+    <div class="drawer__backdrop" data-close></div>
+    <article class="drawer__panel">
+      <button class="drawer__close" aria-label="Fermer la fiche" data-close>×</button>
+      <div class="drawer__media"></div>
+      <div class="drawer__body"></div>
+    </article>
+  </div>
+
   <!-- Lecteur vidéo -->
   <div class="video-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Lecteur vidéo" inert>
     <button class="video-modal__close" aria-label="Fermer la vidéo">×</button>
     <div class="video-modal__frame"></div>
   </div>
+
+  <!-- ================================================================ -->
+  <!-- Blocs thématiques : chaque bloc est placé dans l'étape du voyage -->
+  <!-- où il se vit (voir `blocks` dans src/voyage.js).                  -->
+  <!-- ================================================================ -->
+
+  <template id="block-city">
+    <section class="city" data-shape="dust">
+      <div class="block-head">
+        <p class="eyebrow">Abidjan aujourd'hui</p>
+        <h3 class="section-title">Une ville<br /><em>en chantier</em></h3>
+        <p class="block-lead">De nouveaux ponts, une tour qui va devenir la plus haute d'Afrique, des monuments qui racontent l'histoire du pays.</p>
+      </div>
+      <div class="bento"></div>
+    </section>
+  </template>
+
+  <template id="block-food">
+    <section class="flavors" data-shape="dust" data-hide-world>
+      <div class="block-head">
+        <p class="eyebrow eyebrow--dark">À table</p>
+        <h3 class="section-title">Le goût<br /><em>du maquis</em></h3>
+        <p class="block-lead block-lead--dark">Le maquis, c'est le petit restaurant du coin, souvent en plein air, où l'on mange avec les doigts et où la musique ne s'arrête jamais. Abidjan est le meilleur endroit pour goûter tout le pays.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card__head">
+          <p class="menu-card__count"><span></span> plats et boissons à goûter</p>
+          <div class="tabs" role="group" aria-label="Filtrer la carte"></div>
+        </div>
+        <div class="menu-grid"></div>
+      </div>
+      <div class="eat">
+        <div class="eat__head">
+          <h4 class="menu-card__title">Où <em>manger</em></h4>
+          <p>Des maquis de légende, des tables plus chics et des coins de street-food.</p>
+        </div>
+        <ul class="eat__list"></ul>
+      </div>
+    </section>
+  </template>
+
+  <template id="block-music">
+    <section class="music-head" data-shape="vinyl">
+      <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="eyebrow">La musique</p>
+      <h3 class="music-head__title">La bande-son <em>d'un pays</em></h3>
+      <p class="block-lead">Du balafon au rap ivoire en passant par le reggae, le zouglou et le coupé-décalé, la Côte d'Ivoire n'a jamais arrêté d'inventer des sons. Et quand Abidjan lance une danse, toute l'Afrique la reprend.</p>
+    </section>
+    <section class="story story--music" data-shape="vinyl">
+      <div class="story__col"></div>
+    </section>
+    <section class="artists" data-shape="vinyl">
+      <h4 class="subhead">Les voix <em>à écouter</em></h4>
+      <div class="agrid"></div>
+      <ul class="mfacts"></ul>
+    </section>
+  </template>
+
+  <template id="block-nouchi">
+    <section class="nouchi" data-shape="dust">
+      <div class="nouchi__head">
+        <p class="eyebrow">Le nouchi</p>
+        <h3 class="nouchi__title" data-reveal-chars>On dit quoi&nbsp;?</h3>
+        <div class="nouchi__intro"></div>
+      </div>
+      <div class="nouchi__marquee" aria-hidden="true"><div class="nouchi__marquee-inner"></div></div>
+      <p class="nouchi__hint">Touchez une carte pour la traduire</p>
+      <div class="nouchi__grid"></div>
+      <ul class="nouchi__facts"></ul>
+    </section>
+  </template>
+
+  <template id="block-can">
+    <section class="can-hero" data-shape="ball" data-hide-world>
+      <div class="can-hero__bg"><img data-photo="ebimpe" alt="Le stade olympique Alassane-Ouattara d'Ebimpé à Abidjan" data-zoom data-caption="Le stade olympique Alassane-Ouattara d'Ebimpé, où la CAN s'est ouverte et s'est achevée" /></div>
+      <div class="can-hero__inner">
+        <div>
+          <p class="eyebrow">La CAN 2023, jouée en 2024</p>
+          <div class="stars" aria-label="Trois étoiles : 1992, 2015, 2024">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7L2 9.2l7.1-.6z"/></svg>
+            <span>1992, 2015, 2024</span>
+          </div>
+          <h3 class="can-hero__title">Champions<br /><em>d'Afrique</em></h3>
+          <p class="can-hero__lead">En 2024, Abidjan a reçu toute l'Afrique pour la Coupe d'Afrique des Nations. Presque éliminés au premier tour, les Éléphants sont allés jusqu'au bout. Chez nous, on les appelle les miraculés.</p>
+        </div>
+        <div class="score" aria-label="Finale : Côte d'Ivoire 2, Nigeria 1">
+          <p class="score__label">Finale, 11 février 2024, Ebimpé</p>
+          <div class="score__row score__row--win">
+            <span class="score__team"><span class="score__flag"><i style="background:#f77f00"></i><i style="background:#fff8ee"></i><i style="background:#00a65a"></i></span>Côte d'Ivoire</span>
+            <span class="score__num">2</span>
+          </div>
+          <div class="score__row score__row--lose">
+            <span class="score__team"><span class="score__flag"><i style="background:#008751"></i><i style="background:#fff8ee"></i><i style="background:#008751"></i></span>Nigeria</span>
+            <span class="score__num">1</span>
+          </div>
+          <p class="score__goals">Kessié 62e, Haller 81e</p>
+        </div>
+      </div>
+    </section>
+    <section class="story story--can" data-shape="ball">
+      <div class="story__col">
+        <div class="story__step">
+          <p class="eyebrow">Le parcours</p>
+          <h4 class="section-title">L'histoire<br /><em>des miraculés</em></h4>
+          <p>Un match d'ouverture réussi, une défaite qui fait honte, un entraîneur remercié, puis cinq matchs gagnés avec le cœur.</p>
+        </div>
+      </div>
+    </section>
+    <section class="can-media" data-shape="ball">
+      <div class="can-stats"></div>
+      <h4 class="subhead">Revivre <em>la CAN</em></h4>
+      <div class="vgrid"></div>
+      <h4 class="subhead">La nuit où Abidjan <em>n'a pas dormi</em></h4>
+      <div class="pstrip" data-gallery="can"></div>
+    </section>
+  </template>
+
+  <template id="block-coast">
+    <section class="coast" data-shape="ocean">
+      <div class="coast__inner">
+        <p class="eyebrow">Le littoral</p>
+        <h3 class="coast__title" data-reveal-chars>Plus de 500 km<br /><em>d'océan</em></h3>
+        <p class="coast__lead">De Tabou à Assinie, la côte n'est que cocotiers, lagunes et villages de pêcheurs. Attention, les vagues de l'Atlantique sont puissantes : on se baigne là où les gens du coin se baignent.</p>
+      </div>
+    </section>
+  </template>
+
+  <template id="block-basilica">
+    <section class="story" data-shape="basilica">
+      <div class="story__col">
+        <div class="story__step">
+          <p class="eyebrow">Yamoussoukro</p>
+          <h3 class="section-title">Une basilique<br /><em>dans la savane</em></h3>
+          <p>La ville natale de Félix Houphouët-Boigny, capitale politique depuis 1983, aligne ses grandes avenues jusqu'à la basilique Notre-Dame de la Paix.</p>
+        </div>
+        <div class="story__step">
+          <p class="big-num"><span data-count="158">0</span><small>m</small></p>
+          <p>C'est la hauteur de la basilique jusqu'à la croix. Son dôme s'inspire de Saint-Pierre de Rome, et elle compte parmi les plus grandes églises du monde. Le pape Jean-Paul II l'a consacrée en 1990.</p>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="block-cocoa">
+    <section class="story story--cocoa" data-shape="cocoa">
+      <div class="story__col">
+        <div class="story__step">
+          <p class="eyebrow">La route du cacao</p>
+          <h3 class="section-title">Le pays<br /><em>du chocolat</em></h3>
+          <p>Dans le Sud-Ouest, autour de Soubré, les plantations se succèdent à perte de vue. Les fèves descendent ensuite vers le port de San-Pédro, d'où elles partent pour le monde entier.</p>
+        </div>
+        <div class="story__step">
+          <p class="big-num"><span data-count="40">0</span><small>%</small></p>
+          <p>C'est environ la part de la Côte d'Ivoire dans la production mondiale de cacao. Premier producteur au monde, le pays le doit à des centaines de milliers de petits planteurs.</p>
+        </div>
+        <div class="story__step">
+          <p class="eyebrow">De la cabosse au chocolat</p>
+          <ol class="steps">
+            <li><b>La récolte.</b> On coupe les cabosses à la machette.</li>
+            <li><b>L'écabossage.</b> On ouvre la cabosse pour sortir les fèves et leur pulpe sucrée.</li>
+            <li><b>La fermentation.</b> Les fèves reposent quelques jours sous des feuilles de bananier.</li>
+            <li><b>Le séchage.</b> Elles sèchent ensuite au soleil, étalées sur des claies.</li>
+          </ol>
+          <button class="story__photo" data-zoom-trigger aria-label="Agrandir la photo des cabosses"><img data-photo="cacao" alt="Cabosses de cacao mûres" loading="lazy" data-zoom data-caption="Cabosses de cacao mûres" /></button>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="block-masks">
+    <section class="story story--culture" data-shape="mask">
+      <div class="story__col">
+        <div class="story__step">
+          <p class="eyebrow">Masques de l'Ouest</p>
+          <h3 class="section-title">L'esprit<br /><em>du masque</em></h3>
+          <p>Ici, un masque n'est pas fait pour rester accroché au mur. Il danse, il juge, il chante. Dans l'Ouest, c'est la mémoire vivante des peuples dan et wè.</p>
+        </div>
+      </div>
+    </section>
+  </template>
 
   <script type="module" src="/src/main.js"></script>
 </body>
