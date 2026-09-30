@@ -4,6 +4,8 @@
 import { Color } from 'three';
 // Contour réel (Natural Earth 1:10m) — généré par `npm run map`
 import CIV_OUTLINE from './civ-outline.json';
+// Pays d'Afrique (Natural Earth 1:50m) — généré par `npm run map`
+import AFRICA from './africa-outline.json';
 
 const rand = (a = 0, b = 1) => a + Math.random() * (b - a);
 const TAU = Math.PI * 2;
@@ -20,6 +22,10 @@ export const PALETTE = {
   sea: new Color('#0E7C86'),
   seaLight: new Color('#6FE3E1'),
   foam: new Color('#F4FFFD'),
+  land: new Color('#8A6A4A'),
+  roast: new Color('#4A2A17'),
+  caramel: new Color('#B8743A'),
+  cherry: new Color('#C0392B'),
 };
 
 const tmp = new Color();
@@ -156,6 +162,153 @@ export function mapShape(pos, col, n) {
     const h = relief(x, y);
     setPos(pos, i, x, y, h + rand(-0.03, 0.03));
     tmp.copy(flagColor(x)).multiplyScalar(0.4 + h * 1.2 + rand(0, 0.3));
+    setCol(col, i, tmp);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* L'Afrique, avec la Côte d'Ivoire allumée aux couleurs du drapeau    */
+/* ------------------------------------------------------------------ */
+const AF_K = 0.09;
+const AF_CX = 17;
+const AF_CY = 2;
+export const africaToLocal = (lon, lat) => [(lon - AF_CX) * AF_K, (lat - AF_CY) * AF_K];
+
+const AF_RINGS = AFRICA.filter((c) => c.id !== '384').flatMap((c) => c.rings.map((r) => r.map(([lon, lat]) => africaToLocal(lon, lat))));
+const AF_CIV = CIV_OUTLINE.map(([lon, lat]) => africaToLocal(lon, lat));
+const bbox = (ring) => ring.reduce((b, [x, y]) => [Math.min(b[0], x), Math.max(b[1], x), Math.min(b[2], y), Math.max(b[3], y)], [Infinity, -Infinity, Infinity, -Infinity]);
+const AF_BOXES = AF_RINGS.map(bbox);
+const inAfrica = (x, y) => AF_RINGS.some((r, k) => {
+  const [a, b, c, d] = AF_BOXES[k];
+  return x >= a && x <= b && y >= c && y <= d && insidePolygon(x, y, r);
+});
+
+// Un point au hasard sur un ensemble de contours, proportionnellement à leur longueur
+function outlineSampler(rings) {
+  const segs = [];
+  let total = 0;
+  for (const r of rings)
+    for (let i = 0; i < r.length; i++) {
+      const a = r[i];
+      const b = r[(i + 1) % r.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      segs.push({ a, b, start: total, len });
+      total += len;
+    }
+  return () => {
+    const d = Math.random() * total;
+    let lo = 0;
+    let hi = segs.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (segs[mid].start <= d) lo = mid;
+      else hi = mid - 1;
+    }
+    const s = segs[lo];
+    const k = s.len ? (d - s.start) / s.len : 0;
+    return [s.a[0] + (s.b[0] - s.a[0]) * k, s.a[1] + (s.b[1] - s.a[1]) * k];
+  };
+}
+
+export function africaShape(pos, col, n) {
+  const borders = outlineSampler(AF_RINGS);
+  const civEdge = outlineSampler([AF_CIV]);
+  const [cMinX, cMaxX, cMinY, cMaxY] = bbox(AF_CIV);
+  const civFlag = (x) => {
+    const t = (x - cMinX) / (cMaxX - cMinX);
+    return t < 0.36 ? PALETTE.orange : t < 0.64 ? PALETTE.white : PALETTE.green;
+  };
+  const nBorder = Math.floor(n * 0.16);
+  const nCivEdge = Math.floor(n * 0.06);
+  const nCiv = Math.floor(n * 0.16);
+  const nRing = Math.floor(n * 0.04);
+  let i = 0;
+  // Frontières des pays, discrètes
+  for (; i < nBorder; i++) {
+    const [x, y] = borders();
+    setPos(pos, i, x + rand(-0.01, 0.01), y + rand(-0.01, 0.01), rand(-0.02, 0.02));
+    tmp.copy(PALETTE.gold).multiplyScalar(rand(0.55, 0.85));
+    setCol(col, i, tmp);
+  }
+  // Côte d'Ivoire : contour vif, légèrement soulevé
+  for (let k = 0; k < nCivEdge; k++, i++) {
+    const [x, y] = civEdge();
+    setPos(pos, i, x, y, 0.12 + rand(-0.01, 0.01));
+    tmp.copy(civFlag(x)).lerp(PALETTE.white, 0.25);
+    setCol(col, i, tmp);
+  }
+  // Côte d'Ivoire : remplissage dense
+  for (let k = 0; k < nCiv; ) {
+    const x = rand(cMinX, cMaxX);
+    const y = rand(cMinY, cMaxY);
+    if (!insidePolygon(x, y, AF_CIV)) continue;
+    setPos(pos, i, x, y, 0.1 + rand(-0.03, 0.03));
+    tmp.copy(civFlag(x)).multiplyScalar(rand(0.75, 1.15));
+    setCol(col, i, tmp);
+    k++;
+    i++;
+  }
+  // Halo autour du pays
+  const [ccx, ccy] = africaToLocal(-5.55, 7.55);
+  for (let k = 0; k < nRing; k++, i++) {
+    const a = rand(0, TAU);
+    const r = 0.62 + rand(-0.015, 0.015);
+    setPos(pos, i, ccx + Math.cos(a) * r, ccy + Math.sin(a) * r, 0.1);
+    setCol(col, i, PALETTE.gold);
+  }
+  // Le reste du continent, en pointillés sourds
+  const [minX, maxX, minY, maxY] = AF_BOXES.reduce((b, c) => [Math.min(b[0], c[0]), Math.max(b[1], c[1]), Math.min(b[2], c[2]), Math.max(b[3], c[3])], [Infinity, -Infinity, Infinity, -Infinity]);
+  while (i < n) {
+    const x = rand(minX, maxX);
+    const y = rand(minY, maxY);
+    if (!inAfrica(x, y)) continue;
+    setPos(pos, i, x, y, rand(-0.03, 0.03));
+    tmp.copy(PALETTE.land).lerp(PALETTE.gold, rand(0.1, 0.45)).multiplyScalar(rand(0.5, 0.8));
+    setCol(col, i, tmp);
+    i++;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Grain de café : face bombée, face plate et sillon en S, cerises     */
+/* ------------------------------------------------------------------ */
+export function coffeeShape(pos, col, n) {
+  const A = 1.05; // demi-largeur
+  const L = 1.6; // demi-longueur
+  const C = 0.75; // épaisseur
+  const cherries = Math.floor(n * 0.12);
+  for (let i = 0; i < n; i++) {
+    let x, y, z;
+    if (i < n - cherries) {
+      const u = rand(0, TAU);
+      const v = Math.acos(rand(-1, 1));
+      x = A * Math.sin(v) * Math.cos(u);
+      y = L * Math.cos(v);
+      z = C * Math.sin(v) * Math.sin(u);
+      const flat = z > 0;
+      if (flat) z *= 0.35; // face plate vers la caméra
+      // Sillon en S au milieu de la face plate
+      const s = 0.14 * Math.sin((y / L) * Math.PI * 1.2);
+      const d = Math.abs(x - s);
+      const inCrease = flat && d < 0.09 && Math.abs(y) < L * 0.88;
+      if (inCrease) z -= 0.22 * (1 - d / 0.09);
+      const light = 0.5 + 0.5 * (x / A) * 0.6 + (flat ? 0.15 : 0);
+      tmp.copy(PALETTE.roast).lerp(PALETTE.caramel, Math.max(0, Math.min(1, light)));
+      if (inCrease) tmp.copy(PALETTE.roast).multiplyScalar(0.55);
+    } else {
+      // Cerises de café en orbite
+      const b = i % 14;
+      const a = (b / 14) * TAU;
+      const rr = 2.2 + (b % 3) * 0.22;
+      const u = rand(0, TAU);
+      const v = Math.acos(rand(-1, 1));
+      x = rr * Math.cos(a) + 0.15 * Math.sin(v) * Math.cos(u);
+      y = Math.sin(a * 2) * 0.7 + 0.15 * Math.cos(v);
+      z = rr * Math.sin(a) + 0.15 * Math.sin(v) * Math.sin(u);
+      tmp.copy(PALETTE.cherry).lerp(PALETTE.orange, rand(0, 0.35));
+    }
+    setPos(pos, i, x, y, z);
+    tmp.multiplyScalar(rand(0.75, 1.1));
     setCol(col, i, tmp);
   }
 }

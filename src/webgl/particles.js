@@ -2,7 +2,7 @@
 // La carte du pays sert de fil rouge : elle zoome sur la région visitée et l'allume.
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { mapShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, ballShape, CITIES, lonLatToLocal } from './shapes.js';
+import { mapShape, africaShape, coffeeShape, basilicaShape, cocoaShape, maskShape, oceanShape, dustShape, vinylShape, ballShape, CITIES, lonLatToLocal } from './shapes.js';
 
 const vertexShader = /* glsl */ `
   attribute vec3 aFrom;
@@ -79,6 +79,8 @@ const fragmentShader = /* glsl */ `
 const SHAPES = {
   map: { fn: mapShape, x: 1.3, y: 0, rotX: -0.35, spin: 0, wave: 0, scale: 1 },
   mapSide: { fn: 'map', x: 2.5, y: 0, rotX: -0.3, spin: 0, wave: 0, scale: 0.9 },
+  africa: { fn: africaShape, x: 3.2, y: 0, rotX: -0.2, spin: 0, wave: 0, scale: 0.85 },
+  coffee: { fn: coffeeShape, x: 2.2, y: 0, rotX: 0.2, spin: 0.3, wave: 0, scale: 1, rotZ: 0.4 },
   dust: { fn: dustShape, x: 0, y: 0, rotX: 0, spin: 0.02, wave: 0, scale: 1 },
   basilica: { fn: basilicaShape, x: 2.3, y: 0.35, rotX: 0.22, spin: 0.12, wave: 0, scale: 0.78 },
   cocoa: { fn: cocoaShape, x: 2.2, y: 0, rotX: 0.3, spin: 0.25, wave: 0, scale: 1, rotZ: -0.5 },
@@ -229,6 +231,7 @@ export class ParticleWorld {
     this.applyLayout(duration);
   }
 
+  // overwrite : un nouvel appel remplace les déplacements encore en cours
   applyLayout(duration) {
     const def = SHAPES[this.current];
     if (this.focus && (def.fn === mapShape || def.fn === 'map')) {
@@ -238,23 +241,23 @@ export class ParticleWorld {
       const tx = this.isMobile ? 0 : 2.3;
       const ty = this.isMobile ? 2.4 : 0;
       // carte à plat face caméra : la région tombe exactement sur la cible
-      gsap.to(this.root.position, { x: tx - fx * z, y: ty - fy * z, duration, ease: 'power3.inOut' });
-      gsap.to(this.root.scale, { x: z, y: z, z, duration, ease: 'power3.inOut' });
-      gsap.to(this.root.rotation, { x: 0, z: 0, duration, ease: 'power3.inOut' });
+      gsap.to(this.root.position, { x: tx - fx * z, y: ty - fy * z, duration, ease: 'power3.inOut', overwrite: true });
+      gsap.to(this.root.scale, { x: z, y: z, z, duration, ease: 'power3.inOut', overwrite: true });
+      gsap.to(this.root.rotation, { x: 0, z: 0, duration, ease: 'power3.inOut', overwrite: true });
       return;
     }
     const x = this.isMobile ? 0 : def.x;
-    const isMap = def.fn === mapShape || def.fn === 'map';
+    const isMap = def.fn === mapShape || def.fn === 'map' || def.fn === africaShape;
     // Sur mobile, la forme se place au-dessus du texte
     const y = this.isMobile && def.x ? def.y + (isMap ? 2.9 : 1.2) : def.y;
     const s = (this.isMobile && def.x ? (isMap ? 0.72 : 0.8) : 1) * def.scale;
-    gsap.to(this.root.position, { x, y, duration, ease: 'power3.inOut' });
-    gsap.to(this.root.scale, { x: s, y: s, z: s, duration, ease: 'power3.inOut' });
-    gsap.to(this.root.rotation, { x: def.rotX, z: def.rotZ || 0, duration, ease: 'power3.inOut' });
+    gsap.to(this.root.position, { x, y, duration, ease: 'power3.inOut', overwrite: true });
+    gsap.to(this.root.scale, { x: s, y: s, z: s, duration, ease: 'power3.inOut', overwrite: true });
+    gsap.to(this.root.rotation, { x: def.rotX, z: def.rotZ || 0, duration, ease: 'power3.inOut', overwrite: true });
     if (!def.spin) {
       // revient à l'orientation d'origine la plus proche
       const target = Math.round(this.spinner.rotation.y / (Math.PI * 2)) * Math.PI * 2;
-      gsap.to(this.spinner.rotation, { y: target, duration: duration || 0.01, ease: 'power3.inOut' });
+      gsap.to(this.spinner.rotation, { y: target, duration: duration || 0.01, ease: 'power3.inOut', overwrite: true });
     }
   }
 
