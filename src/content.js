@@ -335,6 +335,7 @@ export const SOURCES = [
       ...CROPS.map((c) => c.img),
       ...FUN_FACTS.map((f) => f.img),
       { author: 'Drone Snap (vidéo « Abidjan 4K »)', url: 'https://www.youtube.com/@DroneSnap' },
+      { author: '@alivelikethewind (film d’accueil, Instagram)', url: 'https://www.instagram.com/reel/DRDLs1tDL-P/' },
       { author: 'Félix Houphouët-Boigny, portrait : source à préciser', url: '' },
     ]
       .filter((x) => x && typeof x === 'object' && x.author && !x.srcset)

@@ -178,10 +178,30 @@ export function initVideo() {
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-video]');
     if (!b) return;
-    frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.video}?autoplay=1&rel=0" title="Vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    // « ig:ID » : reel Instagram (format vertical), sinon identifiant YouTube
+    const v = b.dataset.video;
+    const file = v.startsWith('file:');
+    const ig = v.startsWith('ig:');
+    frame.innerHTML = file
+      ? `<video src="${/^https?:/.test(v.slice(5)) ? v.slice(5) : import.meta.env.BASE_URL + v.slice(5)}" controls autoplay playsinline preload="metadata"></video>`
+      : ig
+      ? `<iframe src="https://www.instagram.com/reel/${b.dataset.video.slice(3)}/embed/" title="Vidéo Instagram" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen scrolling="no"></iframe>`
+      : `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.video}?autoplay=1&rel=0" title="Vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    frame.classList.toggle('video-modal__frame--vertical', ig);
+    frame.classList.toggle('video-modal__frame--file', file);
+    frame.querySelector('video')?.play().catch(() => {});
     openModal(modal, { focus: $('.video-modal__close'), onClose: () => (frame.innerHTML = '') });
   });
   $('.video-modal__close').addEventListener('click', () => closeModal(modal));
+  // Plein écran : double-clic sur la vidéo (le bouton du lecteur reste disponible)
+  const fullscreen = () => {
+    const v = $('video', frame);
+    if (!v) return;
+    if (document.fullscreenElement) return document.exitFullscreen();
+    if (v.requestFullscreen) v.requestFullscreen().catch(() => v.webkitEnterFullscreen?.());
+    else v.webkitEnterFullscreen?.();
+  };
+  frame.addEventListener('dblclick', fullscreen);
   modal.addEventListener('click', (e) => e.target === modal && closeModal(modal));
 }
 
