@@ -152,6 +152,9 @@ export const NOUCHI = {
   glossary: [
     { word: 'On dit quoi ?', meaning: 'La façon de dire bonjour. Quoi de neuf, comment ça va ?', example: 'Eh djo, on dit quoi ?' },
     { word: 'C’est comment ?', meaning: 'Autre façon de demander comment tu vas.', example: 'Bonjour tantie, c’est comment ce matin ?' },
+    { word: 'Babi', meaning: 'Abidjan, tout simplement. Le petit nom que tout le monde donne à la ville.', example: 'Je rentre à Babi ce week-end.' },
+    { word: 'Gâter le coin', meaning: 'Mettre une ambiance de folie, faire sensation là où on arrive.', example: 'Ce soir au maquis, on va gâter le coin !' },
+    { word: 'On est ensemble', meaning: 'On se soutient, on reste en contact. Se dit aussi pour dire au revoir.', example: 'Merci pour tout, mon môgô. On est ensemble !' },
     { word: 'S’enjailler', meaning: 'S’amuser, faire la fête. Ça vient de l’anglais « enjoy ».', example: 'Ce soir on part s’enjailler au maquis.' },
     { word: 'Go', meaning: 'Une fille, une jeune femme, ou ta copine.', example: 'Je vais présenter ma go à la famille.' },
     { word: 'Gaou', meaning: 'Quelqu’un de naïf, qui ne connaît pas encore les codes.', example: 'Premier gaou n’est pas gaou, c’est deuxième gaou qui est niata.' },
