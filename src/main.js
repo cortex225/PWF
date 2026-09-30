@@ -194,7 +194,7 @@ function renderRest() {
   ).join('');
 
 
-  $$('[data-video]').forEach((el) => el.dataset.video !== 'QktjMQh2cFA' && checkVideo(el, el.dataset.video));
+  $$('[data-video]').forEach((el) => !/^(ig|file):/.test(el.dataset.video) && checkVideo(el, el.dataset.video));
 }
 
 /* 5. Monde 3D et sections                                             */

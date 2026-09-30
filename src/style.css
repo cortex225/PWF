@@ -3268,3 +3268,25 @@ main,
 .footer__legal-body { display: grid; gap: 0.8rem; margin-top: 1rem; max-width: 60rem; font-size: 0.82rem; line-height: 1.6; color: rgba(255, 248, 238, 0.65); }
 .footer__legal-body b { color: var(--white); }
 .footer__legal-body a { text-decoration: underline; }
+/* film d'accueil : reel Instagram vertical dans la fenêtre vidéo */
+.video-modal__frame--vertical { width: min(420px, 92vw) !important; aspect-ratio: auto !important; height: min(88svh, 820px) !important; background: #fff; border-radius: 12px; overflow: hidden; }
+.video-modal__frame--vertical iframe { width: 100%; height: 100%; border: 0; }
+.video-modal__frame--file { background: #000; }
+.video-modal__frame--file video { width: 100%; height: 100%; object-fit: contain; display: block; }
+.video-modal__full {
+  position: absolute;
+  bottom: 1.4rem;
+  right: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 248, 238, 0.35);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+.video-modal__full:hover { background: var(--white); color: var(--night); }
+.video-modal__full svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.video-modal__full[hidden] { display: none; }
