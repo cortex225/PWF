@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ILLUSTRATIONS } from './illustrations.js';
 import { CREDITS, src } from './data.js';
-import { NAV, SECTIONS, PAGES } from './content.js';
+import { NAV, SECTIONS, PAGES, SOURCES } from './content.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -472,5 +472,6 @@ export function renderShell(page = 'home') {
   const items = list.map((s, i) => `<li><a href="${s.href}"><small>${String(i + 1).padStart(2, '0')}</small>${s.label}</a></li>`).join('');
   $('.menu__list').innerHTML = items;
   $('.footer__steps').innerHTML = items;
-  $('.footer__credits').innerHTML = CREDITS.map((c) => `<a href="${c.url}" target="_blank" rel="noopener">${c.author}</a>`).join(', ');
+  const credit = (c) => (c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${c.author}</a>` : c.author);
+  $('.footer__credits').innerHTML = `<b>Unsplash :</b> ${CREDITS.map(credit).join(', ')}<br /><b>Autres sources :</b> ${SOURCES.filter((c) => !c.author.startsWith('Source à préciser')).map(credit).join(' · ')}`;
 }

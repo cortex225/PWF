@@ -4,6 +4,9 @@
 
 import { PHOTOS, local } from './data.js';
 
+// Photo externe, avec son auteur ou sa source (affichés dans la visionneuse et le pied de page)
+const S = (file, author, url = '') => ({ src: `${import.meta.env.BASE_URL}media/${file}`, author, url });
+
 /* Navigation principale : ancres de l'accueil */
 export const NAV = [
   { id: 'decouvrir', label: 'Découvrir' },
@@ -85,9 +88,9 @@ export const ITEMS = {
     gallery: ['Façade et croix', 'Intérieur', 'Vitraux'],
   },
   cocody: {
-    group: 'abidjan', tile: 'sm', name: 'Cocody', kicker: 'Abidjan contemporaine', img: `${import.meta.env.BASE_URL}media/baie-cocody.jpg`,
+    group: 'abidjan', tile: 'sm', name: 'Cocody', kicker: 'Abidjan contemporaine', img: S('baie-cocody.jpg', 'Source à préciser', ''),
     text: 'Quartiers résidentiels, hôtels, restaurants et lieux culturels : l’Abidjan d’aujourd’hui.',
-    gallery: [{ img: local('hotel-ivoire'), caption: 'L’hôtel Ivoire, à Cocody' }],
+    gallery: [{ img: S('hotel-ivoire.webp', 'Sofitel Abidjan Hôtel Ivoire', 'https://sofitel.accor.com/'), caption: 'L’hôtel Ivoire, à Cocody' }],
     posts: [
       { platform: 'instagram', id: 'DYFWeD0NlV-', author: 'leboulevardbynoom', url: 'https://www.instagram.com/reel/DYFWeD0NlV-/' },
       { platform: 'youtube', id: 'RKPiE8KSlT4', author: 'Isaac.explore', caption: 'Architecture résidentielle', url: 'https://youtube.com/shorts/RKPiE8KSlT4' },
@@ -105,19 +108,19 @@ export const ITEMS = {
 
   /* 04 — Grand-Bassam */
   'quartier-france': {
-    group: 'bassam', tile: 'lg', name: 'Quartier France', kicker: 'Patrimoine mondial, 2012', img: `${import.meta.env.BASE_URL}media/quartier-france.jpg`,
+    group: 'bassam', tile: 'lg', name: 'Quartier France', kicker: 'Patrimoine mondial, 2012', img: S('quartier-france.jpg', 'Source à préciser', ''),
     text: 'Maisons de commerce à vérandas et bâtiments administratifs : la première capitale de la colonie, figée entre lagune et océan.',
   },
   'musee-costume': {
-    group: 'bassam', tile: 'wide', name: 'Musée national du Costume', kicker: 'Ancien palais du gouverneur', img: `${import.meta.env.BASE_URL}media/musee-costume.jpg`,
+    group: 'bassam', tile: 'wide', name: 'Musée national du Costume', kicker: 'Ancien palais du gouverneur', img: S('musee-costume.jpg', 'Source à préciser', ''),
     text: 'Coiffes, parures et vêtements traditionnels des peuples du pays, dans l’un des plus beaux bâtiments coloniaux de Bassam.',
   },
   'archi-coloniale': {
-    group: 'bassam', tile: 'sm', name: 'Architecture coloniale', kicker: 'Pensée pour le climat', img: `${import.meta.env.BASE_URL}media/bassam-architecture.jpg`,
+    group: 'bassam', tile: 'sm', name: 'Architecture coloniale', kicker: 'Pensée pour le climat', img: S('bassam-architecture.jpg', 'Source à préciser', ''),
     text: 'Galeries, persiennes, toitures débordantes : une architecture adaptée à la chaleur et à la pluie.',
   },
   memoire: {
-    group: 'bassam', tile: 'sm', name: 'Mémoire & patrimoine', kicker: 'Archives', img: `${import.meta.env.BASE_URL}media/bassam-archive.jpg`,
+    group: 'bassam', tile: 'sm', name: 'Mémoire & patrimoine', kicker: 'Archives', img: S('bassam-archive.jpg', 'Carte postale, collection L. Métayer', ''),
     text: 'Photos anciennes, cartes et récits : ce que les murs de Bassam racontent encore.',
   },
 
@@ -128,11 +131,11 @@ export const ITEMS = {
     todo: ['Paddle ou kitesurf sur la lagune', 'Déjeuner de poisson braisé les pieds dans le sable'], embeds: 2,
     posts: [
       { platform: 'instagram', id: 'DdyQIAyswU8', author: 'tanguy_moraux', url: 'https://www.instagram.com/reel/DdyQIAyswU8/' },
-      { img: `${import.meta.env.BASE_URL}media/assinie-plage.jpg`, caption: 'Plage d’Assinie' },
+      { img: S('assinie-plage.jpg', 'Source à préciser', ''), caption: 'Plage d’Assinie' },
     ],
   },
   sassandra: {
-    group: 'plages', name: 'Sassandra', kicker: 'Océan sauvage', img: `${import.meta.env.BASE_URL}media/sassandra.jpg`,
+    group: 'plages', name: 'Sassandra', kicker: 'Océan sauvage', img: S('sassandra.jpg', '@lancrage.sassandra', 'https://www.instagram.com/lancrage.sassandra/'),
     text: 'Une ville chargée d’histoire, des plages plus sauvages et des vagues pour le surf.',
     posts: [
       { platform: 'instagram', id: 'DMckeY5KLGt', author: 'jacques.allatin', url: 'https://www.instagram.com/reel/DMckeY5KLGt/' },
@@ -140,7 +143,7 @@ export const ITEMS = {
     ],
   },
   'bassam-plage': {
-    group: 'plages', name: 'Grand-Bassam', kicker: 'La plage d’Abidjan', img: `${import.meta.env.BASE_URL}media/bassam-plage.jpg`,
+    group: 'plages', name: 'Grand-Bassam', kicker: 'La plage d’Abidjan', img: S('bassam-plage.jpg', 'Source à préciser', ''),
     text: 'À 45 minutes d’Abidjan, la plage où les Abidjanais filent le week-end, entre maquis les pieds dans le sable et vagues de l’Atlantique.',
   },
   'san-pedro': {
@@ -155,7 +158,7 @@ export const ITEMS = {
 
   /* 06 — De la forêt à la savane */
   man: {
-    group: 'nature', tile: 'lg', name: 'Man et l’Ouest', kicker: 'Montagnes & cascades', img: `${import.meta.env.BASE_URL}media/man.jpg`,
+    group: 'nature', tile: 'lg', name: 'Man et l’Ouest', kicker: 'Montagnes & cascades', img: S('man.jpg', 'Visit Côte d’Ivoire', 'https://www.visitcotedivoire.com/'),
     text: 'La Dent de Man, le mont Tonkoui, les cascades et les ponts de lianes : l’Ouest se découvre à pied.',
     todo: ['Monter à la Dent de Man', 'Voir la cascade de Man', 'Traverser un pont de lianes'],
     posts: [
@@ -163,7 +166,7 @@ export const ITEMS = {
     ],
   },
   savane: {
-    group: 'nature', tile: 'lg', name: 'La savane du Centre', kicker: 'Autour de Bouaké · safari', img: `${import.meta.env.BASE_URL}media/nzi-lodge.jpg`,
+    group: 'nature', tile: 'lg', name: 'La savane du Centre', kicker: 'Autour de Bouaké · safari', img: S('nzi-lodge.jpg', 'Ivoir Trips International', ''),
     text: 'En remontant vers le Centre, la forêt s’ouvre et la savane prend le relais. Au N’Zi River Lodge, on part en 4x4 à la rencontre des animaux et on dort au lodge : oui, on peut faire un safari en Côte d’Ivoire.',
     embeds: 2,
     posts: [
@@ -173,16 +176,16 @@ export const ITEMS = {
 
   /* 08 — Fait main (À VÉRIFIER : Kapélé et Torgokaha) */
   katiola: {
-    group: 'craft', tile: 'lg', name: 'Katiola', kicker: 'Les potières', img: `${import.meta.env.BASE_URL}media/katiola.jpg`,
+    group: 'craft', tile: 'lg', name: 'Katiola', kicker: 'Les potières', img: S('katiola.jpg', 'Source à préciser', ''),
     text: 'Les potières façonnent l’argile à la main et la cuisent au feu de bois, comme leurs mères avant elles.',
   },
   korhogo: {
-    group: 'craft', tile: 'wide', name: 'Korhogo', kicker: 'Toiles, peinture, sculpture', img: `${import.meta.env.BASE_URL}media/toile-korhogo.jpg`,
+    group: 'craft', tile: 'wide', name: 'Korhogo', kicker: 'Toiles, peinture, sculpture', img: S('toile-korhogo.jpg', 'Galerie Christian Doux, via Proantic', 'https://www.proantic.com/'),
     text: 'Sur les toiles tissées à la main, les artisans sénoufo peignent animaux et scènes de vie.',
   },
 
   waranienie: {
-    group: 'craft', tile: 'wide', name: 'Waraniéné', kicker: 'Les tisserands', img: `${import.meta.env.BASE_URL}media/waraniene.jpg`,
+    group: 'craft', tile: 'wide', name: 'Waraniéné', kicker: 'Les tisserands', img: S('waraniene.jpg', '@decouvrir_korhogo_', 'https://www.instagram.com/decouvrir_korhogo_/'),
     text: 'Le village des tisserands, près de Korhogo, où les bandes de coton sortent des métiers une à une.',
     posts: [
       { platform: 'instagram', id: 'CqEEH4vuxQZ', author: 'decouvrir_korhogo_', url: 'https://www.instagram.com/reel/CqEEH4vuxQZ/' },
@@ -216,10 +219,10 @@ export const BASILICA_GALLERY = [
 /* 10 — À table : plats mis en avant (noms repris de MENU dans data.js) */
 export const FEATURED_DISHES = [
   'Garba',
-  { name: 'Attiéké poisson braisé', origin: 'Peuples lagunaires du Sud', img: `${import.meta.env.BASE_URL}media/attieke-poisson.webp` },
-  { name: 'Kedjenou', origin: 'Pays baoulé', img: `${import.meta.env.BASE_URL}media/kedjenou.jpg` }, 'Foutou et sauce graine', 'Alloco',
-  { name: 'Bissap', origin: 'Jus de fleurs d’hibiscus', img: `${import.meta.env.BASE_URL}media/bissap.jpg` },
-  { name: 'Gnamankoudji', origin: 'Jus de gingembre', img: `${import.meta.env.BASE_URL}media/gnamankoudji.jpg` },
+  { name: 'Attiéké poisson braisé', origin: 'Peuples lagunaires du Sud', img: S('attieke-poisson.webp', 'Source à préciser', '') },
+  { name: 'Kedjenou', origin: 'Pays baoulé', img: S('kedjenou.jpg', 'International Cuisine', 'https://www.internationalcuisine.com/') }, 'Foutou et sauce graine', 'Alloco',
+  { name: 'Bissap', origin: 'Jus de fleurs d’hibiscus', img: S('bissap.jpg', 'Source à préciser', '') },
+  { name: 'Gnamankoudji', origin: 'Jus de gingembre', img: S('gnamankoudji.jpg', 'Les Secrets d’Eltia', 'https://eltiacuisine.com/') },
 ];
 export const FOOD_WORLDS = [
   { title: 'Cuisine ivoirienne', text: 'Sauces, féculents, braisés : les plats de la maison.' },
@@ -234,7 +237,7 @@ export const CROPS = [
     steps: ['Cabosse', 'Fermentation', 'Séchage', 'Transformation', 'Chocolat'],
   },
   {
-    id: 'cafe', name: 'Café', img: `${import.meta.env.BASE_URL}media/cafe-robusta.jpg`, stat: { value: 'Robusta', label: 'la variété cultivée dans le pays' },
+    id: 'cafe', name: 'Café', img: S('cafe-robusta.jpg', 'Sprudge', 'https://sprudge.com/'), stat: { value: 'Robusta', label: 'la variété cultivée dans le pays' },
     steps: ['Cerise', 'Grain', 'Robusta', 'Tasse'],
   },
 ];
@@ -293,12 +296,12 @@ export const FEATURED_ARTISTS = ['Magic System', 'DJ Arafat', 'Josey', 'Didi B']
 export const NOUCHI_DICTIONARY_URL = 'https://fr.wikipedia.org/wiki/Nouchi';
 export const FUN_FACTS = [
   {
-    id: 'mj', size: 'xl', stamp: '1992 · Krindjabo', img: `${import.meta.env.BASE_URL}media/mj-krindjabo.jpg`,
+    id: 'mj', size: 'xl', stamp: '1992 · Krindjabo', img: S('mj-krindjabo.jpg', 'Jonathan Exley', ''),
     title: 'Michael Jackson,<br /><em>prince du Sanwi</em>',
     text: 'En 1992, Michael Jackson se rend à Krindjabo, capitale du royaume du Sanwi, dans le sud-est du pays. Il y est reçu comme un fils du royaume et fait prince. Ici, on raconte encore cette histoire avec fierté.',
   },
   {
-    id: 'can', size: 'tall', img: `${import.meta.env.BASE_URL}media/can-elephants.jpg`, big: '3×', stamp: '1992 · 2015 · 2023',
+    id: 'can', size: 'tall', img: S('can-elephants.jpg', 'CAF, via Pinterest', ''), big: '3×', stamp: '1992 · 2015 · 2023',
     title: 'Les Éléphants,<br /><em>champions d’Afrique</em>',
     text: 'Pays hôte de la CAN 2023, jouée en 2024, la Côte d’Ivoire bat le Nigeria 2–1 en finale à Abidjan. De presque éliminés… à champions d’Afrique.',
     embeds: 1,
@@ -310,7 +313,7 @@ export const FUN_FACTS = [
     ],
   },
   {
-    id: 'beyonce', size: 'wide', img: `${import.meta.env.BASE_URL}media/beyonce-lafalaise.jpg`, stamp: '2019 · Spirit',
+    id: 'beyonce', size: 'wide', img: S('beyonce-lafalaise.jpg', '« Black Is King », Parkwood Entertainment / Disney+', ''), stamp: '2019 · Spirit',
     title: 'Beyoncé ×<br /><em>LaFalaise Dion</em>',
     text: 'Dans le clip <em>Spirit</em>, Beyoncé porte un masque en cauris de la créatrice ivoirienne. D’autres coiffes suivront pour <em>Black Is King</em>.',
     embeds: 1,
@@ -321,4 +324,20 @@ export const FUN_FACTS = [
     text: '« S’enjailler » fait son entrée dans le Petit Robert. Envie d’en apprendre plus ?',
     link: { href: NOUCHI_DICTIONARY_URL, label: 'Ouvrir le dictionnaire nouchi' },
   },
+];
+
+/* Sources des médias externes (pied de page) */
+export const SOURCES = [
+  ...new Map(
+    [
+      ...Object.values(ITEMS).flatMap((it) => [it.img, ...(it.gallery || []).map((g) => g.img)]),
+      ...FEATURED_DISHES.map((d) => d.img),
+      ...CROPS.map((c) => c.img),
+      ...FUN_FACTS.map((f) => f.img),
+      { author: 'Drone Snap (vidéo « Abidjan 4K »)', url: 'https://www.youtube.com/@DroneSnap' },
+      { author: 'Félix Houphouët-Boigny, portrait : source à préciser', url: '' },
+    ]
+      .filter((x) => x && typeof x === 'object' && x.author && !x.srcset)
+      .map((x) => [x.author, x])
+  ).values(),
 ];
