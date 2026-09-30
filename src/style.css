@@ -3262,3 +3262,9 @@ main,
 .mini-gallery > :first-child { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 10; }
 .mini-gallery > :nth-child(2) { aspect-ratio: auto; align-self: stretch; }
 .mini-gallery > .mini-gallery__post { grid-row: auto; }
+/* Mentions légales */
+.footer__legal { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 248, 238, 0.1); }
+.footer__legal summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--muted); }
+.footer__legal-body { display: grid; gap: 0.8rem; margin-top: 1rem; max-width: 60rem; font-size: 0.82rem; line-height: 1.6; color: rgba(255, 248, 238, 0.65); }
+.footer__legal-body b { color: var(--white); }
+.footer__legal-body a { text-decoration: underline; }
